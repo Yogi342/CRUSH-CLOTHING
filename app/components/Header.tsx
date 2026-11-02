@@ -69,6 +69,7 @@ export function Header({
           role="region"
           aria-label="Atelier Promotion"
           className="bg-black text-white py-2 px-4 text-center text-[10px] sm:text-[11px] font-medium tracking-[0.22em] uppercase relative overflow-hidden flex items-center justify-between z-50 border-b border-neutral-900"
+          style={{backgroundColor: '#000000', color: '#ffffff'}}
         >
           {/* Subtle Accent Tag */}
           <div className="hidden md:flex items-center gap-2 shrink-0 opacity-80 pl-2">
@@ -79,8 +80,11 @@ export function Header({
           </div>
 
           {/* Smooth Animated Gliding Marquee */}
-          <div className="overflow-hidden flex-1 mx-4">
-            <div className="animate-marquee-smooth flex items-center gap-14 font-display text-[10px] tracking-[0.22em] uppercase text-neutral-200 whitespace-nowrap">
+          <div className="overflow-hidden flex-1 mx-4" style={{overflow: 'hidden'}}>
+            <div
+              className="animate-marquee-smooth flex items-center gap-14 font-display text-[10px] tracking-[0.22em] uppercase text-neutral-200 whitespace-nowrap"
+              style={{whiteSpace: 'nowrap'}}
+            >
               <span className="flex items-center gap-3">
                 <span className="text-neutral-500">·</span>
                 <span>COMPLIMENTARY EXPRESS SHIPPING ON ORDERS OVER $150</span>
@@ -174,12 +178,15 @@ export function Header({
             aria-label="Account profile"
           >
             <svg
-              className="w-4 h-4"
+              width="16"
+              height="16"
+              className="w-4 h-4 shrink-0"
               fill="none"
               stroke="currentColor"
               strokeWidth="1.6"
               viewBox="0 0 24 24"
               aria-hidden="true"
+              style={{width: 16, height: 16, maxWidth: '100%'}}
             >
               <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z" />
             </svg>
@@ -540,12 +547,15 @@ function SearchToggle() {
       aria-label="Open search drawer"
     >
       <svg
-        className="w-4 h-4"
+        width="16"
+        height="16"
+        className="w-4 h-4 shrink-0"
         fill="none"
         stroke="currentColor"
         strokeWidth="1.7"
         viewBox="0 0 24 24"
         aria-hidden="true"
+        style={{width: 16, height: 16, maxWidth: '100%'}}
       >
         <circle cx="11" cy="11" r="7" />
         <line x1="16" y1="16" x2="21" y2="21" />
@@ -576,11 +586,15 @@ function CartBadge({count}: {count: number}) {
     >
       {/* Artisanal Luxury Shopping Tote Icon */}
       <svg
+        width="14"
+        height="14"
         className="w-3.5 h-3.5 shrink-0 transition-transform group-hover:scale-110"
         fill="none"
         stroke="currentColor"
         strokeWidth="1.8"
         viewBox="0 0 24 24"
+        aria-hidden="true"
+        style={{width: 14, height: 14, maxWidth: '100%'}}
       >
         <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 10.5V6a3.75 3.75 0 10-7.5 0v4.5m11.356-1.993l1.263 12c.07.665-.45 1.243-1.119 1.243H4.25c-.669 0-1.189-.578-1.119-1.243l1.263-12A1.125 1.125 0 015.513 7.5h12.974c.576 0 1.059.435 1.119 1.007zM8.625 10.5a.375.375 0 11-.75 0 .375.375 0 01.75 0zm7.5 0a.375.375 0 11-.75 0 .375.375 0 01.75 0z" />
       </svg>

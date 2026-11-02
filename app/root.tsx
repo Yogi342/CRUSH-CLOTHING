@@ -163,9 +163,47 @@ export function Layout({children}: {children?: React.ReactNode}) {
       <head>
         <meta charSet="utf-8" />
         <meta name="viewport" content="width=device-width,initial-scale=1" />
+        <link rel="preload" href={tailwindCss} as="style" />
+        <link rel="preload" href={appStyles} as="style" />
         <link rel="stylesheet" href={tailwindCss}></link>
         <link rel="stylesheet" href={resetStyles}></link>
         <link rel="stylesheet" href={appStyles}></link>
+        <style
+          nonce={nonce}
+          dangerouslySetInnerHTML={{
+            __html: `
+              /* Critical Anti-FOUC & Initial Paint Containment */
+              html, body {
+                background-color: #ffffff;
+                color: #171717;
+                margin: 0;
+                padding: 0;
+                -webkit-font-smoothing: antialiased;
+              }
+              /* Strictly hide all unexpanded drawers and asides before hydration/CSS load */
+              .overlay:not(.expanded) {
+                display: none !important;
+                visibility: hidden !important;
+                opacity: 0 !important;
+                pointer-events: none !important;
+              }
+              /* Strict containment for icons so SVGs can NEVER blow up to full viewport width */
+              svg {
+                display: inline-block;
+                vertical-align: middle;
+                max-width: 100%;
+              }
+              header svg,
+              button svg,
+              nav svg {
+                width: 1rem;
+                height: 1rem;
+                max-width: 24px;
+                max-height: 24px;
+              }
+            `,
+          }}
+        />
         <Meta />
         <Links />
       </head>
