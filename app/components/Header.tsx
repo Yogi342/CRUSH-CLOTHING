@@ -56,54 +56,54 @@ export function Header({
     <div
       className={`crush-header-wrapper sticky top-0 z-40 transition-all duration-300 ${
         isScrolled
-          ? 'bg-white/90 backdrop-blur-xl shadow-[0_4px_24px_rgba(0,0,0,0.06)] border-b border-neutral-200/70'
-          : 'bg-white/95 backdrop-blur-md border-b border-neutral-100'
+          ? 'bg-white/95 backdrop-blur-xl shadow-[0_4px_24px_rgba(0,0,0,0.05)] border-b border-neutral-100'
+          : 'bg-white border-b border-neutral-100'
       }`}
       onMouseLeave={handleMouseLeaveMega}
     >
       {/* ========================================================
-          ANIMATED LUXURY MARQUEE ANNOUNCEMENT BAR
+          PROFESSIONAL LUXURY ANNOUNCEMENT TICKER
          ======================================================== */}
       {!announcementDismissed && (
         <div
           role="region"
           aria-label="Atelier Promotion"
-          className="bg-[#0A0A0A] text-white py-2 px-4 text-center text-[10px] sm:text-[11px] font-medium tracking-[0.22em] uppercase relative overflow-hidden flex items-center justify-between z-50 border-b border-neutral-800"
+          className="bg-black text-white py-2 px-4 text-center text-[10px] sm:text-[11px] font-medium tracking-[0.22em] uppercase relative overflow-hidden flex items-center justify-between z-50 border-b border-neutral-900"
         >
           {/* Subtle Accent Tag */}
-          <div className="hidden md:flex items-center gap-2 shrink-0 opacity-90 pl-2">
-            <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
+          <div className="hidden md:flex items-center gap-2 shrink-0 opacity-80 pl-2">
+            <span className="w-1.5 h-1.5 rounded-full bg-emerald-400" />
             <span className="text-[9px] font-display tracking-widest uppercase text-neutral-300">
-              Atelier SS26
+              SS 2026
             </span>
           </div>
 
           {/* Smooth Animated Gliding Marquee */}
           <div className="overflow-hidden flex-1 mx-4">
-            <div className="animate-marquee-smooth flex items-center gap-14 font-display text-[10px] tracking-[0.22em] uppercase text-white/90 whitespace-nowrap">
-              <span className="flex items-center gap-2.5">
-                <span className="text-amber-400">✦</span>
+            <div className="animate-marquee-smooth flex items-center gap-14 font-display text-[10px] tracking-[0.22em] uppercase text-neutral-200 whitespace-nowrap">
+              <span className="flex items-center gap-3">
+                <span className="text-neutral-500">·</span>
                 <span>COMPLIMENTARY EXPRESS SHIPPING ON ORDERS OVER $150</span>
               </span>
-              <span className="flex items-center gap-2.5">
-                <span className="text-amber-400">✦</span>
+              <span className="flex items-center gap-3">
+                <span className="text-neutral-500">·</span>
                 <span>EFFORTLESS 30-DAY ATELIER RETURNS & EXCHANGES</span>
               </span>
-              <span className="flex items-center gap-2.5">
-                <span className="text-amber-400">✦</span>
+              <span className="flex items-center gap-3">
+                <span className="text-neutral-500">·</span>
                 <span>HANDCRAFTED PURE NATURAL WEAVE COTTON</span>
               </span>
-              <span className="flex items-center gap-2.5">
-                <span className="text-amber-400">✦</span>
+              <span className="flex items-center gap-3">
+                <span className="text-neutral-500">·</span>
+                <span>SPRING / SUMMER 2026 CAPSULE EDITORIAL LIVE</span>
+              </span>
+              <span className="flex items-center gap-3">
+                <span className="text-neutral-500">·</span>
                 <span>COMPLIMENTARY EXPRESS SHIPPING ON ORDERS OVER $150</span>
               </span>
-              <span className="flex items-center gap-2.5">
-                <span className="text-amber-400">✦</span>
+              <span className="flex items-center gap-3">
+                <span className="text-neutral-500">·</span>
                 <span>EFFORTLESS 30-DAY ATELIER RETURNS & EXCHANGES</span>
-              </span>
-              <span className="flex items-center gap-2.5">
-                <span className="text-amber-400">✦</span>
-                <span>SPRING / SUMMER 2026 CAPSULE EDITORIAL LIVE</span>
               </span>
             </div>
           </div>
@@ -113,7 +113,7 @@ export function Header({
             type="button"
             onClick={() => setAnnouncementDismissed(true)}
             aria-label="Dismiss announcement"
-            className="text-white/60 hover:text-white transition-opacity text-xs pr-1 cursor-pointer"
+            className="text-neutral-400 hover:text-white transition-opacity text-xs pr-1 cursor-pointer"
           >
             ✕
           </button>
@@ -121,14 +121,14 @@ export function Header({
       )}
 
       {/* ========================================================
-          MAIN EDITORIAL NAVBAR
+          MAIN CLEAN LUXURY NAVBAR
          ======================================================== */}
       <header
         className={`crush-header max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between transition-all duration-300 ${
           isScrolled ? 'h-16' : 'h-20'
         }`}
       >
-        {/* Left: Classic Curated Navigation */}
+        {/* Left: Professional Clean Navigation */}
         <div className="flex items-center gap-4 lg:gap-8">
           <HeaderMenuMobileToggle />
           <HeaderMenu
@@ -141,7 +141,7 @@ export function Header({
           />
         </div>
 
-        {/* Center: Unique Luxury Brand Wordmark */}
+        {/* Center: Prestigious Typographic Brand Wordmark */}
         <div className="crush-brand-logo text-center">
           <NavLink
             prefetch="intent"
@@ -149,20 +149,15 @@ export function Header({
             end
             className="group inline-flex flex-col items-center no-underline text-neutral-900 focus-visible:outline-2 focus-visible:outline-neutral-900"
           >
-            <div className="flex items-center gap-2">
-              <span
-                className={`font-serif tracking-[0.38em] uppercase transition-all duration-400 group-hover:tracking-[0.45em] text-neutral-900 font-normal ${
-                  isScrolled ? 'text-2xl sm:text-[26px]' : 'text-[26px] sm:text-[32px]'
-                }`}
-              >
-                CRUSH
-              </span>
-              <span className="text-[10px] text-amber-600 group-hover:rotate-45 transition-transform duration-500">
-                ✦
-              </span>
-            </div>
-            <span className="font-display text-[8px] sm:text-[9px] tracking-[0.48em] text-neutral-400 uppercase -mt-0.5 group-hover:text-neutral-800 transition-colors font-medium">
-              ATELIER // NEW YORK
+            <span
+              className={`font-serif tracking-[0.38em] uppercase transition-all duration-400 group-hover:tracking-[0.44em] text-neutral-900 font-normal ${
+                isScrolled ? 'text-2xl sm:text-[26px]' : 'text-[26px] sm:text-[32px]'
+              }`}
+            >
+              CRUSH
+            </span>
+            <span className="font-display text-[8px] sm:text-[9px] tracking-[0.48em] text-neutral-400 uppercase -mt-0.5 group-hover:text-neutral-700 transition-colors font-medium">
+              NEW YORK
             </span>
           </NavLink>
         </div>
@@ -207,16 +202,16 @@ export function Header({
             {/* Column 1: Ready-To-Wear Categories */}
             <div className="col-span-3 space-y-3">
               <span className="font-display text-[10px] font-bold tracking-[0.25em] uppercase text-neutral-400 block">
-                Atelier Catalog
+                Ready-To-Wear
               </span>
               <ul className="space-y-2.5 font-display text-xs uppercase tracking-wider list-none p-0 m-0">
                 <li>
                   <Link
                     to="/collections/all"
-                    className="text-neutral-900 hover:text-black font-semibold flex items-center gap-1.5 no-underline transition-transform hover:translate-x-1"
+                    className="text-neutral-900 hover:text-black font-semibold flex items-center justify-between no-underline transition-transform hover:translate-x-1"
                   >
-                    <span>View All Ready-To-Wear</span>
-                    <span className="text-[10px] text-amber-600">→</span>
+                    <span>View All Collection</span>
+                    <span className="text-[10px] text-neutral-400">→</span>
                   </Link>
                 </li>
                 <li>
@@ -263,10 +258,10 @@ export function Header({
                 <li>
                   <Link
                     to="/products/frill-tie-shoulder-mini-dress"
-                    className="text-neutral-900 hover:text-black font-bold flex items-center gap-1.5 no-underline transition-transform hover:translate-x-1"
+                    className="text-neutral-900 hover:text-black font-medium flex items-center justify-between no-underline transition-transform hover:translate-x-1"
                   >
-                    <span className="text-amber-600">✦</span>
                     <span>The Frill Tie Mini Edit</span>
+                    <span className="text-[10px] text-neutral-400">→</span>
                   </Link>
                 </li>
                 <li>
@@ -306,8 +301,8 @@ export function Header({
                 />
               </div>
               <div className="space-y-1.5">
-                <span className="font-display text-[9px] font-bold tracking-widest uppercase text-emerald-800 bg-emerald-50 px-2 py-0.5 rounded-full border border-emerald-200">
-                  Iconic Piece
+                <span className="font-display text-[9px] font-bold tracking-widest uppercase text-neutral-500 block">
+                  Featured Piece
                 </span>
                 <h4 className="font-serif text-base text-neutral-900 m-0">
                   Frill Tie Shoulder Mini Dress
@@ -350,14 +345,14 @@ export function Header({
                 to="/products/frill-tie-shoulder-mini-dress#atelier-specifications"
                 className="block p-3.5 bg-neutral-50 rounded-lg border border-neutral-200 hover:border-black no-underline text-neutral-900 transition-colors shadow-xs"
               >
-                <span className="font-bold block">✦ Interactive Size Advisor</span>
+                <span className="font-bold block">Interactive Size Advisor</span>
                 <span className="text-[10px] text-neutral-500 normal-case font-body">Find your bespoke tailored fit</span>
               </Link>
               <Link
                 to="/policies/shipping-policy"
                 className="block p-3.5 bg-neutral-50 rounded-lg border border-neutral-200 hover:border-black no-underline text-neutral-900 transition-colors shadow-xs"
               >
-                <span className="font-bold block">✦ Complimentary US Delivery</span>
+                <span className="font-bold block">Complimentary Delivery</span>
                 <span className="text-[10px] text-neutral-500 normal-case font-body">Orders over $150 dispatched in 24h</span>
               </Link>
             </div>
@@ -385,13 +380,12 @@ export function HeaderMenu({
 }) {
   const {close} = useAside();
 
-  // Curated Luxury Atelier Navigation Hierarchy
+  // Curated Clean Professional Navigation Hierarchy (No tacky badges, no clutter)
   const curatedLinks = [
     {
       id: 'nav-new-in',
       title: 'New Arrivals',
       url: '/collections/all',
-      badge: '✦',
     },
     {
       id: 'nav-collections',
@@ -403,7 +397,6 @@ export function HeaderMenu({
       id: 'nav-dresses',
       title: 'Dresses',
       url: '/products/frill-tie-shoulder-mini-dress',
-      badge: 'Bestseller',
     },
     {
       id: 'nav-atelier',
@@ -421,7 +414,7 @@ export function HeaderMenu({
   if (viewport === 'desktop') {
     return (
       <nav
-        className="hidden lg:flex items-center gap-7 xl:gap-8"
+        className="hidden lg:flex items-center gap-7 xl:gap-9"
         role="navigation"
         aria-label="Main Navigation"
       >
@@ -435,28 +428,14 @@ export function HeaderMenu({
               <NavLink
                 to={item.url}
                 className={({isActive}) =>
-                  `group inline-flex items-center gap-1.5 font-display text-[11px] font-semibold tracking-[0.18em] uppercase no-underline transition-all nav-link-classic py-0.5 ${
+                  `group inline-flex items-center font-display text-[12px] font-medium tracking-[0.18em] uppercase no-underline transition-all nav-link-classic py-0.5 ${
                     isActive
-                      ? 'text-neutral-900 active font-bold'
+                      ? 'text-neutral-900 active font-semibold'
                       : 'text-neutral-600 hover:text-neutral-900'
                   }`
                 }
               >
                 <span>{item.title}</span>
-                {item.badge && (
-                  <span className="text-[9px] font-bold text-amber-600 group-hover:scale-110 transition-transform">
-                    {item.badge}
-                  </span>
-                )}
-                {item.hasMega && (
-                  <span
-                    className={`text-[8px] text-neutral-400 transition-transform duration-300 ${
-                      activeMega === item.hasMega ? 'rotate-180 text-neutral-900' : ''
-                    }`}
-                  >
-                    ▾
-                  </span>
-                )}
               </NavLink>
             </div>
           );
@@ -492,11 +471,6 @@ export function HeaderMenu({
             to={item.url}
           >
             <span>{item.title}</span>
-            {item.badge && (
-              <span className="text-[10px] tracking-wider text-amber-900 bg-amber-50 px-2 py-0.5 rounded-full border border-amber-200">
-                {item.badge}
-              </span>
-            )}
           </NavLink>
         ))}
       </div>
@@ -510,7 +484,7 @@ export function HeaderMenu({
           onClick={close}
           className="block text-xs uppercase tracking-wider text-neutral-600 no-underline hover:text-black"
         >
-          ✦ Interactive Size Advisor
+          Interactive Size Advisor
         </NavLink>
         <NavLink
           to="/policies/shipping-policy"
