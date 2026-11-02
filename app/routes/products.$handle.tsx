@@ -9,6 +9,7 @@ import {
 import {AddToCartButton} from '~/components/AddToCartButton';
 import {useAside} from '~/components/Aside';
 import {ProductItem} from '~/components/ProductItem';
+import {SizeAdvisorModal} from '~/components/SizeAdvisorModal';
 
 export const meta: Route.MetaFunction = ({data}) => {
   const title = data?.product?.title ?? 'Product';
@@ -520,9 +521,10 @@ export default function ProductPage() {
                       <button
                         type="button"
                         onClick={() => setSizeGuideOpen(true)}
-                        className="font-display text-xs tracking-wider uppercase text-[var(--color-ink)]/60 hover:text-[var(--color-ink)] underline underline-offset-4 cursor-pointer"
+                        className="flex items-center gap-1.5 font-display text-xs tracking-wider uppercase text-[var(--color-ink)] hover:text-black underline underline-offset-4 cursor-pointer group"
                       >
-                        Size Guide & Measurements
+                        <span className="text-[10px] text-emerald-800">✦</span>
+                        <span className="font-semibold">Find Your Fit (Size Advisor)</span>
                       </button>
                     </div>
 
@@ -879,71 +881,27 @@ export default function ProductPage() {
         )}
       </div>
 
-      {/* Sizing Guide Modal */}
-      {sizeGuideOpen && (
-        <div
-          role="dialog"
-          aria-modal="true"
-          aria-labelledby="size-guide-title"
-          className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-[var(--color-ink)]/75 backdrop-blur-xs"
-        >
-          <div className="bg-[var(--color-ivory)] max-w-lg w-full p-6 sm:p-8 border border-[var(--color-stone)] shadow-2xl relative">
-            <div className="flex items-center justify-between pb-4 border-b border-[var(--color-stone)] mb-6">
-              <h2
-                id="size-guide-title"
-                className="font-display font-bold text-lg tracking-widest uppercase m-0 text-[var(--color-ink)]"
-              >
-                Atelier Sizing Guide (US)
-              </h2>
-              <button
-                type="button"
-                onClick={() => setSizeGuideOpen(false)}
-                className="font-display text-lg text-[var(--color-ink)]/70 hover:text-[var(--color-ink)] cursor-pointer"
-                aria-label="Close size guide"
-              >
-                ✕
-              </button>
-            </div>
-
-            <div className="overflow-x-auto">
-              <table className="w-full text-left font-body text-xs border-collapse">
-                <thead>
-                  <tr className="border-b border-[var(--color-stone)] font-display uppercase tracking-wider text-[var(--color-ink)]/70">
-                    <th className="py-2">Size</th>
-                    <th className="py-2">Length</th>
-                    <th className="py-2">Bust</th>
-                    <th className="py-2">Waist</th>
-                  </tr>
-                </thead>
-                <tbody className="divide-y divide-[var(--color-stone)]">
-                  <tr>
-                    <td className="py-2.5 font-bold font-display">S</td>
-                    <td>31.5&quot;</td>
-                    <td>33.9&quot;</td>
-                    <td>33.5&quot;</td>
-                  </tr>
-                  <tr>
-                    <td className="py-2.5 font-bold font-display">M</td>
-                    <td>31.9&quot;</td>
-                    <td>35.4&quot;</td>
-                    <td>35.0&quot;</td>
-                  </tr>
-                  <tr>
-                    <td className="py-2.5 font-bold font-display">L</td>
-                    <td>32.3&quot;</td>
-                    <td>37.0&quot;</td>
-                    <td>36.6&quot;</td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-
-            <p className="font-body text-[11px] text-[var(--color-ink)]/60 mt-6 leading-normal">
-              Measurements reflect garment sizing in inches. Fits true to size with fully adjustable shoulder ties.
-            </p>
-          </div>
-        </div>
-      )}
+      {/* Dynamic Sizing Advisor Modal */}
+      <SizeAdvisorModal
+        isOpen={sizeGuideOpen}
+        onClose={() => setSizeGuideOpen(false)}
+        product={product}
+        availableSizes={
+          meaningfulOptions.find((o: any) => isSizeOption(o.name))?.values || [
+            'S',
+            'M',
+            'L',
+          ]
+        }
+        currentSize={selectedOptions['Size'] || 'S'}
+        onSelectSize={(size: string) => handleSelectOption('Size', size)}
+        onAddToCart={(size: string) => {
+          handleSelectOption('Size', size);
+          setTimeout(() => {
+            handleAddToCart();
+          }, 100);
+        }}
+      />
 
       {/* Sticky Quick-Add Floating Bar */}
       <div
