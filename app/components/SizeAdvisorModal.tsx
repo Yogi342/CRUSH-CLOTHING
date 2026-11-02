@@ -154,7 +154,7 @@ export function SizeAdvisorModal({
       role="dialog"
       aria-modal="true"
       aria-labelledby="size-advisor-title"
-      className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-black/60 backdrop-blur-sm animate-fadeIn"
+      className="fixed inset-0 z-[99999] flex items-center justify-center p-2.5 sm:p-4 bg-black/60 backdrop-blur-sm animate-fadeIn"
     >
       {/* Backdrop */}
       <button
@@ -164,7 +164,7 @@ export function SizeAdvisorModal({
         aria-label="Close size advisor"
       />
 
-      <div className="relative w-full max-w-[440px] bg-white rounded-3xl border border-neutral-100 shadow-[0_25px_60px_-15px_rgba(0,0,0,0.3)] overflow-hidden flex flex-col max-h-[92vh]">
+      <div className="relative w-full max-w-[440px] bg-white rounded-3xl border border-neutral-100 shadow-[0_25px_60px_-15px_rgba(0,0,0,0.3)] overflow-hidden flex flex-col max-h-[92vh] sm:max-h-[90vh]">
         
         {/* Top Mini Header Bar */}
         <div className="flex items-center justify-between px-6 pt-5 pb-3">
@@ -314,7 +314,7 @@ export function SizeAdvisorModal({
                   </div>
 
                   {/* Right Column: Height & Weight Sliders */}
-                  <div className="col-span-9 space-y-4">
+                  <div className="col-span-1 sm:col-span-9 space-y-3 sm:space-y-4">
                     {/* Height Row */}
                     <div className="space-y-1.5 p-3.5 bg-neutral-50 rounded-2xl border border-neutral-100">
                       <div className="flex items-center justify-between">

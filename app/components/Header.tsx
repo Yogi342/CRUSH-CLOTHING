@@ -128,12 +128,12 @@ export function Header({
           MAIN CLEAN LUXURY NAVBAR
          ======================================================== */}
       <header
-        className={`crush-header relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between transition-all duration-300 ${
+        className={`crush-header max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 flex items-center justify-between transition-all duration-300 ${
           isScrolled ? 'h-16' : 'h-20'
         }`}
       >
-        {/* Left: Professional Clean Navigation */}
-        <div className="flex items-center gap-2 sm:gap-4 lg:gap-8 z-10">
+        {/* Left: Hamburger + Desktop Nav */}
+        <div className="flex items-center gap-2 sm:gap-4 lg:gap-8 flex-1 justify-start min-w-[65px]">
           <HeaderMenuMobileToggle />
           <HeaderMenu
             menu={menu}
@@ -145,8 +145,8 @@ export function Header({
           />
         </div>
 
-        {/* Center: Prestigious Typographic Brand Wordmark */}
-        <div className="crush-brand-logo absolute left-1/2 -translate-x-1/2 top-1/2 -translate-y-1/2 text-center pointer-events-auto">
+        {/* Center: Brand Logo */}
+        <div className="crush-brand-logo flex flex-col items-center justify-center text-center px-1 shrink-0">
           <NavLink
             prefetch="intent"
             to="/"
@@ -154,23 +154,23 @@ export function Header({
             className="group inline-flex flex-col items-center no-underline text-neutral-900 focus-visible:outline-2 focus-visible:outline-neutral-900"
           >
             <span
-              className={`font-serif tracking-[0.32em] sm:tracking-[0.38em] uppercase transition-all duration-400 group-hover:tracking-[0.44em] text-neutral-900 font-normal ${
+              className={`font-serif tracking-[0.28em] sm:tracking-[0.38em] uppercase transition-all duration-400 group-hover:tracking-[0.44em] text-neutral-900 font-normal ${
                 isScrolled ? 'text-xl sm:text-[26px]' : 'text-2xl sm:text-[32px]'
               }`}
             >
               CRUSH
             </span>
-            <span className="font-display text-[8px] sm:text-[9px] tracking-[0.48em] text-neutral-400 uppercase -mt-0.5 group-hover:text-neutral-700 transition-colors font-medium">
+            <span className="font-display text-[7.5px] sm:text-[9px] tracking-[0.42em] sm:tracking-[0.48em] text-neutral-400 uppercase -mt-0.5 group-hover:text-neutral-700 transition-colors font-medium">
               NEW YORK
             </span>
           </NavLink>
         </div>
 
-        {/* Right: Actions (Currency, Search, VIP Account, Bag) */}
-        <div className="flex items-center gap-1.5 sm:gap-3.5 lg:gap-4 z-10">
+        {/* Right: Actions */}
+        <div className="flex items-center gap-1.5 sm:gap-3.5 lg:gap-4 flex-1 justify-end min-w-[65px]">
           <CurrencySelector />
           <SearchToggle />
-          
+
           <NavLink
             prefetch="intent"
             to="/account"
@@ -264,7 +264,7 @@ export function Header({
               <ul className="space-y-2.5 font-display text-xs uppercase tracking-wider list-none p-0 m-0">
                 <li>
                   <Link
-                    to="/products/frill-tie-shoulder-mini-dress"
+                    to="/products/frill-tie-shoulder-mini-dress?openSizeAdvisor=true"
                     className="text-neutral-900 hover:text-black font-medium flex items-center justify-between no-underline transition-transform hover:translate-x-1"
                   >
                     <span>The Frill Tie Mini Edit</span>
@@ -318,7 +318,7 @@ export function Header({
                   100% natural cotton weave with romantic self-tie bows. Available in Khaki, Brown & Black.
                 </p>
                 <Link
-                  to="/products/frill-tie-shoulder-mini-dress"
+                  to="/products/frill-tie-shoulder-mini-dress?openSizeAdvisor=true"
                   className="inline-block font-display text-[10px] font-bold tracking-widest uppercase text-neutral-900 underline underline-offset-4 pt-1"
                 >
                   Discover Piece • $31.99 →
@@ -516,7 +516,7 @@ export function HeaderMenu({
           Atelier Client Services
         </p>
         <NavLink
-          to="/products/frill-tie-shoulder-mini-dress"
+          to="/products/frill-tie-shoulder-mini-dress?openSizeAdvisor=true"
           onClick={close}
           className="block text-xs uppercase tracking-wider text-neutral-600 no-underline hover:text-black py-1"
         >

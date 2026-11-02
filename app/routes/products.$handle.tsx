@@ -1,10 +1,11 @@
 import {useState, useEffect, useMemo, useRef} from 'react';
-import {redirect, useLoaderData, useSearchParams, Link} from 'react-router';
+import {redirect, useLoaderData, useSearchParams, Link, useFetcher} from 'react-router';
 import type {Route} from './+types/products.$handle';
 import {
   getSelectedProductOptions,
   Analytics,
   Money,
+  CartForm,
 } from '@shopify/hydrogen';
 import {AddToCartButton} from '~/components/AddToCartButton';
 import {useAside} from '~/components/Aside';
@@ -180,8 +181,18 @@ export default function ProductPage() {
   const [activeImageIndex, setActiveImageIndex] = useState(0);
   const [quantity, setQuantity] = useState(1);
   const [sizeGuideOpen, setSizeGuideOpen] = useState(false);
+
+  useEffect(() => {
+    if (searchParams.get('openSizeAdvisor') === 'true') {
+      setSizeGuideOpen(true);
+      const nextParams = new URLSearchParams(searchParams);
+      nextParams.delete('openSizeAdvisor');
+      setSearchParams(nextParams, {replace: true});
+    }
+  }, [searchParams]);
   const [activeSpecsTab, setActiveSpecsTab] = useState<'details' | 'fabric' | 'measurements'>('details');
   const [addedToast, setAddedToast] = useState(false);
+  const cartFetcher = useFetcher({key: 'size-advisor-cart'});
   const [isStickyVisible, setIsStickyVisible] = useState(false);
   const [isZoomModalOpen, setIsZoomModalOpen] = useState(false);
   const mainCtaRef = useRef<HTMLDivElement>(null);
@@ -1355,10 +1366,47 @@ export default function ProductPage() {
         currentSize={selectedOptions['Size'] || 'S'}
         onSelectSize={(size: string) => handleSelectOption('Size', size)}
         onAddToCart={(size: string) => {
-          handleSelectOption('Size', size);
-          setTimeout(() => {
-            handleAddToCart();
-          }, 100);
+          const sizeOptName =
+            meaningfulOptions.find((o: any) => isSizeOption(o.name))?.name || 'Size';
+          handleSelectOption(sizeOptName, size);
+
+          // Find exact variant matching this recommended size
+          const targetVariant =
+            variants.find((v: any) =>
+              v.selectedOptions?.every((so: any) => {
+                if (so.name === sizeOptName) return so.value.toLowerCase() === size.toLowerCase();
+                return so.value === selectedOptions[so.name];
+              })
+            ) ||
+            variants.find((v: any) =>
+              v.selectedOptions?.some(
+                (so: any) => so.name === sizeOptName && so.value.toLowerCase() === size.toLowerCase()
+              )
+            ) ||
+            activeVariant;
+
+          if (targetVariant?.id) {
+            cartFetcher.submit(
+              {
+                [CartForm.INPUT_NAME]: JSON.stringify({
+                  action: CartForm.ACTIONS.LinesAdd,
+                  inputs: {
+                    lines: [
+                      {
+                        merchandiseId: targetVariant.id,
+                        quantity: 1,
+                        selectedVariant: targetVariant,
+                      },
+                    ],
+                  },
+                }),
+              },
+              {method: 'POST', action: '/cart'}
+            );
+          }
+          open('cart');
+          setAddedToast(true);
+          setTimeout(() => setAddedToast(false), 3000);
         }}
       />
 
@@ -1401,18 +1449,27 @@ export default function ProductPage() {
           </div>
 
           <div className="flex items-center gap-2 sm:gap-4 shrink-0">
-            <button
-              type="button"
+            <AddToCartButton
               disabled={!isAvailable}
               onClick={handleAddToCart}
-              className={`rounded-full py-3 px-6 sm:px-8 text-xs font-bold tracking-widest uppercase shadow-md transition-all cursor-pointer ${
-                isAvailable
-                  ? 'bg-neutral-900 hover:bg-black text-white'
-                  : 'bg-neutral-200 text-neutral-400 cursor-not-allowed'
-              }`}
+              lines={[
+                {
+                  merchandiseId: activeVariant.id,
+                  quantity,
+                  selectedVariant: activeVariant,
+                },
+              ]}
             >
-              {isAvailable ? 'Add To Bag →' : 'Sold Out'}
-            </button>
+              <span
+                className={`rounded-full py-2.5 px-5 sm:py-3 sm:px-8 text-xs font-bold tracking-widest uppercase shadow-md transition-all flex items-center justify-center ${
+                  isAvailable
+                    ? 'bg-neutral-900 hover:bg-black text-white cursor-pointer'
+                    : 'bg-neutral-200 text-neutral-400 cursor-not-allowed'
+                }`}
+              >
+                {isAvailable ? 'Add To Bag →' : 'Sold Out'}
+              </span>
+            </AddToCartButton>
           </div>
         </div>
       </div>

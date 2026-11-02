@@ -57,7 +57,7 @@ export function Aside({
     <div
       aria-modal
       className={`overlay ${expanded ? 'expanded' : ''}`}
-      style={!expanded ? {display: 'none', visibility: 'hidden', opacity: 0} : undefined}
+      style={!expanded ? {display: 'none', visibility: 'hidden', opacity: 0} : {display: 'block', visibility: 'visible', opacity: 1}}
       role="dialog"
       aria-labelledby={id}
     >
