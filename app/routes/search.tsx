@@ -71,7 +71,7 @@ export default function SearchPage() {
                   />
                   <button
                     type="submit"
-                    className="px-6 py-2.5 bg-[var(--color-ink)] text-[var(--color-ivory)] font-display text-xs font-semibold tracking-widest uppercase hover:bg-[var(--color-ink)]/90 transition-colors cursor-pointer"
+                    className="px-6 py-2.5 rounded-full bg-[var(--color-ink)] text-[var(--color-ivory)] font-display text-xs font-semibold tracking-widest uppercase hover:bg-black transition-all cursor-pointer shadow-xs active:scale-95 ml-2 shrink-0"
                   >
                     Search
                   </button>

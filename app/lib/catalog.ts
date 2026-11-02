@@ -52,7 +52,7 @@ export const CRUSH_CATALOG: AtelierProduct[] = [
     title: 'Alabaster Sculpted Trench',
     category: 'outerwear',
     categoryTitle: 'Tailored Outerwear',
-    tag: 'Drop 01 // Limited Edition',
+    tag: 'Drop 01 · Limited Edition',
     price: {amount: '380.00', currencyCode: 'USD'},
     compareAtPrice: {amount: '450.00', currencyCode: 'USD'},
     featuredImage: {
@@ -101,7 +101,7 @@ export const CRUSH_CATALOG: AtelierProduct[] = [
     title: 'Champagne Bias Silk Slip',
     category: 'dresses',
     categoryTitle: 'Dresses & Gowns',
-    tag: 'Atelier Essential // Evening',
+    tag: 'Atelier Essential · Evening',
     price: {amount: '290.00', currencyCode: 'USD'},
     featuredImage: {
       url: '/images/model-full-2.jpg',
@@ -149,7 +149,7 @@ export const CRUSH_CATALOG: AtelierProduct[] = [
     title: 'Monolith Structured Blazer',
     category: 'outerwear',
     categoryTitle: 'Tailored Outerwear',
-    tag: 'Signature Tailoring // SS 2026',
+    tag: 'Signature Tailoring · SS 2026',
     price: {amount: '420.00', currencyCode: 'USD'},
     compareAtPrice: {amount: '480.00', currencyCode: 'USD'},
     featuredImage: {
@@ -197,7 +197,7 @@ export const CRUSH_CATALOG: AtelierProduct[] = [
     title: 'Heather Draped Column Dress',
     category: 'dresses',
     categoryTitle: 'Dresses & Gowns',
-    tag: 'Atelier Knits // Drop 01',
+    tag: 'Atelier Knits · Drop 01',
     price: {amount: '260.00', currencyCode: 'USD'},
     featuredImage: {
       url: '/images/model-full-4.jpg',
@@ -245,7 +245,7 @@ export const CRUSH_CATALOG: AtelierProduct[] = [
     title: 'Obsidian Cashmere Cocoon',
     category: 'outerwear',
     categoryTitle: 'Tailored Outerwear',
-    tag: 'Ultra-Luxury // Cashmere Edition',
+    tag: 'Ultra-Luxury · Cashmere Edition',
     price: {amount: '490.00', currencyCode: 'USD'},
     compareAtPrice: {amount: '580.00', currencyCode: 'USD'},
     featuredImage: {
@@ -293,7 +293,7 @@ export const CRUSH_CATALOG: AtelierProduct[] = [
     title: 'Sculptural Minimalist Hoodie',
     category: 'tops',
     categoryTitle: 'Tops & Shirting',
-    tag: 'Streetwear Atelier // SS 2026',
+    tag: 'Streetwear Atelier · SS 2026',
     price: {amount: '220.00', currencyCode: 'USD'},
     featuredImage: {
       url: '/images/hoodie.jpg',
@@ -339,7 +339,7 @@ export const CRUSH_CATALOG: AtelierProduct[] = [
     title: 'Monochrome Quilted Puffer',
     category: 'outerwear',
     categoryTitle: 'Tailored Outerwear',
-    tag: 'Winter Atelier // Limited Run',
+    tag: 'Winter Atelier · Limited Run',
     price: {amount: '440.00', currencyCode: 'USD'},
     compareAtPrice: {amount: '510.00', currencyCode: 'USD'},
     featuredImage: {
@@ -386,7 +386,7 @@ export const CRUSH_CATALOG: AtelierProduct[] = [
     title: 'Asymmetric Silk Evening Gown',
     category: 'dresses',
     categoryTitle: 'Dresses & Gowns',
-    tag: 'Couture Drop // Gala Edition',
+    tag: 'Couture Drop · Gala Edition',
     price: {amount: '520.00', currencyCode: 'USD'},
     featuredImage: {
       url: '/images/look-studio-2.jpg',
@@ -432,7 +432,7 @@ export const CRUSH_CATALOG: AtelierProduct[] = [
     title: 'Atelier Oversized Poplin Shirt',
     category: 'tops',
     categoryTitle: 'Tops & Shirting',
-    tag: 'Everyday Atelier // Poplin',
+    tag: 'Everyday Atelier · Poplin',
     price: {amount: '195.00', currencyCode: 'USD'},
     featuredImage: {
       url: '/images/look-studio-1.jpg',
@@ -478,7 +478,7 @@ export const CRUSH_CATALOG: AtelierProduct[] = [
     title: 'Pleated Tailored Wide Trouser',
     category: 'bottoms',
     categoryTitle: 'Bottoms & Tailoring',
-    tag: 'Architectural Suiting // SS 2026',
+    tag: 'Architectural Suiting · SS 2026',
     price: {amount: '280.00', currencyCode: 'USD'},
     featuredImage: {
       url: '/images/look-studio-4.jpg',
@@ -523,7 +523,7 @@ export const CRUSH_CATALOG: AtelierProduct[] = [
     title: 'Double-Faced Wool Kimono Coat',
     category: 'outerwear',
     categoryTitle: 'Tailored Outerwear',
-    tag: 'Sculptural Outerwear // SS 2026',
+    tag: 'Sculptural Outerwear · SS 2026',
     price: {amount: '460.00', currencyCode: 'USD'},
     compareAtPrice: {amount: '520.00', currencyCode: 'USD'},
     featuredImage: {
@@ -569,7 +569,7 @@ export const CRUSH_CATALOG: AtelierProduct[] = [
     title: 'Chalk Ivory Ribbed Knit Set',
     category: 'sets',
     categoryTitle: 'Minimalist Sets',
-    tag: 'Atelier Knits // Two-Piece',
+    tag: 'Atelier Knits · Two-Piece',
     price: {amount: '310.00', currencyCode: 'USD'},
     featuredImage: {
       url: '/images/model-look-5.jpg',

@@ -128,8 +128,12 @@ export default function AccountProfile() {
         ) : (
           <br />
         )}
-        <button type="submit" disabled={state !== 'idle'}>
-          {state !== 'idle' ? 'Updating' : 'Update'}
+        <button
+          type="submit"
+          disabled={state !== 'idle'}
+          className="px-6 py-2.5 rounded-full bg-neutral-900 hover:bg-black text-white font-display text-xs font-semibold tracking-wider uppercase cursor-pointer transition-all shadow-xs active:scale-95 disabled:opacity-50"
+        >
+          {state !== 'idle' ? 'Updating...' : 'Update Profile'}
         </button>
       </Form>
     </div>

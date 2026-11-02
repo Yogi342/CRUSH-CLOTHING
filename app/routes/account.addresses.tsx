@@ -317,8 +317,9 @@ function NewAddressForm() {
             disabled={stateForMethod('POST') !== 'idle'}
             formMethod="POST"
             type="submit"
+            className="px-6 py-2.5 rounded-full bg-neutral-900 hover:bg-black text-white font-display text-xs font-semibold tracking-wider uppercase cursor-pointer transition-all shadow-xs active:scale-95 disabled:opacity-50"
           >
-            {stateForMethod('POST') !== 'idle' ? 'Creating' : 'Create'}
+            {stateForMethod('POST') !== 'idle' ? 'Creating...' : 'Create Address'}
           </button>
         </div>
       )}
@@ -341,20 +342,22 @@ function ExistingAddresses({
           defaultAddress={defaultAddress}
         >
           {({stateForMethod}) => (
-            <div>
+            <div className="flex items-center gap-2 pt-2">
               <button
                 disabled={stateForMethod('PUT') !== 'idle'}
                 formMethod="PUT"
                 type="submit"
+                className="px-5 py-2 rounded-full bg-neutral-900 hover:bg-black text-white font-display text-xs font-semibold tracking-wider uppercase cursor-pointer transition-all shadow-xs active:scale-95 disabled:opacity-50"
               >
-                {stateForMethod('PUT') !== 'idle' ? 'Saving' : 'Save'}
+                {stateForMethod('PUT') !== 'idle' ? 'Saving...' : 'Save'}
               </button>
               <button
                 disabled={stateForMethod('DELETE') !== 'idle'}
                 formMethod="DELETE"
                 type="submit"
+                className="px-4 py-2 rounded-full border border-neutral-300 text-neutral-700 hover:border-rose-500 hover:text-rose-600 font-display text-xs tracking-wider uppercase cursor-pointer transition-all disabled:opacity-50"
               >
-                {stateForMethod('DELETE') !== 'idle' ? 'Deleting' : 'Delete'}
+                {stateForMethod('DELETE') !== 'idle' ? 'Deleting...' : 'Delete'}
               </button>
             </div>
           )}

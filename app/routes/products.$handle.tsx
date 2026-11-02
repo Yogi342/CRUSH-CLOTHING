@@ -358,7 +358,7 @@ export default function ProductPage() {
               {/* Top Left: Atelier Eyebrow Pill */}
               <div className="absolute top-4 left-4 bg-white/90 backdrop-blur-md px-3.5 py-1.5 rounded-full border border-neutral-200/60 shadow-xs pointer-events-none">
                 <span className="font-display text-[9px] sm:text-[10px] font-semibold tracking-[0.22em] uppercase text-neutral-900">
-                  {product.productType || 'CRUSH ATELIER // US'}
+                  {product.productType || 'CRUSH ATELIER · US'}
                 </span>
               </div>
 
@@ -539,7 +539,7 @@ export default function ProductPage() {
             <div className="border-b border-neutral-100 pb-6 space-y-3">
               <div className="flex items-center justify-between">
                 <span className="font-display text-[10px] font-semibold tracking-[0.25em] uppercase text-neutral-400">
-                  CRUSH ATELIER // US
+                  CRUSH ATELIER · US
                 </span>
                 <span
                   className={`font-display text-[10px] tracking-widest uppercase px-3 py-1 rounded-full border ${

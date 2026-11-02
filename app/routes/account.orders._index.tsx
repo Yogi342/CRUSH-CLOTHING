@@ -189,9 +189,13 @@ function OrderSearchForm({
           />
         </div>
 
-        <div className="order-search-buttons">
-          <button type="submit" disabled={isSearching}>
-            {isSearching ? 'Searching' : 'Search'}
+        <div className="order-search-buttons flex items-center gap-2 pt-2">
+          <button
+            type="submit"
+            disabled={isSearching}
+            className="px-5 py-2 rounded-full bg-neutral-900 hover:bg-black text-white font-display text-xs font-semibold tracking-wider uppercase cursor-pointer transition-all shadow-xs active:scale-95 disabled:opacity-50"
+          >
+            {isSearching ? 'Searching...' : 'Search'}
           </button>
           {hasFilters && (
             <button
@@ -201,6 +205,7 @@ function OrderSearchForm({
                 setSearchParams(new URLSearchParams());
                 formRef.current?.reset();
               }}
+              className="px-4 py-2 rounded-full border border-neutral-300 text-neutral-700 hover:border-black hover:text-black font-display text-xs tracking-wider uppercase cursor-pointer transition-all"
             >
               Clear
             </button>

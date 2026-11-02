@@ -131,7 +131,7 @@ export default function CollectionAll() {
           <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
             <div className="space-y-2">
               <span className="font-display text-[10px] font-semibold tracking-[0.3em] uppercase text-[var(--color-ink)]/50 block">
-                Atelier Catalog // SS 2026
+                Atelier Catalog · SS 2026
               </span>
               <h1 className="font-display font-bold text-4xl sm:text-6xl tracking-[0.06em] uppercase text-[var(--color-ink)] m-0 leading-tight">
                 All Collections
@@ -165,7 +165,7 @@ export default function CollectionAll() {
                   key={cat.id}
                   type="button"
                   onClick={() => updateParam('category', cat.id)}
-                  className={`px-3.5 py-1.5 font-display text-xs tracking-wider uppercase border transition-all cursor-pointer ${
+                  className={`px-4 py-1.5 rounded-full font-display text-xs tracking-wider uppercase border transition-all cursor-pointer ${
                     categoryFilter === cat.id
                       ? 'bg-[var(--color-ink)] text-[var(--color-ivory)] border-[var(--color-ink)] font-semibold shadow-xs'
                       : 'bg-transparent text-[var(--color-ink)] border-[var(--color-stone)] hover:border-[var(--color-ink)] hover:bg-white/40'
@@ -214,7 +214,7 @@ export default function CollectionAll() {
                   key={tier.id}
                   type="button"
                   onClick={() => updateParam('price', tier.id)}
-                  className={`px-2.5 py-1 font-display text-[11px] tracking-wider uppercase border transition-all cursor-pointer ${
+                  className={`px-3 py-1 rounded-full font-display text-[11px] tracking-wider uppercase border transition-all cursor-pointer ${
                     priceFilter === tier.id
                       ? 'bg-[var(--color-ink)] text-[var(--color-ivory)] border-[var(--color-ink)] font-semibold'
                       : 'bg-white/30 text-[var(--color-ink)]/80 border-[var(--color-stone)] hover:border-[var(--color-ink)]'
@@ -261,7 +261,7 @@ export default function CollectionAll() {
           ) : (
             <div className="py-24 text-center max-w-lg mx-auto bg-white/50 border border-[var(--color-stone)] p-8 sm:p-12">
               <span className="font-display text-[10px] font-semibold tracking-[0.3em] uppercase text-[var(--color-ink)]/50 block mb-2">
-                Live Storefront // Shopify Catalog
+                Live Storefront · Shopify Catalog
               </span>
               <h2 className="font-display font-bold text-2xl sm:text-3xl tracking-[0.08em] uppercase text-[var(--color-ink)] mb-3">
                 No Products Added Yet

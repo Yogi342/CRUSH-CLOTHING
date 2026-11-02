@@ -22,7 +22,7 @@ const LOOKS: LookItem[] = [
     emotion: 'A dramatic silhouette sculpted for quiet authority and sharp presence.',
     garmentImg: '/images/hanger-garment-1.jpg',
     modelImg: '/images/model-full-1.jpg',
-    tag: 'Drop 01 // Tailored Outerwear',
+    tag: 'Drop 01 · Tailored Outerwear',
     handle: 'alabaster-sculpted-trench',
   },
   {
@@ -33,7 +33,7 @@ const LOOKS: LookItem[] = [
     emotion: 'Liquid silk cut on the bias that catches every movement and whisper.',
     garmentImg: '/images/hanger-garment-2.jpg',
     modelImg: '/images/model-full-2.jpg',
-    tag: 'Drop 01 // Evening Silk',
+    tag: 'Drop 01 · Evening Silk',
     handle: 'champagne-bias-silk-slip',
   },
   {
@@ -44,7 +44,7 @@ const LOOKS: LookItem[] = [
     emotion: 'Architectural tailoring engineered to command the room without saying a word.',
     garmentImg: '/images/hanger-garment-3.jpg',
     modelImg: '/images/model-full-3.jpg',
-    tag: 'Drop 01 // Suiting',
+    tag: 'Drop 01 · Suiting',
     handle: 'monolith-structured-blazer',
   },
   {
@@ -55,7 +55,7 @@ const LOOKS: LookItem[] = [
     emotion: 'Fluid column silhouette draped with pure mathematical grace and ease.',
     garmentImg: '/images/hanger-garment-4.jpg',
     modelImg: '/images/model-full-4.jpg',
-    tag: 'Drop 01 // Draped Knit',
+    tag: 'Drop 01 · Draped Knit',
     handle: 'heather-draped-column-dress',
   },
   {
@@ -66,7 +66,7 @@ const LOOKS: LookItem[] = [
     emotion: 'Weightless double-faced cocoon luxury engineered for all-day presence.',
     garmentImg: '/images/hanger-garment-5.jpg',
     modelImg: '/images/model-full-5.jpg',
-    tag: 'Drop 01 // Outerwear',
+    tag: 'Drop 01 · Outerwear',
     handle: 'obsidian-cashmere-cocoon',
   },
 ];
@@ -129,7 +129,7 @@ export function LivingRack() {
           <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-4">
             <div>
               <p className="font-display text-[11px] font-semibold tracking-[0.25em] text-[var(--color-ink)]/60 uppercase m-0 mb-1">
-                Kinetic Atelier Runway // SS 2026
+                Kinetic Atelier Runway · SS 2026
               </p>
               <h2 className="font-display font-bold text-2xl sm:text-4xl tracking-[0.08em] uppercase text-[var(--color-ink)] m-0">
                 The Living Rack
@@ -140,7 +140,7 @@ export function LivingRack() {
               <button
                 type="button"
                 onClick={() => setIsPlaying(!isPlaying)}
-                className="inline-flex items-center gap-2 px-3 py-1.5 border border-[var(--color-stone-dark)] bg-white/50 text-[var(--color-ink)] font-display text-[11px] tracking-widest uppercase hover:bg-[var(--color-ink)] hover:text-[var(--color-ivory)] hover:border-[var(--color-ink)] transition-all duration-200 cursor-pointer"
+                className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-[var(--color-stone-dark)] bg-white/70 text-[var(--color-ink)] font-display text-[11px] tracking-widest uppercase hover:bg-[var(--color-ink)] hover:text-[var(--color-ivory)] hover:border-[var(--color-ink)] transition-all duration-200 cursor-pointer shadow-xs active:scale-95"
                 aria-label={isPlaying ? 'Pause Runway' : 'Auto Play Runway'}
               >
                 <span
@@ -261,7 +261,7 @@ export function LivingRack() {
                             LOOK {look.number}
                           </span>
                           <span className="font-display text-[10px] tracking-wider uppercase text-[var(--color-ink)]/50">
-                            {look.tag.split('//')[1]?.trim() || 'Atelier'}
+                            {look.tag.split('·')[1]?.trim() || 'Atelier'}
                           </span>
                         </div>
                         <h3 className="font-display text-sm font-bold tracking-wider uppercase text-[var(--color-ink)] m-0">
@@ -339,9 +339,9 @@ export function LivingRack() {
               })}
 
               {/* Floating Top Editorial Badge */}
-              <div className="absolute top-4 left-4 z-20 bg-[var(--color-ivory)]/95 backdrop-blur-xs px-3.5 py-1.5 border border-[var(--color-stone)] shadow-sm">
+              <div className="absolute top-4 left-4 z-20 bg-[var(--color-ivory)]/95 backdrop-blur-xs px-4 py-1.5 rounded-full border border-[var(--color-stone)] shadow-xs">
                 <span className="font-display text-[10px] font-semibold tracking-[0.2em] uppercase text-[var(--color-ink)]">
-                  Live Try-On // {activeLook.title}
+                  Live Try-On · {activeLook.title}
                 </span>
               </div>
 
@@ -349,7 +349,7 @@ export function LivingRack() {
               <div className="absolute bottom-4 left-4 right-4 z-20 flex items-end justify-between text-[var(--color-ivory)]">
                 <div>
                   <span className="font-display text-[10px] tracking-[0.25em] uppercase text-[var(--color-stone)] block mb-1">
-                    Spring / Summer 2026 // Look {activeLook.number}
+                    Spring / Summer 2026 · Look {activeLook.number}
                   </span>
                   <h4 className="font-display text-lg font-bold tracking-wider uppercase m-0 text-white">
                     {activeLook.title}
@@ -364,7 +364,7 @@ export function LivingRack() {
                       selectLook((activeIndex - 1 + LOOKS.length) % LOOKS.length)
                     }
                     aria-label="Previous look"
-                    className="w-10 h-10 bg-[var(--color-ivory)] text-[var(--color-ink)] border border-[var(--color-stone)] flex items-center justify-center font-display text-base hover:bg-[var(--color-ink)] hover:text-[var(--color-ivory)] transition-colors duration-200 active:scale-95 cursor-pointer shadow-md"
+                    className="w-10 h-10 rounded-full bg-[var(--color-ivory)] text-[var(--color-ink)] border border-[var(--color-stone)] flex items-center justify-center font-display text-base hover:bg-[var(--color-ink)] hover:text-[var(--color-ivory)] transition-colors duration-200 active:scale-95 cursor-pointer shadow-md"
                   >
                     ←
                   </button>
@@ -372,7 +372,7 @@ export function LivingRack() {
                     type="button"
                     onClick={() => selectLook((activeIndex + 1) % LOOKS.length)}
                     aria-label="Next look"
-                    className="w-10 h-10 bg-[var(--color-ivory)] text-[var(--color-ink)] border border-[var(--color-stone)] flex items-center justify-center font-display text-base hover:bg-[var(--color-ink)] hover:text-[var(--color-ivory)] transition-colors duration-200 active:scale-95 cursor-pointer shadow-md"
+                    className="w-10 h-10 rounded-full bg-[var(--color-ivory)] text-[var(--color-ink)] border border-[var(--color-stone)] flex items-center justify-center font-display text-base hover:bg-[var(--color-ink)] hover:text-[var(--color-ivory)] transition-colors duration-200 active:scale-95 cursor-pointer shadow-md"
                   >
                     →
                   </button>

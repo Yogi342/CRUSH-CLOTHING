@@ -465,7 +465,7 @@ export function SizeAdvisorModal({
                   <button
                     type="button"
                     onClick={() => setStep(2)}
-                    className="w-full py-4 rounded-2xl bg-neutral-900 hover:bg-black text-white font-display text-xs font-bold tracking-widest uppercase shadow-md transition-all cursor-pointer active:scale-[0.99]"
+                    className="w-full py-4 rounded-full bg-neutral-900 hover:bg-black text-white font-display text-xs font-bold tracking-widest uppercase shadow-md transition-all cursor-pointer active:scale-[0.99]"
                   >
                     Continue →
                   </button>
@@ -561,7 +561,7 @@ export function SizeAdvisorModal({
                   <button
                     type="button"
                     onClick={() => setStep(3)}
-                    className="w-full py-4 rounded-2xl bg-neutral-900 hover:bg-black text-white font-display text-xs font-bold tracking-widest uppercase shadow-md transition-all cursor-pointer active:scale-[0.99]"
+                    className="w-full py-4 rounded-full bg-neutral-900 hover:bg-black text-white font-display text-xs font-bold tracking-widest uppercase shadow-md transition-all cursor-pointer active:scale-[0.99]"
                   >
                     Continue →
                   </button>
@@ -630,7 +630,7 @@ export function SizeAdvisorModal({
                   <button
                     type="button"
                     onClick={() => setStep(4)}
-                    className="w-full py-4 rounded-2xl bg-neutral-900 hover:bg-black text-white font-display text-xs font-bold tracking-widest uppercase shadow-md transition-all cursor-pointer active:scale-[0.99]"
+                    className="w-full py-4 rounded-full bg-neutral-900 hover:bg-black text-white font-display text-xs font-bold tracking-widest uppercase shadow-md transition-all cursor-pointer active:scale-[0.99]"
                   >
                     Show my size →
                   </button>
@@ -757,7 +757,7 @@ export function SizeAdvisorModal({
                   <button
                     type="button"
                     onClick={() => handleApplySize(activeRecommendedSize, true)}
-                    className="w-full py-4 rounded-2xl bg-neutral-900 hover:bg-black text-white font-display text-xs font-bold tracking-widest uppercase shadow-md transition-all cursor-pointer active:scale-[0.99]"
+                    className="w-full py-4 rounded-full bg-neutral-900 hover:bg-black text-white font-display text-xs font-bold tracking-widest uppercase shadow-md transition-all cursor-pointer active:scale-[0.99]"
                   >
                     Add size {activeRecommendedSize} to bag
                   </button>
@@ -841,7 +841,7 @@ export function SizeAdvisorModal({
             <button
               type="button"
               onClick={() => setActiveTab('advisor')}
-              className="w-full py-3.5 rounded-2xl bg-neutral-900 hover:bg-black text-white font-display text-xs font-bold tracking-widest uppercase shadow-md transition-all cursor-pointer"
+              className="w-full py-3.5 rounded-full bg-neutral-900 hover:bg-black text-white font-display text-xs font-bold tracking-widest uppercase shadow-md transition-all cursor-pointer"
             >
               ← Back To Smart Fit Advisor
             </button>

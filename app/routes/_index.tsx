@@ -232,7 +232,7 @@ export default function Homepage() {
           <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-12">
             <div>
               <p className="font-display text-[11px] font-semibold tracking-[0.25em] text-neutral-400 uppercase m-0 mb-1">
-                Drop 01 // Fresh Releases
+                Drop 01 · Fresh Releases
               </p>
               <h2
                 id="new-arrivals-heading"
@@ -309,7 +309,7 @@ export default function Homepage() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-10">
             <span className="font-display text-[10px] font-semibold tracking-[0.35em] uppercase text-neutral-400 block mb-1">
-              Critical Acclaim // Industry Recognition
+              Critical Acclaim · Industry Recognition
             </span>
             <h3 className="font-display font-bold text-xl sm:text-2xl tracking-[0.12em] uppercase text-neutral-900 m-0">
               The Architecture of Prestige
@@ -373,7 +373,7 @@ export default function Homepage() {
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
             <div className="lg:col-span-6 space-y-6">
               <span className="font-display text-[10px] font-semibold tracking-[0.3em] uppercase text-neutral-400 block">
-                Editorial Manifesto // SS 2026
+                Editorial Manifesto · SS 2026
               </span>
               <h2 className="font-serif font-normal text-3xl sm:text-5xl lg:text-6xl tracking-tight text-white leading-tight m-0">
                 The Architecture of Presence

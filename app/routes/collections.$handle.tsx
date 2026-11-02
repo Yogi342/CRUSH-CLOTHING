@@ -123,7 +123,7 @@ export default function CollectionHandle() {
           <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
             <div className="space-y-2">
               <span className="font-display text-[10px] font-semibold tracking-[0.25em] text-[var(--color-ink)]/50 uppercase block">
-                Collection Archive // {handle.toUpperCase()}
+                Collection Archive · {handle.toUpperCase()}
               </span>
               <h1 className="font-display font-bold text-3xl sm:text-5xl lg:text-6xl tracking-[0.06em] uppercase text-[var(--color-ink)] m-0 leading-tight">
                 {collection.title}

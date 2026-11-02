@@ -77,7 +77,7 @@ export function Footer({
           <div className="flex items-center gap-3">
             <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" aria-hidden="true" />
             <p className="font-display text-[10px] sm:text-xs tracking-[0.2em] uppercase text-[var(--color-stone)] m-0">
-              NYC Atelier // {studioTime ? `${studioTime} EST` : 'Live Online'} • Global Concierge
+              NYC Atelier · {studioTime ? `${studioTime} EST` : 'Live Online'} • Global Concierge
             </p>
           </div>
 
@@ -106,7 +106,7 @@ export function Footer({
           <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-6">
             <div>
               <span className="font-display text-[11px] font-semibold tracking-[0.35em] text-[var(--color-stone)] uppercase block mb-2">
-                Haute Contemporaine // United States
+                Haute Contemporaine · United States
               </span>
               <h2 className="font-display font-bold text-5xl sm:text-7xl lg:text-9xl tracking-[0.14em] uppercase text-[var(--color-ivory)] m-0 leading-none select-none">
                 CRUSH
@@ -131,7 +131,7 @@ export function Footer({
             </h3>
             <ul className="list-none p-0 m-0 space-y-3">
               {[
-                {label: 'New Arrivals // SS 2026', url: '/collections/all'},
+                {label: 'New Arrivals · SS 2026', url: '/collections/all'},
                 {label: 'Dresses & Gowns', url: '/collections/dresses'},
                 {label: 'Tops & Shirting', url: '/collections/tops'},
                 {label: 'Tailored Outerwear', url: '/collections/outerwear'},

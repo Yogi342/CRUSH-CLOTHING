@@ -110,7 +110,7 @@ export default function Cart() {
         <div className="border-b border-[var(--color-stone)] pb-6 mb-8 flex flex-col sm:flex-row sm:items-end justify-between gap-4">
           <div>
             <span className="font-display text-[10px] font-semibold tracking-[0.25em] text-[var(--color-ink)]/50 uppercase block mb-1">
-              Atelier Checkout // Drop 01
+              Atelier Checkout · Drop 01
             </span>
             <h1 className="font-display font-bold text-3xl sm:text-5xl tracking-[0.06em] uppercase text-[var(--color-ink)] m-0">
               Shopping Bag

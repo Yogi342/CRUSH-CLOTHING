@@ -56,7 +56,7 @@ export default function AccountLayout() {
       <div className="min-h-[70vh] bg-[var(--color-ivory)] py-16 px-4 sm:px-6 lg:px-8 flex items-center justify-center">
         <div className="max-w-md w-full text-center border border-[var(--color-stone)] bg-white/70 p-8 sm:p-10 shadow-xs">
           <p className="font-display text-[10px] sm:text-xs tracking-[0.25em] uppercase text-[var(--color-stone-light)] mb-3">
-            Atelier Client Portal // SS 2026
+            Atelier Client Portal · SS 2026
           </p>
           <h1 className="font-display font-semibold text-2xl sm:text-3xl tracking-wider uppercase text-[var(--color-ink)] mb-4">
             Sign In to CRUSH
@@ -136,15 +136,15 @@ function AccountMenu() {
       <NavLink to="/account/orders" style={isActiveStyle} className="text-[var(--color-ink)] no-underline hover:opacity-100 transition-opacity">
         Orders
       </NavLink>
-      <span className="text-[var(--color-stone)]">/</span>
+      <span className="text-[var(--color-stone)]">·</span>
       <NavLink to="/account/profile" style={isActiveStyle} className="text-[var(--color-ink)] no-underline hover:opacity-100 transition-opacity">
         Profile
       </NavLink>
-      <span className="text-[var(--color-stone)]">/</span>
+      <span className="text-[var(--color-stone)]">·</span>
       <NavLink to="/account/addresses" style={isActiveStyle} className="text-[var(--color-ink)] no-underline hover:opacity-100 transition-opacity">
         Addresses
       </NavLink>
-      <span className="text-[var(--color-stone)]">/</span>
+      <span className="text-[var(--color-stone)]">·</span>
       <Logout />
     </nav>
   );

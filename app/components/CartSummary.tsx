@@ -105,7 +105,11 @@ function CartDiscounts({
             >
               <code>{codes?.join(', ')}</code>
               &nbsp;
-              <button type="submit" aria-label="Remove discount">
+              <button
+                type="submit"
+                aria-label="Remove discount"
+                className="font-display text-[10px] tracking-wider uppercase text-neutral-400 hover:text-rose-600 cursor-pointer transition-colors bg-transparent border-0 p-0 ml-2"
+              >
                 Remove
               </button>
             </div>
@@ -115,7 +119,7 @@ function CartDiscounts({
 
       {/* Show an input to apply a discount */}
       <UpdateDiscountForm discountCodes={codes}>
-        <div>
+        <div className="flex items-center gap-2 pt-2">
           <label htmlFor={discountCodeInputId} className="sr-only">
             Discount code
           </label>
@@ -124,9 +128,13 @@ function CartDiscounts({
             type="text"
             name="discountCode"
             placeholder="Discount code"
+            className="rounded-full border border-neutral-300 px-3.5 py-1.5 text-xs font-body outline-none focus:border-neutral-900 bg-white grow"
           />
-          &nbsp;
-          <button type="submit" aria-label="Apply discount code">
+          <button
+            type="submit"
+            aria-label="Apply discount code"
+            className="px-4 py-1.5 rounded-full bg-neutral-900 hover:bg-black text-white font-display text-[11px] font-semibold tracking-wider uppercase cursor-pointer transition-all shadow-xs active:scale-95 shrink-0"
+          >
             Apply
           </button>
         </div>
@@ -239,7 +247,7 @@ function CartGiftCard({
       )}
 
       <AddGiftCardForm fetcherKey="gift-card-add">
-        <div>
+        <div className="flex items-center gap-2 pt-2">
           <label htmlFor={giftCardInputId} className="sr-only">
             Gift card code
           </label>
@@ -249,12 +257,13 @@ function CartGiftCard({
             name="giftCardCode"
             placeholder="Gift card code"
             ref={giftCardCodeInput}
+            className="rounded-full border border-neutral-300 px-3.5 py-1.5 text-xs font-body outline-none focus:border-neutral-900 bg-white grow"
           />
-          &nbsp;
           <button
             type="submit"
             disabled={giftCardAddFetcher.state !== 'idle'}
             aria-label="Apply gift card code"
+            className="px-4 py-1.5 rounded-full bg-neutral-900 hover:bg-black text-white font-display text-[11px] font-semibold tracking-wider uppercase cursor-pointer transition-all shadow-xs active:scale-95 shrink-0 disabled:opacity-40"
           >
             Apply
           </button>

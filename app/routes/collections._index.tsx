@@ -56,7 +56,7 @@ export default function CollectionsIndex() {
           <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
             <div className="space-y-3">
               <span className="font-display text-[10px] font-semibold tracking-[0.3em] uppercase text-[var(--color-ink)]/50 block">
-                Atelier Directory // SS 2026
+                Atelier Directory · SS 2026
               </span>
               <h1 className="font-display font-bold text-4xl sm:text-6xl lg:text-7xl tracking-[0.06em] uppercase text-[var(--color-ink)] m-0 leading-tight">
                 Collections

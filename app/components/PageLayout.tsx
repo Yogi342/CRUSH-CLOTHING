@@ -90,7 +90,7 @@ function SearchAside() {
               <button
                 type="button"
                 onClick={goToSearch}
-                className="font-display text-xs font-semibold tracking-wider uppercase text-[var(--color-ink)] hover:text-[var(--color-stone-dark)] px-2 cursor-pointer"
+                className="px-4 py-1.5 rounded-full bg-neutral-900 hover:bg-black text-white font-display text-[11px] font-semibold tracking-wider uppercase cursor-pointer shadow-xs active:scale-95 transition-all shrink-0"
               >
                 Find
               </button>

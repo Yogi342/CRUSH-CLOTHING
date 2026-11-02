@@ -106,7 +106,7 @@ export default function Page() {
 
         <header className="mb-12 pb-6 border-b border-[var(--color-stone)]">
           <span className="font-display text-[10px] font-semibold tracking-[0.3em] uppercase text-[var(--color-ink)]/50 block mb-2">
-            CRUSH CLOTHING // Editorial Archive
+            CRUSH CLOTHING · Editorial Archive
           </span>
           <h1 className="font-display font-bold text-4xl sm:text-6xl tracking-[0.06em] uppercase text-[var(--color-ink)] m-0 leading-tight">
             {page.title}
