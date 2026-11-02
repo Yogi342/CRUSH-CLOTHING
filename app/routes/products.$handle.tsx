@@ -170,7 +170,7 @@ export default function ProductPage() {
   const [activeImageIndex, setActiveImageIndex] = useState(0);
   const [quantity, setQuantity] = useState(1);
   const [sizeGuideOpen, setSizeGuideOpen] = useState(false);
-  const [openAccordion, setOpenAccordion] = useState<string>('silhouette');
+  const [activeSpecsTab, setActiveSpecsTab] = useState<'details' | 'fabric' | 'measurements'>('details');
   const [addedToast, setAddedToast] = useState(false);
   const [isStickyVisible, setIsStickyVisible] = useState(false);
   const [isZoomModalOpen, setIsZoomModalOpen] = useState(false);
@@ -240,10 +240,6 @@ export default function ProductPage() {
     setActiveImageIndex((prev) => (prev - 1 + images.length) % images.length);
   };
 
-  const toggleAccordion = (id: string) => {
-    setOpenAccordion((prev) => (prev === id ? '' : id));
-  };
-
   const price = activeVariant?.price ||
     product?.priceRange?.minVariantPrice || {
       amount: '31.99',
@@ -274,7 +270,7 @@ export default function ProductPage() {
   );
 
   return (
-    <div className="crush-pdp bg-[var(--color-ivory)] text-[var(--color-ink)] min-h-screen py-6 sm:py-12">
+    <div className="crush-pdp bg-[var(--color-ivory)] text-[var(--color-ink)] min-h-screen py-6 sm:py-10">
       {/* Structured Data for SEO */}
       <script
         type="application/ld+json"
@@ -301,7 +297,7 @@ export default function ProductPage() {
         {/* Editorial Breadcrumb Navigation */}
         <nav
           aria-label="Breadcrumb"
-          className="mb-6 sm:mb-8 font-display text-[11px] tracking-[0.25em] uppercase text-[var(--color-ink)]/50 flex flex-wrap items-center gap-2 border-b border-[var(--color-stone)]/50 pb-4"
+          className="mb-6 font-display text-[11px] tracking-[0.25em] uppercase text-[var(--color-ink)]/50 flex flex-wrap items-center gap-2 border-b border-[var(--color-stone)]/50 pb-3"
         >
           <Link to="/" className="hover:text-[var(--color-ink)] no-underline transition-colors">
             Atelier Home
@@ -323,14 +319,17 @@ export default function ProductPage() {
           </span>
         </nav>
 
-        {/* 2-Column Luxury Atelier PDP Layout */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-14 xl:gap-16">
+        {/* ========================================================
+            TOP SECTION: BALANCED 2-COLUMN HERO & PURCHASING CONSOLE
+            Height is balanced between left and right columns!
+           ======================================================== */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 xl:gap-14 items-start">
           
           {/* ========================================================
-              LEFT COLUMN: EDITORIAL IMAGE SHOWCASE
+              LEFT COLUMN: CURATED EDITORIAL GALLERY & DETAIL GRID
              ======================================================== */}
           <div className="lg:col-span-7 space-y-4">
-            {/* Main Stage Viewport with Discreet Floating Arrows */}
+            {/* Main Stage Viewport with Next/Prev Arrows */}
             <div className="relative aspect-[3/4] w-full overflow-hidden bg-[var(--color-stone-light)] border border-[var(--color-stone)] shadow-xs group">
               {images[activeImageIndex] ? (
                 <img
@@ -402,12 +401,18 @@ export default function ProductPage() {
               </button>
             </div>
 
-            {/* Editorial Thumbnail Gallery Strip */}
+            {/* Editorial Thumbnail Strip */}
             {images.length > 1 && (
-              <div className="space-y-2">
+              <div className="space-y-1.5">
                 <div className="flex items-center justify-between text-[10px] font-display uppercase tracking-widest text-[var(--color-ink)]/60 px-1">
-                  <span>Atelier Perspectives ({images.length} Angles)</span>
-                  <span className="hidden sm:inline">Click angle or swipe</span>
+                  <span>Atelier Perspectives ({images.length} High-Res Angles)</span>
+                  <button
+                    type="button"
+                    onClick={() => setIsZoomModalOpen(true)}
+                    className="underline underline-offset-2 text-[var(--color-ink)] hover:text-black cursor-pointer font-bold"
+                  >
+                    View All In Fullscreen ↗
+                  </button>
                 </div>
                 <div
                   className="flex gap-2.5 overflow-x-auto pb-2 scrollbar-thin scrollbar-thumb-[var(--color-stone)]"
@@ -434,9 +439,6 @@ export default function ProductPage() {
                           className="w-full h-full object-cover object-top"
                           loading="lazy"
                         />
-                        {isActive && (
-                          <div className="absolute inset-0 border border-white/40 pointer-events-none" />
-                        )}
                       </button>
                     );
                   })}
@@ -444,17 +446,62 @@ export default function ProductPage() {
               </div>
             )}
 
+            {/* Curated 2-Up Detail Shots Duo (Eliminates empty space on desktop left column!) */}
+            {images.length >= 3 && (
+              <div className="grid grid-cols-2 gap-3 pt-2">
+                <div
+                  className="group relative aspect-[3/4] overflow-hidden border border-[var(--color-stone)] bg-white cursor-pointer"
+                  onClick={() => {
+                    setActiveImageIndex(1);
+                    setIsZoomModalOpen(true);
+                  }}
+                >
+                  <img
+                    src={images[1].url}
+                    alt="Atelier Silhouette Close-Up"
+                    className="w-full h-full object-cover object-top transition-transform duration-500 group-hover:scale-105"
+                    loading="lazy"
+                  />
+                  <div className="absolute bottom-2 left-2 right-2 bg-[var(--color-ivory)]/90 backdrop-blur-xs py-1 px-2 border border-[var(--color-stone)] text-center">
+                    <span className="font-display text-[9px] uppercase tracking-wider text-[var(--color-ink)] font-bold">
+                      Bodice & Ties Detail
+                    </span>
+                  </div>
+                </div>
+
+                <div
+                  className="group relative aspect-[3/4] overflow-hidden border border-[var(--color-stone)] bg-white cursor-pointer"
+                  onClick={() => {
+                    setActiveImageIndex(2);
+                    setIsZoomModalOpen(true);
+                  }}
+                >
+                  <img
+                    src={images[2].url}
+                    alt="Atelier Silhouette Movement"
+                    className="w-full h-full object-cover object-top transition-transform duration-500 group-hover:scale-105"
+                    loading="lazy"
+                  />
+                  <div className="absolute bottom-2 left-2 right-2 bg-[var(--color-ivory)]/90 backdrop-blur-xs py-1 px-2 border border-[var(--color-stone)] text-center">
+                    <span className="font-display text-[9px] uppercase tracking-wider text-[var(--color-ink)] font-bold">
+                      A-Line Silhouette Drape
+                    </span>
+                  </div>
+                </div>
+              </div>
+            )}
+
             {/* Atelier Key Highlights Strip */}
-            <div className="grid grid-cols-3 gap-2 sm:gap-3 pt-2">
-              <div className="p-3 bg-white/70 border border-[var(--color-stone)] text-center">
+            <div className="grid grid-cols-3 gap-2 sm:gap-3 pt-1">
+              <div className="p-3 bg-white border border-[var(--color-stone)] text-center shadow-xs">
                 <span className="font-display text-[9px] sm:text-[10px] font-bold tracking-[0.16em] uppercase text-[var(--color-ink)] block">
-                  100% Woven Cotton
+                  100% Cotton
                 </span>
                 <span className="font-body text-[10px] text-[var(--color-ink)]/60 mt-0.5 block">
-                  Breathable weave
+                  Crisp breathable weave
                 </span>
               </div>
-              <div className="p-3 bg-white/70 border border-[var(--color-stone)] text-center">
+              <div className="p-3 bg-white border border-[var(--color-stone)] text-center shadow-xs">
                 <span className="font-display text-[9px] sm:text-[10px] font-bold tracking-[0.16em] uppercase text-[var(--color-ink)] block">
                   Adjustable Ties
                 </span>
@@ -462,48 +509,45 @@ export default function ProductPage() {
                   Custom shoulder drop
                 </span>
               </div>
-              <div className="p-3 bg-white/70 border border-[var(--color-stone)] text-center">
+              <div className="p-3 bg-white border border-[var(--color-stone)] text-center shadow-xs">
                 <span className="font-display text-[9px] sm:text-[10px] font-bold tracking-[0.16em] uppercase text-[var(--color-ink)] block">
-                  A-Line Swing
+                  A-Line Cut
                 </span>
                 <span className="font-body text-[10px] text-[var(--color-ink)]/60 mt-0.5 block">
-                  Effortless drape
+                  Fluid mini length
                 </span>
               </div>
             </div>
           </div>
 
           {/* ========================================================
-              RIGHT COLUMN: PURCHASING & ATELIER CONSOLE
+              RIGHT COLUMN: PURCHASING CONSOLE (Sleek, focused & perfectly balanced!)
              ======================================================== */}
-          <div className="lg:col-span-5 lg:sticky lg:top-24 h-fit space-y-6">
+          <div className="lg:col-span-5 lg:sticky lg:top-24 h-fit space-y-5">
             
-            {/* Product Header & Title Area */}
-            <div className="border-b border-[var(--color-stone)] pb-6 space-y-3">
-              {/* Eyebrow & Status */}
+            {/* Header: Eyebrow, Title, Reviews, Price */}
+            <div className="border-b border-[var(--color-stone)] pb-5 space-y-3">
               <div className="flex items-center justify-between">
                 <span className="font-display text-[10px] font-semibold tracking-[0.25em] uppercase text-[var(--color-ink)]/60">
                   {product.vendor || 'CRUSH ATELIER // US'}
                 </span>
-                <div className="flex items-center gap-2">
-                  <span
-                    className={`font-display text-[10px] tracking-widest uppercase px-2.5 py-0.5 border ${
-                      isAvailable
-                        ? 'text-emerald-800 bg-emerald-50 border-emerald-200'
-                        : 'text-stone-600 bg-stone-100 border-stone-300'
-                    }`}
-                  >
-                    {isAvailable ? '● In Stock' : '✕ Out of Stock'}
-                  </span>
-                </div>
+                <span
+                  className={`font-display text-[10px] tracking-widest uppercase px-2.5 py-0.5 border ${
+                    isAvailable
+                      ? 'text-emerald-800 bg-emerald-50 border-emerald-200 font-bold'
+                      : 'text-stone-600 bg-stone-100 border-stone-300'
+                  }`}
+                >
+                  {isAvailable ? '● In Stock' : '✕ Out of Stock'}
+                </span>
               </div>
 
               {/* Title: Classic High-Fashion Serif */}
-              <h1 className="font-serif font-normal text-3xl sm:text-4xl lg:text-[42px] tracking-tight text-[var(--color-ink)] m-0 leading-[1.12]">
+              <h1 className="font-serif font-normal text-3xl sm:text-4xl lg:text-[40px] tracking-tight text-[var(--color-ink)] m-0 leading-[1.12]">
                 {product.title}
               </h1>
 
-              {/* Rating & Social Proof Whisper */}
+              {/* Rating & Social Proof */}
               <div className="flex items-center gap-2 pt-0.5">
                 <div className="flex text-amber-800 text-xs tracking-tight">
                   ★★★★★
@@ -514,7 +558,7 @@ export default function ProductPage() {
               </div>
 
               {/* Price & Installments Row */}
-              <div className="pt-2">
+              <div className="pt-1">
                 <div className="flex items-baseline gap-3">
                   <span className="font-body text-2xl sm:text-3xl font-bold text-[var(--color-ink)]">
                     <Money data={price} />
@@ -529,23 +573,20 @@ export default function ProductPage() {
                   </span>
                 </div>
 
-                {/* Klarna / Afterpay flexible installment note */}
-                <p className="font-body text-xs text-[var(--color-ink)]/65 mt-2 m-0 flex items-center gap-1.5">
+                <p className="font-body text-xs text-[var(--color-ink)]/65 mt-1.5 m-0 flex items-center gap-1.5">
                   <span>or 4 interest-free installments of $7.99 with</span>
-                  <span className="font-display font-bold uppercase tracking-wider text-[var(--color-ink)] underline underline-offset-2 cursor-pointer">
+                  <span className="font-display font-bold uppercase tracking-wider text-[var(--color-ink)] underline underline-offset-2">
                     Klarna
                   </span>
                   <span>or</span>
-                  <span className="font-display font-bold uppercase tracking-wider text-[var(--color-ink)] underline underline-offset-2 cursor-pointer">
+                  <span className="font-display font-bold uppercase tracking-wider text-[var(--color-ink)] underline underline-offset-2">
                     Afterpay
                   </span>
                 </p>
               </div>
             </div>
 
-            {/* ========================================================
-                DYNAMIC OPTION SELECTORS
-               ======================================================== */}
+            {/* Dynamic Options Selectors */}
             {meaningfulOptions.map((opt: any) => {
               const optName = opt.name;
               const currentValue = selectedOptions[optName];
@@ -553,8 +594,7 @@ export default function ProductPage() {
               // COLOR SELECTOR: Visual Photo Swatch Cards
               if (isColorOption(optName)) {
                 return (
-                  <div key={opt.id || optName} className="space-y-3 pt-1">
-                    {/* Header: Selected Color · [Color Name] */}
+                  <div key={opt.id || optName} className="space-y-2.5">
                     <div className="flex items-center justify-between">
                       <div className="flex items-center gap-2">
                         <span className="font-display text-xs tracking-wider uppercase text-[var(--color-ink)]/70">
@@ -566,11 +606,10 @@ export default function ProductPage() {
                         </span>
                       </div>
                       <span className="font-display text-[10px] tracking-widest uppercase text-[var(--color-ink)]/50">
-                        {opt.values.length} Shade{opt.values.length > 1 ? 's' : ''}
+                        {opt.values.length} Shades
                       </span>
                     </div>
 
-                    {/* Horizontal Photo Swatches */}
                     <div
                       className="flex items-center gap-3 overflow-x-auto pb-1"
                       role="radiogroup"
@@ -616,7 +655,6 @@ export default function ProductPage() {
                               </div>
                             )}
 
-                            {/* Active Check Indicator */}
                             {isSelected && (
                               <span className="absolute top-1 right-1 w-2 h-2 rounded-full bg-[var(--color-ink)] border border-white" />
                             )}
@@ -631,7 +669,7 @@ export default function ProductPage() {
               // SIZE SELECTOR: Tiles with Find Your Fit Size Advisor
               if (isSizeOption(optName)) {
                 return (
-                  <div key={opt.id || optName} className="space-y-3 pt-1">
+                  <div key={opt.id || optName} className="space-y-2.5">
                     <div className="flex items-center justify-between">
                       <span className="font-display text-xs font-semibold tracking-[0.14em] uppercase text-[var(--color-ink)]">
                         Select {optName}:{' '}
@@ -640,7 +678,6 @@ export default function ProductPage() {
                         </span>
                       </span>
 
-                      {/* Smart Size Advisor Link */}
                       <button
                         type="button"
                         onClick={() => setSizeGuideOpen(true)}
@@ -658,8 +695,6 @@ export default function ProductPage() {
                     >
                       {opt.values.map((sizeVal: string) => {
                         const isSelected = currentValue === sizeVal;
-
-                        // Check availability for this size with current color
                         const comboVariant = variants.find((v: any) =>
                           v.selectedOptions?.every((so: any) => {
                             if (so.name === optName) return so.value === sizeVal;
@@ -694,12 +729,14 @@ export default function ProductPage() {
                       })}
                     </div>
 
-                    {/* Sizing Note */}
                     <div className="flex items-center justify-between text-[11px] font-body text-[var(--color-ink)]/70 px-0.5">
                       <span>✦ True to atelier sizing (Fits US 4 - 10)</span>
-                      <span className="font-display uppercase text-[10px] text-emerald-800 font-semibold">
-                        Free Size Exchange
-                      </span>
+                      <a
+                        href="#atelier-specifications"
+                        className="font-display uppercase text-[10px] text-[var(--color-ink)] underline underline-offset-2 hover:text-black"
+                      >
+                        Measurements ↓
+                      </a>
                     </div>
                   </div>
                 );
@@ -707,7 +744,7 @@ export default function ProductPage() {
 
               // Generic Option Selector
               return (
-                <div key={opt.id || optName} className="space-y-2 pt-1">
+                <div key={opt.id || optName} className="space-y-2">
                   <span className="font-display text-xs font-semibold tracking-[0.14em] uppercase text-[var(--color-ink)] block">
                     {optName}: <span className="font-bold">{currentValue}</span>
                   </span>
@@ -735,9 +772,8 @@ export default function ProductPage() {
             })}
 
             {/* Quantity Stepper & Add to Bag Block */}
-            <div className="space-y-3 pt-2">
+            <div className="space-y-3 pt-1">
               <div className="flex items-center gap-3">
-                {/* Quantity Stepper */}
                 <div className="flex items-center border border-[var(--color-stone)] bg-white h-13">
                   <button
                     type="button"
@@ -766,7 +802,6 @@ export default function ProductPage() {
                   </button>
                 </div>
 
-                {/* Primary Add To Bag CTA Button */}
                 <div ref={mainCtaRef} className="flex-1">
                   {activeVariant?.id ? (
                     <AddToCartButton
@@ -804,7 +839,6 @@ export default function ProductPage() {
                 </div>
               </div>
 
-              {/* Added Toast Notification */}
               {addedToast && (
                 <div className="p-3 bg-emerald-50 border border-emerald-300 text-emerald-900 font-display text-xs tracking-wider uppercase text-center animate-pulse shadow-sm">
                   ✓ Added {quantity} item{quantity > 1 ? 's' : ''} to your Atelier Bag
@@ -813,181 +847,36 @@ export default function ProductPage() {
             </div>
 
             {/* Classic Luxury Trust Trio */}
-            <div className="py-4 px-4 bg-white/70 border border-[var(--color-stone)] space-y-2 font-display text-[11px] tracking-wider uppercase text-[var(--color-ink)]/80">
-              <div className="flex items-center gap-2.5">
+            <div className="py-3.5 px-4 bg-white/70 border border-[var(--color-stone)] space-y-1.5 font-display text-[10px] sm:text-[11px] tracking-wider uppercase text-[var(--color-ink)]/80">
+              <div className="flex items-center gap-2">
                 <span className="text-amber-800 text-xs">✦</span>
                 <span>Complimentary US Ground Delivery On Orders Over $150</span>
               </div>
-              <div className="flex items-center gap-2.5">
+              <div className="flex items-center gap-2">
                 <span className="text-amber-800 text-xs">✦</span>
                 <span>30-Day Effortless Atelier Returns & Size Exchanges</span>
               </div>
-              <div className="flex items-center gap-2.5">
+              <div className="flex items-center gap-2">
                 <span className="text-amber-800 text-xs">✦</span>
                 <span>Delivered In Signature Archival Breathable Dust Bag</span>
               </div>
             </div>
 
-            {/* ========================================================
-                CLASSIC LUXURY ACCORDIONS (Silhouette, Fabric, Sizing, Delivery)
-               ======================================================== */}
-            <div className="border-t border-[var(--color-stone)] divide-y divide-[var(--color-stone)] pt-2">
-              
-              {/* Accordion 1: The Atelier Silhouette & Design Notes */}
-              <div className="py-3">
-                <button
-                  type="button"
-                  onClick={() => toggleAccordion('silhouette')}
-                  className="w-full flex items-center justify-between py-2 text-left font-display text-xs font-bold uppercase tracking-[0.14em] text-[var(--color-ink)] hover:text-black cursor-pointer"
+            {/* Concise Atelier Overview & Direct Anchor */}
+            <div className="p-4 bg-white border border-[var(--color-stone)] space-y-2">
+              <p className="font-serif italic text-sm text-[var(--color-ink)]/90 leading-snug m-0">
+                &ldquo;Cut from crisp breathable 100% cotton with romantic self-tie shoulder bows and an airy A-line drape.&rdquo;
+              </p>
+              <div className="flex items-center justify-between pt-1 border-t border-[var(--color-stone)]/50 text-xs">
+                <span className="font-display uppercase text-[10px] text-[var(--color-ink)]/60">
+                  Model: 5&apos;9&quot; • Wears Size S
+                </span>
+                <a
+                  href="#atelier-specifications"
+                  className="font-display uppercase text-[10px] font-bold tracking-wider text-[var(--color-ink)] hover:underline underline-offset-4"
                 >
-                  <span>The Atelier Silhouette & Notes</span>
-                  <span className="text-base font-light font-display">
-                    {openAccordion === 'silhouette' ? '−' : '+'}
-                  </span>
-                </button>
-                {openAccordion === 'silhouette' && (
-                  <div className="pt-2 pb-4 font-body text-xs sm:text-sm text-[var(--color-ink)]/85 leading-relaxed space-y-3">
-                    <p className="m-0 font-serif italic text-base sm:text-lg text-[var(--color-ink)]/90 leading-snug">
-                      &ldquo;A celebration of effortless romance — sculpted from natural woven cotton with delicate self-tie shoulder ribbons and an airy A-line drape.&rdquo;
-                    </p>
-                    <div className="space-y-1.5 text-xs">
-                      <p className="m-0">✦ <strong>Neckline:</strong> Contemporary straight square neckline with clean tailored finish.</p>
-                      <p className="m-0">✦ <strong>Straps:</strong> Adjustable self-tie shoulder bows allowing custom bodice elevation and bust support.</p>
-                      <p className="m-0">✦ <strong>Hemline:</strong> Above-knee mini length cut for fluid motion.</p>
-                    </div>
-                    {product.descriptionHtml && (
-                      <div
-                        className="crush-product-content text-xs pt-2"
-                        dangerouslySetInnerHTML={{
-                          __html: product.descriptionHtml,
-                        }}
-                      />
-                    )}
-                  </div>
-                )}
-              </div>
-
-              {/* Accordion 2: Fabrication, Weave & Care */}
-              <div className="py-3">
-                <button
-                  type="button"
-                  onClick={() => toggleAccordion('fabric')}
-                  className="w-full flex items-center justify-between py-2 text-left font-display text-xs font-bold uppercase tracking-[0.14em] text-[var(--color-ink)] hover:text-black cursor-pointer"
-                >
-                  <span>Fabrication, Weave & Care</span>
-                  <span className="text-base font-light font-display">
-                    {openAccordion === 'fabric' ? '−' : '+'}
-                  </span>
-                </button>
-                {openAccordion === 'fabric' && (
-                  <div className="pt-2 pb-4 font-body text-xs sm:text-sm text-[var(--color-ink)]/85 leading-relaxed space-y-3">
-                    <div className="grid grid-cols-2 gap-2 text-xs font-display uppercase tracking-wider">
-                      <div className="p-3 bg-white border border-[var(--color-stone)]">
-                        <span className="text-[var(--color-ink)]/50 block text-[10px] mb-0.5">Fabric Composition</span>
-                        <strong className="text-[var(--color-ink)]">100% Breathable Cotton</strong>
-                      </div>
-                      <div className="p-3 bg-white border border-[var(--color-stone)]">
-                        <span className="text-[var(--color-ink)]/50 block text-[10px] mb-0.5">Stretch & Structure</span>
-                        <strong className="text-[var(--color-ink)]">Non-Stretch Woven</strong>
-                      </div>
-                      <div className="p-3 bg-white border border-[var(--color-stone)]">
-                        <span className="text-[var(--color-ink)]/50 block text-[10px] mb-0.5">Lining</span>
-                        <strong className="text-[var(--color-ink)]">Unlined Lightweight</strong>
-                      </div>
-                      <div className="p-3 bg-white border border-[var(--color-stone)]">
-                        <span className="text-[var(--color-ink)]/50 block text-[10px] mb-0.5">Care Instructions</span>
-                        <strong className="text-[var(--color-ink)]">Cold Gentle Wash</strong>
-                      </div>
-                    </div>
-                    <p className="text-xs text-[var(--color-ink)]/70 m-0">
-                      Machine wash cold on delicate cycle. Hang to dry or tumble dry low. Warm iron if desired to maintain crisp cotton weave.
-                    </p>
-                  </div>
-                )}
-              </div>
-
-              {/* Accordion 3: Tailoring & Model Dimensions */}
-              <div className="py-3">
-                <button
-                  type="button"
-                  onClick={() => toggleAccordion('sizing')}
-                  className="w-full flex items-center justify-between py-2 text-left font-display text-xs font-bold uppercase tracking-[0.14em] text-[var(--color-ink)] hover:text-black cursor-pointer"
-                >
-                  <span>Tailoring & Model Dimensions</span>
-                  <span className="text-base font-light font-display">
-                    {openAccordion === 'sizing' ? '−' : '+'}
-                  </span>
-                </button>
-                {openAccordion === 'sizing' && (
-                  <div className="pt-2 pb-4 font-body text-xs text-[var(--color-ink)]/85 leading-relaxed space-y-3">
-                    <p className="m-0">
-                      <strong>Model Measurements:</strong> Height 5&apos;9&quot; (175 cm), Bust 34&quot;, Waist 25&quot;, Hips 36&quot;. Model wears size <strong>S</strong>.
-                    </p>
-                    <div className="overflow-x-auto">
-                      <table className="w-full text-left font-body text-xs border border-[var(--color-stone)] bg-white">
-                        <thead>
-                          <tr className="bg-[var(--color-ink)] text-[var(--color-ivory)] font-display uppercase tracking-wider text-[10px]">
-                            <th className="py-2 px-3">Size</th>
-                            <th className="py-2 px-3">Length</th>
-                            <th className="py-2 px-3">Bust</th>
-                            <th className="py-2 px-3">Waist</th>
-                          </tr>
-                        </thead>
-                        <tbody className="divide-y divide-[var(--color-stone)]">
-                          <tr>
-                            <td className="py-2 px-3 font-bold font-display">S</td>
-                            <td className="py-2 px-3">31.5&quot; (80 cm)</td>
-                            <td className="py-2 px-3">33.9&quot; (86 cm)</td>
-                            <td className="py-2 px-3">33.5&quot; (85 cm)</td>
-                          </tr>
-                          <tr>
-                            <td className="py-2 px-3 font-bold font-display">M</td>
-                            <td className="py-2 px-3">31.9&quot; (81 cm)</td>
-                            <td className="py-2 px-3">35.4&quot; (90 cm)</td>
-                            <td className="py-2 px-3">35.0&quot; (89 cm)</td>
-                          </tr>
-                          <tr>
-                            <td className="py-2 px-3 font-bold font-display">L</td>
-                            <td className="py-2 px-3">32.3&quot; (82 cm)</td>
-                            <td className="py-2 px-3">37.0&quot; (94 cm)</td>
-                            <td className="py-2 px-3">36.6&quot; (93 cm)</td>
-                          </tr>
-                        </tbody>
-                      </table>
-                    </div>
-                    <button
-                      type="button"
-                      onClick={() => setSizeGuideOpen(true)}
-                      className="font-display text-xs font-bold uppercase tracking-wider text-emerald-800 underline underline-offset-4 cursor-pointer block pt-1"
-                    >
-                      ✦ Open Interactive Size Advisor →
-                    </button>
-                  </div>
-                )}
-              </div>
-
-              {/* Accordion 4: Complimentary Delivery & Returns */}
-              <div className="py-3">
-                <button
-                  type="button"
-                  onClick={() => toggleAccordion('shipping')}
-                  className="w-full flex items-center justify-between py-2 text-left font-display text-xs font-bold uppercase tracking-[0.14em] text-[var(--color-ink)] hover:text-black cursor-pointer"
-                >
-                  <span>Complimentary Delivery & Returns</span>
-                  <span className="text-base font-light font-display">
-                    {openAccordion === 'shipping' ? '−' : '+'}
-                  </span>
-                </button>
-                {openAccordion === 'shipping' && (
-                  <div className="pt-2 pb-4 font-body text-xs sm:text-sm text-[var(--color-ink)]/85 leading-relaxed space-y-2">
-                    <p className="m-0">
-                      <strong>Domestic United States:</strong> Complimentary standard shipping on orders over $150 (3–5 business days). Express 2-day delivery available at checkout.
-                    </p>
-                    <p className="m-0">
-                      <strong>Effortless Returns & Exchanges:</strong> 30-day effortless returns on all unworn items with original tags intact. Prepaid return label included with your order.
-                    </p>
-                  </div>
-                )}
+                  Full Sizing & Specs ↓
+                </a>
               </div>
             </div>
 
@@ -995,9 +884,247 @@ export default function ProductPage() {
         </div>
 
         {/* ========================================================
+            FULL-WIDTH ATELIER SPECIFICATIONS & MEASUREMENTS HUB
+            Spans across the whole page to eliminate any empty space!
+           ======================================================== */}
+        <section
+          id="atelier-specifications"
+          className="mt-16 sm:mt-24 pt-12 border-t border-[var(--color-stone)] scroll-mt-20"
+        >
+          {/* Section Header */}
+          <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-8">
+            <div>
+              <span className="font-display text-[10px] font-bold tracking-[0.28em] uppercase text-[var(--color-ink)]/50 block mb-1">
+                Atelier Blueprint & Tailoring
+              </span>
+              <h2 className="font-serif font-normal text-3xl sm:text-4xl text-[var(--color-ink)] m-0">
+                Specifications & Garment Dimensions
+              </h2>
+            </div>
+
+            {/* Tab switchers */}
+            <div className="flex border border-[var(--color-stone)] bg-white p-0.5 shrink-0">
+              <button
+                type="button"
+                onClick={() => setActiveSpecsTab('details')}
+                className={`px-3 sm:px-4 py-1.5 text-xs font-display uppercase tracking-wider cursor-pointer transition-colors ${
+                  activeSpecsTab === 'details'
+                    ? 'bg-[var(--color-ink)] text-[var(--color-ivory)] font-bold'
+                    : 'text-[var(--color-ink)]/70 hover:text-[var(--color-ink)]'
+                }`}
+              >
+                Silhouette & Cut
+              </button>
+              <button
+                type="button"
+                onClick={() => setActiveSpecsTab('fabric')}
+                className={`px-3 sm:px-4 py-1.5 text-xs font-display uppercase tracking-wider cursor-pointer transition-colors ${
+                  activeSpecsTab === 'fabric'
+                    ? 'bg-[var(--color-ink)] text-[var(--color-ivory)] font-bold'
+                    : 'text-[var(--color-ink)]/70 hover:text-[var(--color-ink)]'
+                }`}
+              >
+                Fabric & Care
+              </button>
+              <button
+                type="button"
+                onClick={() => setActiveSpecsTab('measurements')}
+                className={`px-3 sm:px-4 py-1.5 text-xs font-display uppercase tracking-wider cursor-pointer transition-colors ${
+                  activeSpecsTab === 'measurements'
+                    ? 'bg-[var(--color-ink)] text-[var(--color-ivory)] font-bold'
+                    : 'text-[var(--color-ink)]/70 hover:text-[var(--color-ink)]'
+                }`}
+              >
+                Size Chart
+              </button>
+            </div>
+          </div>
+
+          {/* TAB 1: SILHOUETTE & DESIGN SPECIFICATIONS */}
+          {activeSpecsTab === 'details' && (
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              <div className="p-6 bg-white border border-[var(--color-stone)] space-y-3 shadow-xs">
+                <span className="font-display text-[11px] font-bold tracking-widest uppercase text-amber-900 block">
+                  01 • The Neckline & Bodice
+                </span>
+                <h3 className="font-serif text-2xl text-[var(--color-ink)] m-0">
+                  Straight Square Cut
+                </h3>
+                <p className="font-body text-xs sm:text-sm text-[var(--color-ink)]/80 leading-relaxed m-0">
+                  Tailored with a clean straight horizontal square neckline, framing the collarbones with timeless French refinement and clean seam binding.
+                </p>
+              </div>
+
+              <div className="p-6 bg-white border border-[var(--color-stone)] space-y-3 shadow-xs">
+                <span className="font-display text-[11px] font-bold tracking-widest uppercase text-amber-900 block">
+                  02 • Adjustable Straps
+                </span>
+                <h3 className="font-serif text-2xl text-[var(--color-ink)] m-0">
+                  Self-Tie Shoulder Bows
+                </h3>
+                <p className="font-body text-xs sm:text-sm text-[var(--color-ink)]/80 leading-relaxed m-0">
+                  Delicate frill-edged ties allow full customization over vertical torso drop, bust elevation, and neckline depth for your unique body proportions.
+                </p>
+              </div>
+
+              <div className="p-6 bg-white border border-[var(--color-stone)] space-y-3 shadow-xs">
+                <span className="font-display text-[11px] font-bold tracking-widest uppercase text-amber-900 block">
+                  03 • Silhouette & Hem
+                </span>
+                <h3 className="font-serif text-2xl text-[var(--color-ink)] m-0">
+                  Airy A-Line Swing
+                </h3>
+                <p className="font-body text-xs sm:text-sm text-[var(--color-ink)]/80 leading-relaxed m-0">
+                  Flows gently away from the natural waist into an effortless above-knee mini hemline, providing fluid motion and flattering ease through the hips.
+                </p>
+              </div>
+            </div>
+          )}
+
+          {/* TAB 2: FABRICATION, WEAVE & CARE GUIDELINES */}
+          {activeSpecsTab === 'fabric' && (
+            <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+              <div className="p-5 bg-white border border-[var(--color-stone)] space-y-1 shadow-xs">
+                <span className="font-display text-[10px] uppercase tracking-widest text-[var(--color-ink)]/50 block">
+                  Composition
+                </span>
+                <strong className="font-display text-sm uppercase text-[var(--color-ink)] block">
+                  100% Breathable Cotton
+                </strong>
+                <p className="font-body text-xs text-[var(--color-ink)]/70 m-0 pt-1">
+                  Pure natural cotton fibers woven for structural crispness and lightweight breathability.
+                </p>
+              </div>
+
+              <div className="p-5 bg-white border border-[var(--color-stone)] space-y-1 shadow-xs">
+                <span className="font-display text-[10px] uppercase tracking-widest text-[var(--color-ink)]/50 block">
+                  Elasticity & Structure
+                </span>
+                <strong className="font-display text-sm uppercase text-[var(--color-ink)] block">
+                  Non-Stretch Woven
+                </strong>
+                <p className="font-body text-xs text-[var(--color-ink)]/70 m-0 pt-1">
+                  Holds tailored A-line geometry gracefully without clinging. Unlined for airy summer wear.
+                </p>
+              </div>
+
+              <div className="p-5 bg-white border border-[var(--color-stone)] space-y-1 shadow-xs">
+                <span className="font-display text-[10px] uppercase tracking-widest text-[var(--color-ink)]/50 block">
+                  Washing Method
+                </span>
+                <strong className="font-display text-sm uppercase text-[var(--color-ink)] block">
+                  Cold Delicate Wash
+                </strong>
+                <p className="font-body text-xs text-[var(--color-ink)]/70 m-0 pt-1">
+                  Machine wash cold with like colors on gentle cycle. Use mild detergent to protect color.
+                </p>
+              </div>
+
+              <div className="p-5 bg-white border border-[var(--color-stone)] space-y-1 shadow-xs">
+                <span className="font-display text-[10px] uppercase tracking-widest text-[var(--color-ink)]/50 block">
+                  Drying & Pressing
+                </span>
+                <strong className="font-display text-sm uppercase text-[var(--color-ink)] block">
+                  Line Dry or Low Heat
+                </strong>
+                <p className="font-body text-xs text-[var(--color-ink)]/70 m-0 pt-1">
+                  Hang dry in shade or tumble dry low. Warm iron if desired to restore crisp woven finish.
+                </p>
+              </div>
+            </div>
+          )}
+
+          {/* TAB 3: PRECISION GARMENT MEASUREMENTS TABLE */}
+          {activeSpecsTab === 'measurements' && (
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+              <div className="lg:col-span-8 overflow-x-auto border border-[var(--color-stone)] bg-white shadow-xs">
+                <table className="w-full text-left font-body text-xs sm:text-sm">
+                  <thead>
+                    <tr className="bg-[var(--color-ink)] text-[var(--color-ivory)] font-display uppercase tracking-wider text-xs">
+                      <th className="py-3 px-4">Size</th>
+                      <th className="py-3 px-4">Garment Length</th>
+                      <th className="py-3 px-4">Bust Circumference</th>
+                      <th className="py-3 px-4">Waist Circumference</th>
+                      <th className="py-3 px-4 text-right">Quick Select</th>
+                    </tr>
+                  </thead>
+                  <tbody className="divide-y divide-[var(--color-stone)]">
+                    <tr className="hover:bg-[var(--color-stone-light)]/40 transition-colors">
+                      <td className="py-3.5 px-4 font-bold font-display text-sm">S (US 4 - 6)</td>
+                      <td className="py-3.5 px-4">31.5&quot; (80 cm)</td>
+                      <td className="py-3.5 px-4">33.9&quot; (86 cm)</td>
+                      <td className="py-3.5 px-4">33.5&quot; (85 cm)</td>
+                      <td className="py-3.5 px-4 text-right">
+                        <button
+                          type="button"
+                          onClick={() => handleSelectOption('Size', 'S')}
+                          className="px-3 py-1 text-xs font-display uppercase font-bold border border-[var(--color-ink)] hover:bg-[var(--color-ink)] hover:text-white cursor-pointer"
+                        >
+                          Choose S
+                        </button>
+                      </td>
+                    </tr>
+                    <tr className="hover:bg-[var(--color-stone-light)]/40 transition-colors">
+                      <td className="py-3.5 px-4 font-bold font-display text-sm">M (US 8)</td>
+                      <td className="py-3.5 px-4">31.9&quot; (81 cm)</td>
+                      <td className="py-3.5 px-4">35.4&quot; (90 cm)</td>
+                      <td className="py-3.5 px-4">35.0&quot; (89 cm)</td>
+                      <td className="py-3.5 px-4 text-right">
+                        <button
+                          type="button"
+                          onClick={() => handleSelectOption('Size', 'M')}
+                          className="px-3 py-1 text-xs font-display uppercase font-bold border border-[var(--color-ink)] hover:bg-[var(--color-ink)] hover:text-white cursor-pointer"
+                        >
+                          Choose M
+                        </button>
+                      </td>
+                    </tr>
+                    <tr className="hover:bg-[var(--color-stone-light)]/40 transition-colors">
+                      <td className="py-3.5 px-4 font-bold font-display text-sm">L (US 10)</td>
+                      <td className="py-3.5 px-4">32.3&quot; (82 cm)</td>
+                      <td className="py-3.5 px-4">37.0&quot; (94 cm)</td>
+                      <td className="py-3.5 px-4">36.6&quot; (93 cm)</td>
+                      <td className="py-3.5 px-4 text-right">
+                        <button
+                          type="button"
+                          onClick={() => handleSelectOption('Size', 'L')}
+                          className="px-3 py-1 text-xs font-display uppercase font-bold border border-[var(--color-ink)] hover:bg-[var(--color-ink)] hover:text-white cursor-pointer"
+                        >
+                          Choose L
+                        </button>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+
+              {/* Sizing Advisor Promo Card */}
+              <div className="lg:col-span-4 p-6 bg-white border border-[var(--color-stone)] space-y-3 shadow-xs">
+                <span className="font-display text-[10px] font-bold tracking-widest uppercase text-emerald-800 bg-emerald-50 px-2 py-0.5 border border-emerald-200">
+                  Smart Sizing Assistant
+                </span>
+                <h3 className="font-serif text-2xl text-[var(--color-ink)] m-0">
+                  Unsure About Your Size?
+                </h3>
+                <p className="font-body text-xs text-[var(--color-ink)]/75 leading-relaxed m-0">
+                  Use our interactive 4-step Size Advisor to calculate your exact fit based on height, weight, body shape, and personal fit preference.
+                </p>
+                <button
+                  type="button"
+                  onClick={() => setSizeGuideOpen(true)}
+                  className="crush-btn crush-btn-primary w-full py-3.5 text-xs font-bold tracking-widest uppercase cursor-pointer"
+                >
+                  ✦ Open Size Advisor Modal →
+                </button>
+              </div>
+            </div>
+          )}
+        </section>
+
+        {/* ========================================================
             EDITORIAL MID-PAGE SPOTLIGHT: THE ATELIER STORY
            ======================================================== */}
-        <section className="mt-20 sm:mt-28 py-12 sm:py-16 border-t border-b border-[var(--color-stone)] bg-white/50">
+        <section className="mt-16 sm:mt-24 py-12 sm:py-16 border-t border-b border-[var(--color-stone)] bg-white/50">
           <div className="max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-12 gap-8 items-center px-4">
             <div className="md:col-span-5 aspect-[3/4] overflow-hidden border border-[var(--color-stone)] shadow-md">
               {images[1] ? (
@@ -1217,7 +1344,6 @@ export default function ProductPage() {
         aria-hidden={!isStickyVisible}
       >
         <div className="max-w-7xl mx-auto flex items-center justify-between gap-4">
-          {/* Left: Thumbnail & Garment Info */}
           <div className="flex items-center gap-3 min-w-0">
             {images[activeImageIndex] && (
               <div className="w-10 h-13 bg-[var(--color-stone-light)] shrink-0 overflow-hidden border border-[var(--color-stone)]">
@@ -1244,7 +1370,6 @@ export default function ProductPage() {
             </div>
           </div>
 
-          {/* Right: Quick Add to Bag Action */}
           <div className="flex items-center gap-2 sm:gap-4 shrink-0">
             <button
               type="button"
@@ -1280,7 +1405,6 @@ export default function ProductPage() {
           />
 
           <div className="relative max-w-4xl w-full max-h-[92vh] flex flex-col items-center justify-center z-10 pointer-events-auto">
-            {/* Top Close bar */}
             <div className="w-full flex items-center justify-between pb-3 text-[var(--color-ivory)]">
               <span className="font-display text-xs tracking-widest uppercase">
                 {product.title} • High-Resolution Atelier Inspection
@@ -1295,7 +1419,6 @@ export default function ProductPage() {
               </button>
             </div>
 
-            {/* Large Image Viewport */}
             <div className="relative overflow-hidden border border-white/20 shadow-2xl bg-black max-h-[80vh] flex items-center justify-center">
               {images[activeImageIndex] && (
                 <img
@@ -1306,7 +1429,6 @@ export default function ProductPage() {
                 />
               )}
 
-              {/* Lightbox Next/Prev Arrows */}
               {images.length > 1 && (
                 <>
                   <button
