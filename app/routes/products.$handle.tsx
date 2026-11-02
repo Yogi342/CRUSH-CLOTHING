@@ -1,13 +1,9 @@
-import {useState, useEffect, useRef} from 'react';
-import {redirect, useLoaderData, Link} from 'react-router';
+import {useState, useEffect, useMemo, useRef} from 'react';
+import {redirect, useLoaderData, useSearchParams, Link} from 'react-router';
 import type {Route} from './+types/products.$handle';
 import {
   getSelectedProductOptions,
   Analytics,
-  useOptimisticVariant,
-  getProductOptions,
-  getAdjacentAndFirstAvailableVariants,
-  useSelectedOptionInUrlParam,
   Money,
 } from '@shopify/hydrogen';
 import {AddToCartButton} from '~/components/AddToCartButton';
@@ -20,7 +16,7 @@ export const meta: Route.MetaFunction = ({data}) => {
     {title: `CRUSH CLOTHING | ${title}`},
     {
       name: 'description',
-      content: `${title} — Contemporary women's apparel by CRUSH CLOTHING. Sculptural tailoring and premium fabrications.`,
+      content: `${title} — Contemporary women's luxury apparel by CRUSH CLOTHING. Atelier craftsmanship and modern silhouette.`,
     },
     {
       rel: 'canonical',
@@ -43,13 +39,16 @@ async function loadCriticalData({context, params, request}: Route.LoaderArgs) {
     throw redirect('/collections/all');
   }
 
+  const selectedOptions = getSelectedProductOptions(request);
+
   let shopifyProduct: any = null;
   try {
     const res = await storefront.query(PRODUCT_QUERY, {
-      variables: {handle, selectedOptions: getSelectedProductOptions(request)},
+      variables: {handle, selectedOptions},
     });
     shopifyProduct = res?.product;
-  } catch {
+  } catch (error) {
+    console.error('Error fetching product from Storefront API:', error);
     shopifyProduct = null;
   }
 
@@ -57,72 +56,149 @@ async function loadCriticalData({context, params, request}: Route.LoaderArgs) {
     throw redirect('/collections/all');
   }
 
-  // Get related products from Shopify
+  // Related pieces query
   let related: any[] = [];
   try {
     const relRes = await storefront.query(RELATED_PRODUCTS_QUERY, {
-      variables: {first: 5},
+      variables: {first: 6},
     });
-    related = (relRes?.products?.nodes || []).filter(
-      (p: any) => p.handle !== handle,
-    ).slice(0, 4);
+    related = (relRes?.products?.nodes || [])
+      .filter((p: any) => p.handle !== handle)
+      .slice(0, 4);
   } catch {
     related = [];
   }
 
-  const product = {
-    ...shopifyProduct,
-    categoryTitle: shopifyProduct.productType || 'Atelier Collection',
-    tag: 'SS 2026 Collection',
-    specs: {
-      fabric: 'High-performance luxury apparel fabrication',
-      silhouette: 'Architectural contemporary silhouette',
-      craft: 'Crafted with premium construction standards',
-      details: 'Custom branded hardware, signature lining',
-      care: 'Specialist dry clean only. Store on shaped wooden hanger.',
-    },
-    modelInfo: "Model is 5'10\" / 178 cm wearing size Small.",
-    availableSizes: ['XS', 'S', 'M', 'L', 'XL'],
-    colors: [
-      {name: 'Ink Black', hex: '#111111'},
-      {name: 'Chalk Ivory', hex: '#F4F1E9'},
-      {name: 'Soft Stone', hex: '#D8D5CE'},
-    ],
+  return {
+    product: shopifyProduct,
+    related,
   };
-
-  return {product, related};
 }
 
 function loadDeferredData({context: _context}: Route.LoaderArgs) {
   return {};
 }
 
+// Smart color hex resolver for luxury garment swatches
+function resolveColorHex(colorName: string): string {
+  const n = (colorName || '').toLowerCase().trim();
+  const palette: Record<string, string> = {
+    'khaki color': '#C3B091',
+    khaki: '#C3B091',
+    brown: '#5C4033',
+    'dark brown': '#3B2F2F',
+    black: '#111111',
+    white: '#FFFFFF',
+    ivory: '#F4F1E9',
+    'chalk ivory': '#F4F1E9',
+    cream: '#FDFBF7',
+    beige: '#E8DCCA',
+    taupe: '#B38B6D',
+    sand: '#D2B48C',
+    camel: '#C19A6B',
+    stone: '#D8D5CE',
+    'soft stone': '#D8D5CE',
+    charcoal: '#36454F',
+    grey: '#808080',
+    gray: '#808080',
+    navy: '#0A192F',
+    blue: '#1E3A8A',
+    olive: '#556B2F',
+    sage: '#9DC183',
+    green: '#1B4D3E',
+    emerald: '#097969',
+    burgundy: '#800020',
+    wine: '#722F37',
+    red: '#A31D1D',
+    rust: '#B7410E',
+    rose: '#E8C5C8',
+    pink: '#F4C2C2',
+    terracotta: '#D97443',
+    tan: '#D2B48C',
+  };
+
+  return palette[n] || '#A09D94';
+}
+
 export default function ProductPage() {
   const {product, related} = useLoaderData<typeof loader>();
   const {open} = useAside();
-  const [selectedSize, setSelectedSize] = useState('S');
-  const [selectedColor, setSelectedColor] = useState(
-    product.colors?.[0]?.name || 'Chalk Ivory',
-  );
+  const [searchParams, setSearchParams] = useSearchParams();
+
+  // All product variants and options from Shopify
+  const options = useMemo(() => product?.options || [], [product]);
+  const variants = useMemo(() => product?.variants?.nodes || [], [product]);
+  const images = useMemo(() => {
+    if (product?.images?.nodes?.length) return product.images.nodes;
+    if (product?.featuredImage) return [product.featuredImage];
+    return [];
+  }, [product]);
+
+  // Compute selected options from URL search params or fallback to first available variant
+  const selectedOptions = useMemo(() => {
+    const current: Record<string, string> = {};
+    const fallbackVariant =
+      product?.selectedOrFirstAvailableVariant || variants[0];
+
+    options.forEach((opt: any) => {
+      const fromUrl = searchParams.get(opt.name);
+      if (fromUrl && opt.values?.includes(fromUrl)) {
+        current[opt.name] = fromUrl;
+      } else {
+        const fromVariant = fallbackVariant?.selectedOptions?.find(
+          (so: any) => so.name === opt.name,
+        )?.value;
+        current[opt.name] = fromVariant || opt.values?.[0] || '';
+      }
+    });
+
+    return current;
+  }, [options, variants, searchParams, product]);
+
+  // Find exact matching variant based on currently selected options
+  const activeVariant = useMemo(() => {
+    const matched = variants.find((v: any) =>
+      v.selectedOptions?.every(
+        (so: any) => selectedOptions[so.name] === so.value,
+      ),
+    );
+    return matched || product?.selectedOrFirstAvailableVariant || variants[0];
+  }, [variants, selectedOptions, product]);
+
+  // Interactive UI states
+  const [activeImageIndex, setActiveImageIndex] = useState(0);
   const [quantity, setQuantity] = useState(1);
   const [sizeGuideOpen, setSizeGuideOpen] = useState(false);
   const [activeTab, setActiveTab] = useState<
     'details' | 'fabric' | 'fit' | 'shipping'
   >('details');
-  const [activeImageIndex, setActiveImageIndex] = useState(0);
   const [addedToast, setAddedToast] = useState(false);
   const [isStickyVisible, setIsStickyVisible] = useState(false);
   const [isZoomModalOpen, setIsZoomModalOpen] = useState(false);
   const mainCtaRef = useRef<HTMLDivElement>(null);
 
+  // Sync image to variant image when active variant changes
+  useEffect(() => {
+    if (activeVariant?.image?.url) {
+      const idx = images.findIndex(
+        (img: any) => img.url === activeVariant.image.url,
+      );
+      if (idx !== -1) {
+        setActiveImageIndex(idx);
+      }
+    }
+  }, [activeVariant, images]);
+
+  // Intersection observer for sticky quick-add bar
   useEffect(() => {
     const el = mainCtaRef.current;
     if (!el) return;
 
     const observer = new IntersectionObserver(
       ([entry]) => {
-        // Show sticky bar when the main CTA is scrolled above the viewport
-        setIsStickyVisible(!entry.isIntersecting && entry.boundingClientRect.top < 0);
+        setIsStickyVisible(
+          !entry.isIntersecting && entry.boundingClientRect.top < 0,
+        );
       },
       {threshold: 0, rootMargin: '-60px 0px 0px 0px'},
     );
@@ -131,24 +207,57 @@ export default function ProductPage() {
     return () => observer.disconnect();
   }, []);
 
-  const images = product?.images?.nodes?.length
-    ? product.images.nodes
-    : product?.featuredImage
-    ? [product.featuredImage]
-    : [];
+  // Update selected option in URL and state
+  const handleSelectOption = (name: string, value: string) => {
+    const nextParams = new URLSearchParams(searchParams);
+    nextParams.set(name, value);
+    setSearchParams(nextParams, {replace: true, preventScrollReset: true});
 
-  const price = product?.selectedOrFirstAvailableVariant?.price || {
-    amount: '380.00',
-    currencyCode: 'USD',
+    // Check if new combination maps to a variant with a unique image
+    const potentialSelected = {...selectedOptions, [name]: value};
+    const potentialVariant = variants.find((v: any) =>
+      v.selectedOptions?.every(
+        (so: any) => potentialSelected[so.name] === so.value,
+      ),
+    );
+    if (potentialVariant?.image?.url) {
+      const idx = images.findIndex(
+        (img: any) => img.url === potentialVariant.image.url,
+      );
+      if (idx !== -1) {
+        setActiveImageIndex(idx);
+      }
+    }
   };
-  const compareAtPrice =
-    product?.selectedOrFirstAvailableVariant?.compareAtPrice;
+
+  const price = activeVariant?.price ||
+    product?.priceRange?.minVariantPrice || {
+      amount: '31.99',
+      currencyCode: 'USD',
+    };
+  const compareAtPrice = activeVariant?.compareAtPrice;
+  const isAvailable = Boolean(activeVariant?.availableForSale);
 
   const handleAddToCart = () => {
+    if (!activeVariant?.id || !isAvailable) return;
     open('cart');
     setAddedToast(true);
     setTimeout(() => setAddedToast(false), 3000);
   };
+
+  // Check if option is a color option
+  const isColorOption = (optName: string) =>
+    /colou?r/i.test(optName);
+
+  // Check if option is a size option
+  const isSizeOption = (optName: string) =>
+    /size/i.test(optName);
+
+  // Filter out single "Title: Default Title" option
+  const meaningfulOptions = options.filter(
+    (opt: any) =>
+      !(opt.name.toLowerCase() === 'title' && opt.values?.[0] === 'Default Title'),
+  );
 
   return (
     <div className="crush-pdp bg-[var(--color-ivory)] text-[var(--color-ink)] min-h-screen py-8 sm:py-16">
@@ -166,7 +275,9 @@ export default function ProductPage() {
               '@type': 'Offer',
               price: price.amount,
               priceCurrency: price.currencyCode,
-              availability: 'https://schema.org/InStock',
+              availability: isAvailable
+                ? 'https://schema.org/InStock'
+                : 'https://schema.org/OutOfStock',
             },
           }),
         }}
@@ -190,7 +301,7 @@ export default function ProductPage() {
           </Link>
           <span>/</span>
           <span className="text-[var(--color-ink)]/70">
-            {product.categoryTitle || 'Atelier'}
+            {product.productType || 'Atelier'}
           </span>
           <span>/</span>
           <span className="text-[var(--color-ink)] font-bold">
@@ -198,11 +309,11 @@ export default function ProductPage() {
           </span>
         </nav>
 
-        {/* 2-Column Luxury PDP Layout */}
+        {/* 2-Column Luxury Atelier PDP Layout */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16">
-          {/* Left Column: Interactive Photo Gallery */}
+          {/* Left Column: Interactive Image Gallery */}
           <div className="lg:col-span-7 space-y-4">
-            {/* Main Stage Image with High-Res Fabric Inspect */}
+            {/* Main Stage Viewport with High-Res Fabric Inspect */}
             <div
               onClick={() => setIsZoomModalOpen(true)}
               className="relative aspect-[3/4] w-full overflow-hidden bg-[var(--color-stone-light)] border border-[var(--color-stone)] shadow-sm group cursor-zoom-in"
@@ -224,38 +335,45 @@ export default function ProductPage() {
                 </div>
               )}
 
-              {/* Tag pill overlay */}
+              {/* Tag overlay */}
               <div className="absolute top-4 left-4 bg-[var(--color-ivory)]/95 backdrop-blur-xs px-3.5 py-1.5 border border-[var(--color-stone)]">
                 <span className="font-display text-[10px] font-semibold tracking-[0.2em] uppercase text-[var(--color-ink)]">
-                  {product.tag || 'Atelier SS 2026'}
+                  {product.productType || 'CRUSH ATELIER // US'}
                 </span>
               </div>
 
-              {/* Fabric Texture Inspect Pill */}
-              <div className="absolute bottom-4 right-4 bg-[var(--color-ink)]/90 text-[var(--color-ivory)] backdrop-blur-xs px-3 py-1.5 border border-[var(--color-stone)] opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none shadow-md">
+              {/* Counter badge */}
+              {images.length > 1 && (
+                <div className="absolute top-4 right-4 bg-[var(--color-ink)]/85 text-[var(--color-ivory)] backdrop-blur-xs px-3 py-1 text-[10px] font-display tracking-widest uppercase">
+                  {activeImageIndex + 1} / {images.length}
+                </div>
+              )}
+
+              {/* Hover Inspect Pill */}
+              <div className="absolute bottom-4 right-4 bg-[var(--color-ink)]/90 text-[var(--color-ivory)] backdrop-blur-xs px-3.5 py-1.5 border border-[var(--color-stone)] opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none shadow-md">
                 <span className="font-display text-[10px] font-semibold tracking-[0.18em] uppercase flex items-center gap-1.5">
-                  <span>✦</span> Inspect Drape & Weave
+                  <span>✦</span> Zoom Atelier Drape
                 </span>
               </div>
             </div>
 
-            {/* Thumbnail Row */}
+            {/* Thumbnail Strip */}
             {images.length > 1 && (
               <div
-                className="grid grid-cols-4 sm:grid-cols-4 gap-3"
+                className="grid grid-cols-4 sm:grid-cols-6 gap-2.5 max-h-60 overflow-y-auto pr-1"
                 role="region"
-                aria-label="Product thumbnails"
+                aria-label="Product angle thumbnails"
               >
                 {images.map((img: any, idx: number) => {
                   const isActive = activeImageIndex === idx;
                   return (
                     <button
-                      key={img.id || idx}
+                      key={img.id || img.url || idx}
                       type="button"
                       onClick={() => setActiveImageIndex(idx)}
                       className={`relative aspect-[3/4] overflow-hidden border transition-all duration-300 cursor-pointer ${
                         isActive
-                          ? 'border-[var(--color-ink)] ring-1 ring-[var(--color-ink)] shadow-sm'
+                          ? 'border-[var(--color-ink)] ring-2 ring-[var(--color-ink)] shadow-sm'
                           : 'border-[var(--color-stone)] opacity-70 hover:opacity-100 hover:border-[var(--color-stone-dark)]'
                       }`}
                       aria-label={`View photo angle ${idx + 1}`}
@@ -281,10 +399,16 @@ export default function ProductPage() {
             <div className="border-b border-[var(--color-stone)] pb-6">
               <div className="flex items-center justify-between mb-2">
                 <span className="font-display text-[10px] font-semibold tracking-[0.3em] uppercase text-[var(--color-ink)]/50">
-                  {product.categoryTitle || 'CRUSH ATELIER // US'}
+                  {product.vendor || 'CRUSH ATELIER // US'}
                 </span>
-                <span className="font-display text-[10px] tracking-widest uppercase text-emerald-800 bg-emerald-50 px-2.5 py-0.5 border border-emerald-200">
-                  ● In Stock
+                <span
+                  className={`font-display text-[10px] tracking-widest uppercase px-2.5 py-0.5 border ${
+                    isAvailable
+                      ? 'text-emerald-800 bg-emerald-50 border-emerald-200'
+                      : 'text-stone-600 bg-stone-100 border-stone-300'
+                  }`}
+                >
+                  {isAvailable ? '● In Stock' : '✕ Out of Stock'}
                 </span>
               </div>
 
@@ -308,69 +432,152 @@ export default function ProductPage() {
               </div>
             </div>
 
-            {/* Color Swatch Selector */}
-            {product.colors && product.colors.length > 0 && (
-              <div className="space-y-2.5">
-                <div className="flex items-center justify-between">
-                  <span className="font-display text-xs font-semibold tracking-[0.14em] uppercase text-[var(--color-ink)]">
-                    Color: <span className="font-normal text-[var(--color-ink)]/70">{selectedColor}</span>
-                  </span>
-                </div>
-                <div className="flex items-center gap-3" role="radiogroup" aria-label="Color options">
-                  {product.colors.map((color: any) => (
-                    <button
-                      key={color.name}
-                      type="button"
-                      onClick={() => setSelectedColor(color.name)}
-                      className={`flex items-center gap-2 px-3 py-1.5 border text-xs font-display uppercase tracking-wider transition-all duration-200 cursor-pointer ${
-                        selectedColor === color.name
-                          ? 'border-[var(--color-ink)] bg-[var(--color-stone-light)]/80 font-bold ring-1 ring-[var(--color-ink)]'
-                          : 'border-[var(--color-stone)] bg-transparent hover:border-[var(--color-stone-dark)]'
-                      }`}
+            {/* Dynamic Options Selectors */}
+            {meaningfulOptions.map((opt: any) => {
+              const optName = opt.name;
+              const currentValue = selectedOptions[optName];
+
+              // Color Option Swatch View
+              if (isColorOption(optName)) {
+                return (
+                  <div key={opt.id || optName} className="space-y-2.5">
+                    <div className="flex items-center justify-between">
+                      <span className="font-display text-xs font-semibold tracking-[0.14em] uppercase text-[var(--color-ink)]">
+                        {optName}:{' '}
+                        <span className="font-bold text-[var(--color-ink)] underline underline-offset-2">
+                          {currentValue}
+                        </span>
+                      </span>
+                    </div>
+                    <div
+                      className="flex flex-wrap items-center gap-2.5"
+                      role="radiogroup"
+                      aria-label={`${optName} options`}
                     >
-                      <span
-                        className="w-3.5 h-3.5 rounded-full border border-black/20"
-                        style={{backgroundColor: color.hex}}
-                      />
-                      <span>{color.name}</span>
-                    </button>
-                  ))}
+                      {opt.values.map((val: string) => {
+                        const isSelected = currentValue === val;
+                        const hex = resolveColorHex(val);
+
+                        return (
+                          <button
+                            key={val}
+                            type="button"
+                            onClick={() => handleSelectOption(optName, val)}
+                            className={`flex items-center gap-2 px-3.5 py-2 border text-xs font-display uppercase tracking-wider transition-all duration-200 cursor-pointer ${
+                              isSelected
+                                ? 'border-[var(--color-ink)] bg-white font-bold ring-2 ring-[var(--color-ink)] shadow-xs'
+                                : 'border-[var(--color-stone)] bg-transparent hover:border-[var(--color-stone-dark)]'
+                            }`}
+                            aria-checked={isSelected}
+                            role="radio"
+                          >
+                            <span
+                              className="w-4 h-4 rounded-full border border-black/25 shrink-0 shadow-inner"
+                              style={{backgroundColor: hex}}
+                            />
+                            <span>{val}</span>
+                          </button>
+                        );
+                      })}
+                    </div>
+                  </div>
+                );
+              }
+
+              // Size Option Tile View
+              if (isSizeOption(optName)) {
+                return (
+                  <div key={opt.id || optName} className="space-y-3">
+                    <div className="flex items-center justify-between">
+                      <span className="font-display text-xs font-semibold tracking-[0.14em] uppercase text-[var(--color-ink)]">
+                        Select {optName}:{' '}
+                        <span className="font-bold text-[var(--color-ink)]">
+                          {currentValue}
+                        </span>
+                      </span>
+                      <button
+                        type="button"
+                        onClick={() => setSizeGuideOpen(true)}
+                        className="font-display text-xs tracking-wider uppercase text-[var(--color-ink)]/60 hover:text-[var(--color-ink)] underline underline-offset-4 cursor-pointer"
+                      >
+                        Size Guide & Measurements
+                      </button>
+                    </div>
+
+                    <div
+                      className="grid grid-cols-4 sm:grid-cols-6 gap-2"
+                      role="radiogroup"
+                      aria-label={`${optName} choices`}
+                    >
+                      {opt.values.map((sizeVal: string) => {
+                        const isSelected = currentValue === sizeVal;
+
+                        // Check availability for this size with currently selected other options
+                        const comboVariant = variants.find((v: any) =>
+                          v.selectedOptions?.every((so: any) => {
+                            if (so.name === optName) return so.value === sizeVal;
+                            return so.value === selectedOptions[so.name];
+                          }),
+                        );
+                        const isSizeAvailable = comboVariant
+                          ? comboVariant.availableForSale
+                          : true;
+
+                        return (
+                          <button
+                            key={sizeVal}
+                            type="button"
+                            onClick={() => handleSelectOption(optName, sizeVal)}
+                            className={`py-3 text-center font-display text-xs font-semibold tracking-wider uppercase border transition-all duration-200 cursor-pointer relative ${
+                              isSelected
+                                ? 'border-[var(--color-ink)] bg-[var(--color-ink)] text-[var(--color-ivory)] shadow-sm'
+                                : isSizeAvailable
+                                ? 'border-[var(--color-stone)] bg-white text-[var(--color-ink)] hover:border-[var(--color-ink)] hover:bg-[var(--color-stone-light)]'
+                                : 'border-[var(--color-stone)]/50 bg-stone-100 text-stone-400 cursor-not-allowed opacity-60'
+                            }`}
+                            aria-checked={isSelected}
+                            role="radio"
+                          >
+                            <span>{sizeVal}</span>
+                            {!isSizeAvailable && (
+                              <span className="sr-only"> (Sold Out)</span>
+                            )}
+                          </button>
+                        );
+                      })}
+                    </div>
+                  </div>
+                );
+              }
+
+              // Generic Option Selector (e.g. Material, Cut)
+              return (
+                <div key={opt.id || optName} className="space-y-2">
+                  <span className="font-display text-xs font-semibold tracking-[0.14em] uppercase text-[var(--color-ink)] block">
+                    {optName}: <span className="font-bold">{currentValue}</span>
+                  </span>
+                  <div className="flex flex-wrap gap-2">
+                    {opt.values.map((val: string) => {
+                      const isSelected = currentValue === val;
+                      return (
+                        <button
+                          key={val}
+                          type="button"
+                          onClick={() => handleSelectOption(optName, val)}
+                          className={`px-4 py-2 border text-xs font-display uppercase tracking-wider transition-all duration-200 ${
+                            isSelected
+                              ? 'border-[var(--color-ink)] bg-[var(--color-ink)] text-[var(--color-ivory)]'
+                              : 'border-[var(--color-stone)] bg-white text-[var(--color-ink)] hover:border-[var(--color-ink)]'
+                          }`}
+                        >
+                          {val}
+                        </button>
+                      );
+                    })}
+                  </div>
                 </div>
-              </div>
-            )}
-
-            {/* Size Selector with Modal Trigger */}
-            <div className="space-y-3">
-              <div className="flex items-center justify-between">
-                <span className="font-display text-xs font-semibold tracking-[0.14em] uppercase text-[var(--color-ink)]">
-                  Select Size
-                </span>
-                <button
-                  type="button"
-                  onClick={() => setSizeGuideOpen(true)}
-                  className="font-display text-xs tracking-wider uppercase text-[var(--color-ink)]/60 hover:text-[var(--color-ink)] underline underline-offset-4 cursor-pointer"
-                >
-                  Size Guide & Measurements
-                </button>
-              </div>
-
-              <div className="grid grid-cols-5 gap-2" role="radiogroup" aria-label="Sizes">
-                {(product.availableSizes || ['XS', 'S', 'M', 'L', 'XL']).map((size: string) => (
-                  <button
-                    key={size}
-                    type="button"
-                    onClick={() => setSelectedSize(size)}
-                    className={`py-3.5 text-center font-display text-xs font-semibold tracking-wider uppercase border transition-all duration-200 cursor-pointer ${
-                      selectedSize === size
-                        ? 'border-[var(--color-ink)] bg-[var(--color-ink)] text-[var(--color-ivory)] shadow-sm'
-                        : 'border-[var(--color-stone)] bg-transparent text-[var(--color-ink)] hover:border-[var(--color-ink)] hover:bg-[var(--color-stone-light)]'
-                    }`}
-                  >
-                    {size}
-                  </button>
-                ))}
-              </div>
-            </div>
+              );
+            })}
 
             {/* Quantity Stepper */}
             <div className="space-y-2">
@@ -409,34 +616,49 @@ export default function ProductPage() {
               </div>
             </div>
 
-            {/* Add to Bag CTA */}
+            {/* Dynamic Add to Bag CTA */}
             <div ref={mainCtaRef} className="pt-2">
-              {product.selectedOrFirstAvailableVariant?.id ? (
+              {activeVariant?.id ? (
                 <AddToCartButton
-                  disabled={!product.selectedOrFirstAvailableVariant.availableForSale}
+                  disabled={!isAvailable}
                   onClick={handleAddToCart}
                   lines={[
                     {
-                      merchandiseId: product.selectedOrFirstAvailableVariant.id,
+                      merchandiseId: activeVariant.id,
                       quantity,
-                      selectedVariant: product.selectedOrFirstAvailableVariant,
+                      selectedVariant: activeVariant,
                     },
                   ]}
                 >
-                  <span className="crush-btn crush-btn-primary w-full py-4 text-center font-display text-xs sm:text-sm font-semibold tracking-[0.2em] uppercase shadow-md">
-                    Add To Bag • <Money data={price} />
+                  <span className="crush-btn crush-btn-primary w-full py-4 text-center font-display text-xs sm:text-sm font-semibold tracking-[0.2em] uppercase shadow-md flex items-center justify-center gap-2">
+                    {isAvailable ? (
+                      <>
+                        <span>Add To Bag</span>
+                        <span>•</span>
+                        <Money data={price} />
+                      </>
+                    ) : (
+                      'Sold Out'
+                    )}
                   </span>
                 </AddToCartButton>
               ) : (
                 <button
                   type="button"
-                  onClick={handleAddToCart}
-                  className="crush-btn crush-btn-primary w-full py-4 text-center font-display text-xs sm:text-sm font-semibold tracking-[0.2em] uppercase shadow-md"
+                  disabled
+                  className="crush-btn crush-btn-secondary w-full py-4 text-center font-display text-xs sm:text-sm font-semibold tracking-[0.2em] uppercase opacity-50 cursor-not-allowed"
                 >
-                  Claim Piece • <Money data={price} />
+                  Unavailable
                 </button>
               )}
             </div>
+
+            {/* Added Toast Notification */}
+            {addedToast && (
+              <div className="p-3 bg-emerald-50 border border-emerald-300 text-emerald-900 font-display text-xs tracking-wider uppercase text-center animate-pulse">
+                ✓ Added {quantity} item{quantity > 1 ? 's' : ''} to your Atelier Bag
+              </div>
+            )}
 
             {/* Value Proposition Callouts */}
             <div className="py-3 px-4 bg-[var(--color-stone-light)]/60 border border-[var(--color-stone)] space-y-1.5 font-display text-[11px] tracking-wider uppercase text-[var(--color-ink)]/75">
@@ -451,13 +673,13 @@ export default function ProductPage() {
               </p>
             </div>
 
-            {/* 4-Tab Specification Accordion */}
+            {/* 4-Tab Luxury Specification Accordion */}
             <div className="border-t border-[var(--color-stone)] pt-4 space-y-4">
               <div className="flex border-b border-[var(--color-stone)] overflow-x-auto">
                 {[
                   {id: 'details', label: 'Atelier Details'},
-                  {id: 'fabric', label: 'Fabric & Craft'},
-                  {id: 'fit', label: 'Fit & Model'},
+                  {id: 'fabric', label: 'Fabric & Specifications'},
+                  {id: 'fit', label: 'Fit & Measurements'},
                   {id: 'shipping', label: 'Delivery & Returns'},
                 ].map((tab) => (
                   <button
@@ -477,53 +699,123 @@ export default function ProductPage() {
 
               {/* Tab 1: Atelier Details */}
               {activeTab === 'details' && (
-                <div className="font-body text-sm text-[var(--color-ink)]/80 leading-relaxed space-y-3">
+                <div className="font-body text-sm text-[var(--color-ink)]/85 leading-relaxed space-y-3">
                   {product.descriptionHtml ? (
-                    <div dangerouslySetInnerHTML={{__html: product.descriptionHtml}} />
+                    <div
+                      className="crush-product-content"
+                      dangerouslySetInnerHTML={{
+                        __html: product.descriptionHtml,
+                      }}
+                    />
                   ) : (
                     <p>{product.description}</p>
                   )}
-                  {product.specs?.details && (
-                    <p className="font-display text-xs tracking-wider uppercase text-[var(--color-ink)] pt-2 border-t border-[var(--color-stone)]/50">
-                      <strong>Design Accents:</strong> {product.specs.details}
-                    </p>
+
+                  {product.tags && product.tags.length > 0 && (
+                    <div className="pt-3 border-t border-[var(--color-stone)] flex flex-wrap gap-1.5">
+                      {product.tags.map((tag: string) => (
+                        <span
+                          key={tag}
+                          className="px-2.5 py-0.5 bg-white border border-[var(--color-stone)] text-[10px] font-display uppercase tracking-widest text-[var(--color-ink)]/70"
+                        >
+                          {tag}
+                        </span>
+                      ))}
+                    </div>
                   )}
                 </div>
               )}
 
-              {/* Tab 2: Fabric & Craft */}
+              {/* Tab 2: Fabric & Specifications */}
               {activeTab === 'fabric' && (
-                <div className="font-body text-sm text-[var(--color-ink)]/80 leading-relaxed space-y-3">
-                  <p>
-                    <strong>Material:</strong> {product.specs?.fabric || 'Premium virgin textile'}
-                  </p>
-                  <p>
-                    <strong>Craftsmanship:</strong> {product.specs?.craft || 'Tailored with blind interior seams in the United States.'}
-                  </p>
-                  <p>
-                    <strong>Care Guidelines:</strong> {product.specs?.care || 'Specialist dry clean only.'}
+                <div className="font-body text-sm text-[var(--color-ink)]/85 leading-relaxed space-y-3">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs font-display uppercase tracking-wider">
+                    <div className="p-3 bg-white border border-[var(--color-stone)]">
+                      <span className="text-[var(--color-ink)]/50 block mb-1">
+                        Silhouette & Cut
+                      </span>
+                      <strong className="text-[var(--color-ink)]">
+                        {product.title}
+                      </strong>
+                    </div>
+                    <div className="p-3 bg-white border border-[var(--color-stone)]">
+                      <span className="text-[var(--color-ink)]/50 block mb-1">
+                        Fabrication
+                      </span>
+                      <strong className="text-[var(--color-ink)]">
+                        100% Breathable Cotton
+                      </strong>
+                    </div>
+                    <div className="p-3 bg-white border border-[var(--color-stone)]">
+                      <span className="text-[var(--color-ink)]/50 block mb-1">
+                        Structure & Stretch
+                      </span>
+                      <strong className="text-[var(--color-ink)]">
+                        No Stretch • Unlined
+                      </strong>
+                    </div>
+                    <div className="p-3 bg-white border border-[var(--color-stone)]">
+                      <span className="text-[var(--color-ink)]/50 block mb-1">
+                        Care Instructions
+                      </span>
+                      <strong className="text-[var(--color-ink)]">
+                        Cold Wash • Tumble Dry Low
+                      </strong>
+                    </div>
+                  </div>
+                  <p className="text-xs text-[var(--color-ink)]/60 pt-2">
+                    Crafted with precision seams and delicate shoulder tie accents designed for versatile day-to-evening wear.
                   </p>
                 </div>
               )}
 
-              {/* Tab 3: Fit & Model */}
+              {/* Tab 3: Fit & Measurements */}
               {activeTab === 'fit' && (
-                <div className="font-body text-sm text-[var(--color-ink)]/80 leading-relaxed space-y-3">
-                  <p>
-                    <strong>Silhouette:</strong> {product.specs?.silhouette || 'Structural tailored profile.'}
+                <div className="font-body text-sm text-[var(--color-ink)]/85 leading-relaxed space-y-3">
+                  <p className="text-xs font-display uppercase tracking-wider text-[var(--color-ink)]/70">
+                    Product Measurements (Inches)
                   </p>
-                  <p>
-                    <strong>Model Dimensions:</strong> {product.modelInfo || "Model is 5'10\" wearing size Small."}
-                  </p>
-                  <p className="text-xs text-[var(--color-ink)]/60">
-                    If between sizes, we recommend selecting your regular size for tailored pieces or sizing down for fluid knit and bias-cut silk silhouettes.
+                  <div className="overflow-x-auto">
+                    <table className="w-full text-left font-body text-xs border border-[var(--color-stone)] bg-white">
+                      <thead>
+                        <tr className="bg-[var(--color-ink)] text-[var(--color-ivory)] font-display uppercase tracking-wider text-[11px]">
+                          <th className="py-2.5 px-3">Size</th>
+                          <th className="py-2.5 px-3">Length</th>
+                          <th className="py-2.5 px-3">Bust</th>
+                          <th className="py-2.5 px-3">Waist</th>
+                        </tr>
+                      </thead>
+                      <tbody className="divide-y divide-[var(--color-stone)]">
+                        <tr className="hover:bg-[var(--color-stone-light)]/40">
+                          <td className="py-2.5 px-3 font-bold font-display">S</td>
+                          <td className="py-2.5 px-3">31.5&quot;</td>
+                          <td className="py-2.5 px-3">33.9&quot;</td>
+                          <td className="py-2.5 px-3">33.5&quot;</td>
+                        </tr>
+                        <tr className="hover:bg-[var(--color-stone-light)]/40">
+                          <td className="py-2.5 px-3 font-bold font-display">M</td>
+                          <td className="py-2.5 px-3">31.9&quot;</td>
+                          <td className="py-2.5 px-3">35.4&quot;</td>
+                          <td className="py-2.5 px-3">35.0&quot;</td>
+                        </tr>
+                        <tr className="hover:bg-[var(--color-stone-light)]/40">
+                          <td className="py-2.5 px-3 font-bold font-display">L</td>
+                          <td className="py-2.5 px-3">32.3&quot;</td>
+                          <td className="py-2.5 px-3">37.0&quot;</td>
+                          <td className="py-2.5 px-3">36.6&quot;</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                  <p className="text-xs text-[var(--color-ink)]/60 pt-2">
+                    True to size fit. The shoulder ties are fully adjustable allowing customized bust support and torso length.
                   </p>
                 </div>
               )}
 
               {/* Tab 4: Delivery & Returns */}
               {activeTab === 'shipping' && (
-                <div className="font-body text-sm text-[var(--color-ink)]/80 leading-relaxed space-y-2">
+                <div className="font-body text-sm text-[var(--color-ink)]/85 leading-relaxed space-y-2">
                   <p>
                     <strong>Domestic United States:</strong> Complimentary standard shipping on orders over $150 (3–5 business days). Express 2-day delivery available at checkout.
                   </p>
@@ -536,31 +828,33 @@ export default function ProductPage() {
           </div>
         </div>
 
-        {/* Related Products: Complete The Look */}
-        <section className="mt-24 pt-16 border-t border-[var(--color-stone)]">
-          <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-10">
-            <div>
-              <p className="font-display text-[10px] font-semibold tracking-[0.25em] text-[var(--color-ink)]/50 uppercase m-0 mb-1">
-                Atelier Pairing
-              </p>
-              <h2 className="font-display font-bold text-2xl sm:text-3xl tracking-[0.06em] uppercase text-[var(--color-ink)] m-0">
-                Complete The Look
-              </h2>
+        {/* Related Products Section */}
+        {related && related.length > 0 && (
+          <section className="mt-24 pt-16 border-t border-[var(--color-stone)]">
+            <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-10">
+              <div>
+                <p className="font-display text-[10px] font-semibold tracking-[0.25em] text-[var(--color-ink)]/50 uppercase m-0 mb-1">
+                  Atelier Pairing
+                </p>
+                <h2 className="font-display font-bold text-2xl sm:text-3xl tracking-[0.06em] uppercase text-[var(--color-ink)] m-0">
+                  Complete The Look
+                </h2>
+              </div>
+              <Link
+                to="/collections/all"
+                className="font-display text-xs font-semibold tracking-wider uppercase text-[var(--color-ink)] hover:underline underline-offset-4 no-underline"
+              >
+                Browse All Pieces →
+              </Link>
             </div>
-            <Link
-              to="/collections/all"
-              className="font-display text-xs font-semibold tracking-wider uppercase text-[var(--color-ink)] hover:underline underline-offset-4 no-underline"
-            >
-              Browse All Pieces →
-            </Link>
-          </div>
 
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6">
-            {related.map((relProduct: any) => (
-              <ProductItem key={relProduct.id} product={relProduct} loading="lazy" />
-            ))}
-          </div>
-        </section>
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6">
+              {related.map((relProduct: any) => (
+                <ProductItem key={relProduct.id} product={relProduct} loading="lazy" />
+              ))}
+            </div>
+          </section>
+        )}
       </div>
 
       {/* Sizing Guide Modal */}
@@ -569,13 +863,13 @@ export default function ProductPage() {
           role="dialog"
           aria-modal="true"
           aria-labelledby="size-guide-title"
-          className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-[var(--color-ink)]/70 backdrop-blur-xs"
+          className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-[var(--color-ink)]/75 backdrop-blur-xs"
         >
           <div className="bg-[var(--color-ivory)] max-w-lg w-full p-6 sm:p-8 border border-[var(--color-stone)] shadow-2xl relative">
             <div className="flex items-center justify-between pb-4 border-b border-[var(--color-stone)] mb-6">
               <h2
                 id="size-guide-title"
-                className="font-display font-bold text-lg tracking-widest uppercase m-0"
+                className="font-display font-bold text-lg tracking-widest uppercase m-0 text-[var(--color-ink)]"
               >
                 Atelier Sizing Guide (US)
               </h2>
@@ -594,54 +888,36 @@ export default function ProductPage() {
                 <thead>
                   <tr className="border-b border-[var(--color-stone)] font-display uppercase tracking-wider text-[var(--color-ink)]/70">
                     <th className="py-2">Size</th>
-                    <th className="py-2">US</th>
+                    <th className="py-2">Length</th>
                     <th className="py-2">Bust</th>
                     <th className="py-2">Waist</th>
-                    <th className="py-2">Hips</th>
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-[var(--color-stone)]">
                   <tr>
-                    <td className="py-2.5 font-bold">XS</td>
-                    <td>0–2</td>
-                    <td>32–33&quot;</td>
-                    <td>24–25&quot;</td>
-                    <td>34–35&quot;</td>
+                    <td className="py-2.5 font-bold font-display">S</td>
+                    <td>31.5&quot;</td>
+                    <td>33.9&quot;</td>
+                    <td>33.5&quot;</td>
                   </tr>
                   <tr>
-                    <td className="py-2.5 font-bold">S</td>
-                    <td>4–6</td>
-                    <td>34–35&quot;</td>
-                    <td>26–27&quot;</td>
-                    <td>36–37&quot;</td>
+                    <td className="py-2.5 font-bold font-display">M</td>
+                    <td>31.9&quot;</td>
+                    <td>35.4&quot;</td>
+                    <td>35.0&quot;</td>
                   </tr>
                   <tr>
-                    <td className="py-2.5 font-bold">M</td>
-                    <td>8–10</td>
-                    <td>36–37&quot;</td>
-                    <td>28–29&quot;</td>
-                    <td>38–39&quot;</td>
-                  </tr>
-                  <tr>
-                    <td className="py-2.5 font-bold">L</td>
-                    <td>12–14</td>
-                    <td>38–40&quot;</td>
-                    <td>30–32&quot;</td>
-                    <td>40–42&quot;</td>
-                  </tr>
-                  <tr>
-                    <td className="py-2.5 font-bold">XL</td>
-                    <td>16</td>
-                    <td>41–43&quot;</td>
-                    <td>33–35&quot;</td>
-                    <td>43–45&quot;</td>
+                    <td className="py-2.5 font-bold font-display">L</td>
+                    <td>32.3&quot;</td>
+                    <td>37.0&quot;</td>
+                    <td>36.6&quot;</td>
                   </tr>
                 </tbody>
               </table>
             </div>
 
             <p className="font-body text-[11px] text-[var(--color-ink)]/60 mt-6 leading-normal">
-              Measurements reflect garment sizing. If between sizes, we recommend sizing up for structured outer layers or down for bias-cut silk pieces.
+              Measurements reflect garment sizing in inches. Fits true to size with fully adjustable shoulder ties.
             </p>
           </div>
         </div>
@@ -659,10 +935,10 @@ export default function ProductPage() {
         <div className="max-w-7xl mx-auto flex items-center justify-between gap-4">
           {/* Left: Thumbnail & Garment Info */}
           <div className="flex items-center gap-3 min-w-0">
-            {images[0] && (
+            {images[activeImageIndex] && (
               <div className="w-10 h-12 bg-[var(--color-stone-light)] shrink-0 overflow-hidden border border-[var(--color-stone)]">
                 <img
-                  src={images[0].url}
+                  src={images[activeImageIndex].url}
                   alt={product.title}
                   className="w-full h-full object-cover"
                 />
@@ -673,38 +949,30 @@ export default function ProductPage() {
                 {product.title}
               </h4>
               <p className="font-display text-[11px] tracking-wide text-[var(--color-ink)]/70 m-0 flex items-center gap-2">
-                <span className="font-semibold"><Money data={price} /></span>
+                <span className="font-semibold">
+                  <Money data={price} />
+                </span>
                 <span className="text-[var(--color-stone-dark)]">•</span>
-                <span className="text-[var(--color-ink)] uppercase">Size {selectedSize}</span>
+                <span className="text-[var(--color-ink)] uppercase">
+                  {Object.values(selectedOptions).join(' / ')}
+                </span>
               </p>
             </div>
           </div>
 
-          {/* Right: Quick Size Stepper & Add to Bag Action */}
+          {/* Right: Quick Add to Bag Action */}
           <div className="flex items-center gap-2 sm:gap-4 shrink-0">
-            <div className="hidden sm:flex items-center gap-1 border border-[var(--color-stone)] bg-white p-0.5">
-              {(product.availableSizes || ['XS', 'S', 'M', 'L', 'XL']).map((size: string) => (
-                <button
-                  key={size}
-                  type="button"
-                  onClick={() => setSelectedSize(size)}
-                  className={`px-2.5 py-1 font-display text-[10px] font-semibold tracking-wider uppercase transition-colors cursor-pointer ${
-                    selectedSize === size
-                      ? 'bg-[var(--color-ink)] text-[var(--color-ivory)]'
-                      : 'text-[var(--color-ink)] hover:bg-[var(--color-stone-light)]'
-                  }`}
-                >
-                  {size}
-                </button>
-              ))}
-            </div>
-
             <button
               type="button"
+              disabled={!isAvailable}
               onClick={handleAddToCart}
-              className="crush-btn crush-btn-primary py-2.5 px-5 sm:px-8 text-xs shadow-md"
+              className={`crush-btn py-2.5 px-5 sm:px-8 text-xs shadow-md ${
+                isAvailable
+                  ? 'crush-btn-primary'
+                  : 'crush-btn-secondary opacity-50 cursor-not-allowed'
+              }`}
             >
-              Add To Bag →
+              {isAvailable ? 'Add To Bag →' : 'Sold Out'}
             </button>
           </div>
         </div>
@@ -718,7 +986,6 @@ export default function ProductPage() {
           aria-label="High-resolution fabric inspect"
           className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/90 backdrop-blur-md"
         >
-          {/* Backdrop button to close */}
           <button
             type="button"
             className="absolute inset-0 w-full h-full bg-transparent border-none cursor-default"
@@ -760,7 +1027,7 @@ export default function ProductPage() {
         </div>
       )}
 
-      {product.selectedOrFirstAvailableVariant?.id && (
+      {activeVariant?.id && (
         <Analytics.ProductView
           data={{
             products: [
@@ -769,9 +1036,8 @@ export default function ProductPage() {
                 title: product.title,
                 price: price.amount || '0',
                 vendor: product.vendor,
-                variantId: product.selectedOrFirstAvailableVariant.id || '',
-                variantTitle:
-                  product.selectedOrFirstAvailableVariant.title || '',
+                variantId: activeVariant.id || '',
+                variantTitle: activeVariant.title || '',
                 quantity: 1,
               },
             ],
@@ -825,31 +1091,38 @@ const PRODUCT_FRAGMENT = `#graphql
     title
     vendor
     handle
+    productType
     descriptionHtml
     description
+    tags
     options {
+      id
       name
-      optionValues {
-        name
-      }
+      values
     }
     featuredImage {
       id
       url
       altText
+      width
+      height
     }
-    images(first: 6) {
+    images(first: 20) {
       nodes {
         id
         url
         altText
+        width
+        height
       }
     }
     selectedOrFirstAvailableVariant(selectedOptions: $selectedOptions, ignoreUnknownOptions: true, caseInsensitiveMatch: true) {
       ...ProductVariant
     }
-    adjacentVariants (selectedOptions: $selectedOptions) {
-      ...ProductVariant
+    variants(first: 50) {
+      nodes {
+        ...ProductVariant
+      }
     }
     seo {
       description
