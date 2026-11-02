@@ -158,16 +158,24 @@ function loadDeferredData({context}: Route.LoaderArgs) {
 export function Layout({children}: {children?: React.ReactNode}) {
   const nonce = useNonce();
 
+  // In Vite dev mode, CSS urls without `?direct` are served with Content-Type: text/javascript
+  // which causes browsers to reject the stylesheet until JS loads (causing FOUC).
+  // Appending `?direct` forces Vite to serve raw CSS with Content-Type: text/css.
+  const isDev = process.env.NODE_ENV !== 'production';
+  const tailwindUrl = isDev ? `${tailwindCss}?direct` : tailwindCss;
+  const resetUrl = isDev ? `${resetStyles}?direct` : resetStyles;
+  const appUrl = isDev ? `${appStyles}?direct` : appStyles;
+
   return (
     <html lang="en">
       <head>
         <meta charSet="utf-8" />
         <meta name="viewport" content="width=device-width,initial-scale=1" />
-        <link rel="preload" href={tailwindCss} as="style" />
-        <link rel="preload" href={appStyles} as="style" />
-        <link rel="stylesheet" href={tailwindCss}></link>
-        <link rel="stylesheet" href={resetStyles}></link>
-        <link rel="stylesheet" href={appStyles}></link>
+        <link rel="preload" href={tailwindUrl} as="style" />
+        <link rel="preload" href={appUrl} as="style" />
+        <link rel="stylesheet" href={tailwindUrl}></link>
+        <link rel="stylesheet" href={resetUrl}></link>
+        <link rel="stylesheet" href={appUrl}></link>
         <style
           nonce={nonce}
           dangerouslySetInnerHTML={{
@@ -178,7 +186,12 @@ export function Layout({children}: {children?: React.ReactNode}) {
                 color: #171717;
                 margin: 0;
                 padding: 0;
+                font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
                 -webkit-font-smoothing: antialiased;
+              }
+              a {
+                color: inherit;
+                text-decoration: none;
               }
               /* Strictly hide all unexpanded drawers and asides before hydration/CSS load */
               .overlay:not(.expanded) {
@@ -200,6 +213,20 @@ export function Layout({children}: {children?: React.ReactNode}) {
                 height: 1rem;
                 max-width: 24px;
                 max-height: 24px;
+              }
+              /* Critical Navbar Baseline Layout */
+              .crush-header-wrapper {
+                background-color: #ffffff;
+                border-bottom: 1px solid #f3f4f6;
+              }
+              .crush-header {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                max-width: 80rem;
+                margin: 0 auto;
+                padding: 0 1rem;
+                height: 5rem;
               }
             `,
           }}
