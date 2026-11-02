@@ -8,6 +8,8 @@
   --color-light: #F4F1E9;
 
   --font-display: 'Space Grotesk', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-serif: 'Playfair Display', Georgia, serif;
+  --font-editorial: 'Cormorant Garamond', 'Playfair Display', Georgia, serif;
   --font-body: 'DM Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
 
   --aside-width: 440px;
@@ -878,4 +880,14 @@ button.reset:hover:not(:has(> *)) {
 
 .crush-product-content tr:hover td {
   background-color: var(--color-stone-light);
+}
+
+
+/* High Fashion Editorial Typography */
+.font-serif {
+  font-family: var(--font-serif), 'Playfair Display', Georgia, serif;
+}
+
+.font-editorial {
+  font-family: var(--font-editorial), 'Cormorant Garamond', Georgia, serif;
 }
