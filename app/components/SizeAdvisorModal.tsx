@@ -164,7 +164,7 @@ export function SizeAdvisorModal({
         aria-label="Close size advisor"
       />
 
-      <div className="relative w-full max-w-[440px] bg-white rounded-3xl border border-neutral-100 shadow-[0_25px_60px_-15px_rgba(0,0,0,0.3)] overflow-hidden flex flex-col max-h-[92vh] sm:max-h-[90vh]">
+      <div className="relative w-full max-w-[440px] bg-white rounded-3xl border border-neutral-100 shadow-[0_25px_60px_-15px_rgba(0,0,0,0.3)] overflow-hidden flex flex-col max-h-[92dvh] sm:max-h-[90dvh]">
         
         {/* Top Mini Header Bar */}
         <div className="flex items-center justify-between px-6 pt-5 pb-3">
@@ -288,9 +288,9 @@ export function SizeAdvisorModal({
                   </p>
                 </div>
 
-                <div className="grid grid-cols-12 gap-4 items-center">
+                <div className="grid grid-cols-1 sm:grid-cols-12 gap-3 sm:gap-4 items-center">
                   {/* Left Column: Human Silhouette SVG Icon */}
-                  <div className="col-span-3 flex flex-col items-center justify-center p-3 bg-neutral-50 rounded-2xl border border-neutral-100">
+                  <div className="hidden sm:flex sm:col-span-3 flex-col items-center justify-center p-3 bg-neutral-50 rounded-2xl border border-neutral-100">
                     <svg
                       className="w-12 h-28 text-neutral-800"
                       viewBox="0 0 50 120"
@@ -314,7 +314,7 @@ export function SizeAdvisorModal({
                   </div>
 
                   {/* Right Column: Height & Weight Sliders */}
-                  <div className="col-span-1 sm:col-span-9 space-y-3 sm:space-y-4">
+                  <div className="col-span-1 sm:col-span-9 w-full space-y-3 sm:space-y-4">
                     {/* Height Row */}
                     <div className="space-y-1.5 p-3.5 bg-neutral-50 rounded-2xl border border-neutral-100">
                       <div className="flex items-center justify-between">

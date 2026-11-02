@@ -269,14 +269,16 @@ aside header .close {
   align-items: center;
   justify-content: center;
   font-family: var(--font-display);
-  font-size: 1.25rem;
-  font-weight: 400;
-  opacity: 0.7;
+  font-size: 1.35rem;
+  font-weight: 300;
+  opacity: 0.8;
   text-decoration: none;
-  transition: opacity 200ms ease;
-  width: 32px;
-  height: 32px;
+  transition: all 200ms ease;
+  width: 40px;
+  height: 40px;
+  border-radius: 9999px;
   color: var(--color-ink);
+  cursor: pointer;
 }
 
 aside header .close:hover {
@@ -503,12 +505,20 @@ button.reset:hover:not(:has(> *)) {
   bottom: 0;
   left: 0;
   right: 0;
-  padding: 1rem;
+  padding: 1.25rem 1.5rem;
   padding-bottom: max(1.25rem, env(safe-area-inset-bottom));
-padding: 1.25rem 1.5rem;
   position: absolute;
   width: 100%;
   box-sizing: border-box;
+  z-index: 10;
+}
+
+.cart-details {
+  padding-bottom: calc(var(--cart-aside-summary-height) + 2.5rem);
+}
+
+.cart-main.with-discount .cart-details {
+  padding-bottom: calc(var(--cart-aside-summary-height-with-discount) + 2.5rem);
 }
 
 .cart-line-quantity {
@@ -1007,6 +1017,12 @@ padding: 1.25rem 1.5rem;
 /* ========================================================
    Mobile Viewport & Smooth Touch Scrolling Enhancements
    ======================================================== */
+html {
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+  scroll-behavior: smooth;
+}
+
 html,
 body {
   overflow-x: hidden;
@@ -1015,8 +1031,16 @@ body {
   -webkit-overflow-scrolling: touch;
 }
 
+button, input, select, a {
+  touch-action: manipulation;
+}
+
 * {
   -webkit-tap-highlight-color: transparent;
+}
+
+.animate-marquee-smooth {
+  will-change: transform;
 }
 
 /* Scrollbar None Utility for Mobile Carousels */

@@ -179,62 +179,73 @@ export function Layout({children}: {children?: React.ReactNode}) {
       <head>
         <meta charSet="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, viewport-fit=cover" />
-        <link rel="preload" href={tailwindUrl} as="style" />
-        <link rel="preload" href={appUrl} as="style" />
-        <link rel="stylesheet" href={tailwindUrl}></link>
-        <link rel="stylesheet" href={resetUrl}></link>
-        <link rel="stylesheet" href={appUrl}></link>
+        <Meta />
+        <Links />
         <style
           nonce={nonce}
           dangerouslySetInnerHTML={{
             __html: `
               /* Critical Anti-FOUC & Initial Paint Containment */
+              *, *::before, *::after {
+                box-sizing: border-box;
+              }
               html {
                 background-color: #ffffff;
-                color: #171717;
+                color: #111827;
                 margin: 0;
                 padding: 0;
-                font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+                font-family: 'DM Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
                 -webkit-font-smoothing: antialiased;
+                -webkit-text-size-adjust: 100%;
               }
-              /* Strictly keep body visually hidden until CSS parses and sets visibility: visible */
               body {
                 background-color: #ffffff;
-                color: #171717;
+                color: #111827;
                 margin: 0;
                 padding: 0;
-                visibility: hidden;
-                opacity: 0;
+                overflow-x: hidden;
+                width: 100%;
               }
               a {
                 color: inherit;
                 text-decoration: none;
               }
-              /* Strictly hide all unexpanded drawers and asides before hydration/CSS load */
+              /* Strictly hide all unexpanded drawers and hidden utility classes on frame 1 */
+              .hidden {
+                display: none !important;
+              }
               .overlay:not(.expanded) {
                 display: none !important;
                 visibility: hidden !important;
                 opacity: 0 !important;
                 pointer-events: none !important;
               }
-              /* Strict containment for icons so SVGs can NEVER blow up to full viewport width */
+              aside:not(.expanded) {
+                display: none !important;
+              }
+              .crush-mega-menu {
+                display: none !important;
+              }
+              /* Strict containment for icons so SVGs can NEVER blow up to viewport width */
               svg {
                 display: inline-block;
                 vertical-align: middle;
                 max-width: 100%;
+                height: auto;
               }
               header svg,
               button svg,
               nav svg {
-                width: 1rem;
-                height: 1rem;
-                max-width: 24px;
-                max-height: 24px;
+                width: 1.125rem !important;
+                height: 1.125rem !important;
+                max-width: 20px !important;
+                max-height: 20px !important;
               }
               /* Critical Navbar Baseline Layout */
               .crush-header-wrapper {
                 background-color: #ffffff;
                 border-bottom: 1px solid #f3f4f6;
+                width: 100%;
               }
               .crush-header {
                 display: flex;
@@ -242,34 +253,19 @@ export function Layout({children}: {children?: React.ReactNode}) {
                 justify-content: space-between;
                 max-width: 80rem;
                 margin: 0 auto;
-                padding: 0 1rem;
+                padding: 0 0.75rem;
                 height: 5rem;
+              }
+              .crush-brand-logo {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                text-align: center;
               }
             `,
           }}
         />
-        <script
-          nonce={nonce}
-          dangerouslySetInnerHTML={{
-            __html: `
-              setTimeout(function() {
-                if (document.body && document.body.style.visibility !== 'visible') {
-                  document.body.style.visibility = 'visible';
-                  document.body.style.opacity = '1';
-                }
-              }, 250);
-            `,
-          }}
-        />
-        <noscript>
-          <style
-            dangerouslySetInnerHTML={{
-              __html: `body { visibility: visible !important; opacity: 1 !important; }`,
-            }}
-          />
-        </noscript>
-        <Meta />
-        <Links />
       </head>
       <body>
         {children}

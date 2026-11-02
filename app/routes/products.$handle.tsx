@@ -256,6 +256,30 @@ export default function ProductPage() {
     setActiveImageIndex((prev) => (prev + 1) % images.length);
   };
 
+  // Mobile Touch Swipe Gesture Support
+  const touchStartXRef = useRef<number | null>(null);
+  const touchEndXRef = useRef<number | null>(null);
+
+  const handleGalleryTouchStart = (e: React.TouchEvent) => {
+    touchStartXRef.current = e.targetTouches[0].clientX;
+  };
+
+  const handleGalleryTouchMove = (e: React.TouchEvent) => {
+    touchEndXRef.current = e.targetTouches[0].clientX;
+  };
+
+  const handleGalleryTouchEnd = () => {
+    if (touchStartXRef.current === null || touchEndXRef.current === null) return;
+    const diff = touchStartXRef.current - touchEndXRef.current;
+    if (diff > 45) {
+      nextImage(); // Swiped left -> next photo
+    } else if (diff < -45) {
+      prevImage(); // Swiped right -> previous photo
+    }
+    touchStartXRef.current = null;
+    touchEndXRef.current = null;
+  };
+
   const prevImage = () => {
     if (images.length <= 1) return;
     setActiveImageIndex((prev) => (prev - 1 + images.length) % images.length);
@@ -351,7 +375,7 @@ export default function ProductPage() {
              ======================================================== */}
           <div className="lg:col-span-7 space-y-4">
             {/* Main Stage Viewport with Next/Prev Arrows */}
-            <div className="relative aspect-[3/4] w-full overflow-hidden rounded-2xl bg-neutral-100 border border-neutral-100 shadow-sm group">
+            <div className="relative aspect-[3/4] w-full overflow-hidden rounded-2xl bg-neutral-100 border border-neutral-100 shadow-sm group select-none touch-pan-y" onTouchStart={handleGalleryTouchStart} onTouchMove={handleGalleryTouchMove} onTouchEnd={handleGalleryTouchEnd}>
               {images[activeImageIndex] ? (
                 <img
                   src={images[activeImageIndex].url}

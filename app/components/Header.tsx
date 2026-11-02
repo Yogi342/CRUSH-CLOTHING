@@ -186,7 +186,7 @@ export function Header({
               strokeWidth="1.6"
               viewBox="0 0 24 24"
               aria-hidden="true"
-              style={{width: 16, height: 16, maxWidth: '100%'}}
+              style={{width: 16, height: 16, maxWidth: 16, maxHeight: 16}}
             >
               <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z" />
             </svg>
@@ -562,7 +562,7 @@ function HeaderMenuMobileToggle() {
   return (
     <button
       type="button"
-      className="lg:hidden p-2 -ml-2 text-neutral-900 rounded-lg hover:bg-neutral-100 transition-colors cursor-pointer group"
+      className="lg:hidden min-w-[44px] min-h-[44px] p-2.5 -ml-2 text-neutral-900 rounded-full hover:bg-neutral-100 active:bg-neutral-200 transition-colors cursor-pointer group flex items-center justify-center"
       onClick={() => open('mobile')}
       aria-label="Open mobile menu"
     >
@@ -580,7 +580,7 @@ function SearchToggle() {
   return (
     <button
       type="button"
-      className="w-9 h-9 rounded-full text-neutral-700 hover:text-black hover:bg-neutral-100 transition-all cursor-pointer flex items-center justify-center"
+      className="min-w-[40px] min-h-[40px] w-10 h-10 rounded-full text-neutral-700 hover:text-black hover:bg-neutral-100 active:bg-neutral-200 transition-all cursor-pointer flex items-center justify-center"
       onClick={() => open('search')}
       aria-label="Open search drawer"
     >
@@ -593,7 +593,7 @@ function SearchToggle() {
         strokeWidth="1.7"
         viewBox="0 0 24 24"
         aria-hidden="true"
-        style={{width: 16, height: 16, maxWidth: '100%'}}
+        style={{width: 16, height: 16, maxWidth: 16, maxHeight: 16}}
       >
         <circle cx="11" cy="11" r="7" />
         <line x1="16" y1="16" x2="21" y2="21" />
@@ -632,7 +632,7 @@ function CartBadge({count}: {count: number}) {
         strokeWidth="1.8"
         viewBox="0 0 24 24"
         aria-hidden="true"
-        style={{width: 14, height: 14, maxWidth: '100%'}}
+        style={{width: 14, height: 14, maxWidth: 14, maxHeight: 14}}
       >
         <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 10.5V6a3.75 3.75 0 10-7.5 0v4.5m11.356-1.993l1.263 12c.07.665-.45 1.243-1.119 1.243H4.25c-.669 0-1.189-.578-1.119-1.243l1.263-12A1.125 1.125 0 015.513 7.5h12.974c.576 0 1.059.435 1.119 1.007zM8.625 10.5a.375.375 0 11-.75 0 .375.375 0 01.75 0zm7.5 0a.375.375 0 11-.75 0 .375.375 0 01.75 0z" />
       </svg>
