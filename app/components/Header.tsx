@@ -128,12 +128,12 @@ export function Header({
           MAIN CLEAN LUXURY NAVBAR
          ======================================================== */}
       <header
-        className={`crush-header max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between transition-all duration-300 ${
+        className={`crush-header relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between transition-all duration-300 ${
           isScrolled ? 'h-16' : 'h-20'
         }`}
       >
         {/* Left: Professional Clean Navigation */}
-        <div className="flex items-center gap-4 lg:gap-8">
+        <div className="flex items-center gap-2 sm:gap-4 lg:gap-8 z-10">
           <HeaderMenuMobileToggle />
           <HeaderMenu
             menu={menu}
@@ -146,7 +146,7 @@ export function Header({
         </div>
 
         {/* Center: Prestigious Typographic Brand Wordmark */}
-        <div className="crush-brand-logo text-center">
+        <div className="crush-brand-logo absolute left-1/2 -translate-x-1/2 top-1/2 -translate-y-1/2 text-center pointer-events-auto">
           <NavLink
             prefetch="intent"
             to="/"
@@ -154,8 +154,8 @@ export function Header({
             className="group inline-flex flex-col items-center no-underline text-neutral-900 focus-visible:outline-2 focus-visible:outline-neutral-900"
           >
             <span
-              className={`font-serif tracking-[0.38em] uppercase transition-all duration-400 group-hover:tracking-[0.44em] text-neutral-900 font-normal ${
-                isScrolled ? 'text-2xl sm:text-[26px]' : 'text-[26px] sm:text-[32px]'
+              className={`font-serif tracking-[0.32em] sm:tracking-[0.38em] uppercase transition-all duration-400 group-hover:tracking-[0.44em] text-neutral-900 font-normal ${
+                isScrolled ? 'text-xl sm:text-[26px]' : 'text-2xl sm:text-[32px]'
               }`}
             >
               CRUSH
@@ -167,7 +167,7 @@ export function Header({
         </div>
 
         {/* Right: Actions (Currency, Search, VIP Account, Bag) */}
-        <div className="flex items-center gap-2 sm:gap-3.5 lg:gap-4">
+        <div className="flex items-center gap-1.5 sm:gap-3.5 lg:gap-4 z-10">
           <CurrencySelector />
           <SearchToggle />
           
@@ -454,11 +454,39 @@ export function HeaderMenu({
   // Mobile Drawer Navigation
   return (
     <nav
-      className="crush-mobile-nav flex flex-col divide-y divide-neutral-100"
+      className="crush-mobile-nav flex flex-col divide-y divide-neutral-100 p-2 sm:p-4"
       role="navigation"
       aria-label="Mobile Navigation"
     >
+      {/* Client Account Quick Access */}
+      <div className="pb-4">
+        <NavLink
+          to="/account"
+          onClick={close}
+          className="flex items-center justify-between py-3 px-4 rounded-xl bg-neutral-900 text-white font-display text-xs font-semibold tracking-widest uppercase no-underline shadow-xs hover:bg-black transition-colors"
+        >
+          <div className="flex items-center gap-2.5">
+            <svg
+              width="15"
+              height="15"
+              className="w-4 h-4 shrink-0"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="1.8"
+              viewBox="0 0 24 24"
+            >
+              <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z" />
+            </svg>
+            <span>Client Account</span>
+          </div>
+          <span className="text-[10px] opacity-70">Sign In →</span>
+        </NavLink>
+      </div>
+
       <div className="py-4 space-y-1">
+        <span className="font-display text-[10px] tracking-[0.25em] uppercase text-neutral-400 block mb-2">
+          Collections & Edits
+        </span>
         <NavLink
           end
           onClick={close}
@@ -478,6 +506,7 @@ export function HeaderMenu({
             to={item.url}
           >
             <span>{item.title}</span>
+            <span className="text-xs text-neutral-400">→</span>
           </NavLink>
         ))}
       </div>
@@ -489,31 +518,40 @@ export function HeaderMenu({
         <NavLink
           to="/products/frill-tie-shoulder-mini-dress"
           onClick={close}
-          className="block text-xs uppercase tracking-wider text-neutral-600 no-underline hover:text-black"
+          className="block text-xs uppercase tracking-wider text-neutral-600 no-underline hover:text-black py-1"
         >
           Interactive Size Advisor
         </NavLink>
         <NavLink
           to="/policies/shipping-policy"
           onClick={close}
-          className="block text-xs uppercase tracking-wider text-neutral-600 no-underline hover:text-black"
+          className="block text-xs uppercase tracking-wider text-neutral-600 no-underline hover:text-black py-1"
         >
           Shipping & Global Delivery
         </NavLink>
         <NavLink
           to="/policies/refund-policy"
           onClick={close}
-          className="block text-xs uppercase tracking-wider text-neutral-600 no-underline hover:text-black"
+          className="block text-xs uppercase tracking-wider text-neutral-600 no-underline hover:text-black py-1"
         >
           30-Day Returns & Exchanges
         </NavLink>
         <NavLink
           to="/policies/terms-of-service"
           onClick={close}
-          className="block text-xs uppercase tracking-wider text-neutral-600 no-underline hover:text-black"
+          className="block text-xs uppercase tracking-wider text-neutral-600 no-underline hover:text-black py-1"
         >
           Terms of Service
         </NavLink>
+      </div>
+
+      <div className="pt-6 pb-2">
+        <span className="font-display text-[10px] tracking-[0.25em] uppercase text-neutral-400 block mb-2">
+          Region & Currency
+        </span>
+        <div className="flex items-center gap-2 font-display text-xs text-neutral-800 bg-neutral-100 py-2.5 px-3.5 rounded-xl border border-neutral-200">
+          <span>🇺🇸 United States (USD $)</span>
+        </div>
       </div>
     </nav>
   );
@@ -571,7 +609,7 @@ function CartBadge({count}: {count: number}) {
   return (
     <button
       type="button"
-      className="inline-flex items-center gap-2.5 px-4 py-2 bg-neutral-900 hover:bg-black text-white rounded-full cursor-pointer shadow-xs hover:shadow-md transition-all active:scale-95 group"
+      className="inline-flex items-center gap-1.5 sm:gap-2.5 px-3 py-1.5 sm:px-4 sm:py-2 bg-neutral-900 hover:bg-black text-white rounded-full cursor-pointer shadow-xs hover:shadow-md transition-all active:scale-95 group"
       onClick={(e) => {
         e.preventDefault();
         open('cart');
@@ -598,7 +636,7 @@ function CartBadge({count}: {count: number}) {
       >
         <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 10.5V6a3.75 3.75 0 10-7.5 0v4.5m11.356-1.993l1.263 12c.07.665-.45 1.243-1.119 1.243H4.25c-.669 0-1.189-.578-1.119-1.243l1.263-12A1.125 1.125 0 015.513 7.5h12.974c.576 0 1.059.435 1.119 1.007zM8.625 10.5a.375.375 0 11-.75 0 .375.375 0 01.75 0zm7.5 0a.375.375 0 11-.75 0 .375.375 0 01.75 0z" />
       </svg>
-      <span className="font-display text-[11px] font-semibold tracking-[0.18em] uppercase">
+      <span className="hidden xs:inline sm:inline font-display text-[11px] font-semibold tracking-[0.18em] uppercase">
         Bag
       </span>
       <span className="w-5 h-5 rounded-full bg-white text-neutral-900 font-display text-[10px] font-bold flex items-center justify-center shrink-0 shadow-xs">

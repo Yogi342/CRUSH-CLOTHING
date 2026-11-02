@@ -108,7 +108,7 @@ export function Footer({
               <span className="font-display text-[11px] font-semibold tracking-[0.35em] text-[var(--color-stone)] uppercase block mb-2">
                 Haute Contemporaine · United States
               </span>
-              <h2 className="font-display font-bold text-5xl sm:text-7xl lg:text-9xl tracking-[0.14em] uppercase text-[var(--color-ivory)] m-0 leading-none select-none">
+              <h2 className="font-display font-bold text-4xl sm:text-7xl lg:text-9xl tracking-[0.08em] sm:tracking-[0.14em] uppercase text-[var(--color-ivory)] m-0 leading-none select-none">
                 CRUSH
               </h2>
             </div>

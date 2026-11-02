@@ -153,7 +153,7 @@ export default function CollectionAll() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3.5 space-y-3">
           {/* Row 1: Category Filter Pills */}
           <div className="flex flex-wrap items-center justify-between gap-4">
-            <div className="flex items-center gap-2 overflow-x-auto py-1">
+            <div className="flex items-center gap-2 overflow-x-auto py-1 scrollbar-none max-w-full">
               {[
                 {id: 'all', label: 'All Pieces'},
                 {id: 'dresses', label: 'Dresses'},
@@ -200,7 +200,7 @@ export default function CollectionAll() {
           {/* Row 2: Secondary Filters (Price Range + Reset) */}
           <div className="flex flex-wrap items-center justify-between gap-3 pt-1 border-t border-[var(--color-stone)]/50">
             {/* Price Filter Chips */}
-            <div className="flex items-center gap-2 overflow-x-auto">
+            <div className="flex items-center gap-2 overflow-x-auto py-1 scrollbar-none max-w-full">
               <span className="font-display text-[11px] tracking-wider uppercase text-[var(--color-ink)]/60 mr-1">
                 Price:
               </span>

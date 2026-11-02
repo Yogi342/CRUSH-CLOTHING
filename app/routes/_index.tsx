@@ -79,7 +79,7 @@ export default function Homepage() {
                 <span>Spring / Summer 2026 Collection</span>
               </div>
 
-              <h1 className="crush-hero-title font-serif font-normal text-4xl sm:text-6xl lg:text-7xl tracking-tight text-neutral-900 m-0 leading-[1.08]">
+              <h1 className="crush-hero-title font-serif font-normal text-3xl sm:text-5xl lg:text-7xl tracking-tight text-neutral-900 m-0 leading-[1.12]">
                 Effortless Silhouettes.
                 <span className="block italic text-neutral-600 font-serif font-normal mt-1">
                   Sculptural Presence.
@@ -90,22 +90,22 @@ export default function Homepage() {
                 Contemporary women’s luxury apparel crafted from breathable natural cotton weaves and French-finished seams. Designed in New York for an effortless day-to-evening presence.
               </p>
 
-              <div className="crush-hero-ctas flex flex-wrap items-center gap-3.5 pt-2">
+              <div className="crush-hero-ctas flex flex-col sm:flex-row items-stretch sm:items-center gap-3 pt-2">
                 <Link
                   to="/collections/all"
-                  className="rounded-full bg-neutral-900 hover:bg-black text-white px-8 py-4 font-display text-xs font-bold tracking-widest uppercase shadow-md hover:shadow-lg transition-all active:scale-[0.99] cursor-pointer"
+                  className="rounded-full bg-neutral-900 hover:bg-black text-white px-8 py-3.5 sm:py-4 font-display text-xs font-bold tracking-widest uppercase shadow-md hover:shadow-lg transition-all active:scale-[0.99] cursor-pointer text-center"
                 >
                   Shop New Arrivals →
                 </Link>
                 <Link
                   to="/products/frill-tie-shoulder-mini-dress"
-                  className="rounded-full border border-neutral-300 hover:border-black text-neutral-900 px-8 py-4 font-display text-xs font-bold tracking-widest uppercase transition-all hover:bg-neutral-50 cursor-pointer"
+                  className="rounded-full border border-neutral-300 hover:border-black text-neutral-900 px-8 py-3.5 sm:py-4 font-display text-xs font-bold tracking-widest uppercase transition-all hover:bg-neutral-50 cursor-pointer text-center"
                 >
                   The Frill Tie Mini Edit
                 </Link>
               </div>
 
-              <div className="pt-8 border-t border-neutral-100 grid grid-cols-3 gap-4 text-[11px] font-display uppercase tracking-wider text-neutral-500">
+              <div className="pt-8 border-t border-neutral-100 grid grid-cols-1 sm:grid-cols-3 gap-3.5 sm:gap-4 text-[11px] font-display uppercase tracking-wider text-neutral-500">
                 <div>
                   <span className="font-bold text-neutral-900 block">100% Cotton</span>
                   <span className="text-[10px] text-neutral-400 font-body normal-case">Natural breathable weave</span>
@@ -192,7 +192,7 @@ export default function Homepage() {
             </Link>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-6">
             {CATEGORIES.map((cat) => (
               <Link
                 key={cat.id}

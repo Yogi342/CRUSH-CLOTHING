@@ -933,7 +933,7 @@ export default function ProductPage() {
             </div>
 
             {/* Tab switchers */}
-            <div className="flex rounded-full border border-neutral-200 bg-neutral-100 p-1 shrink-0">
+            <div className="flex rounded-full border border-neutral-200 bg-neutral-100 p-1 shrink-0 max-w-full overflow-x-auto scrollbar-none">
               <button
                 type="button"
                 onClick={() => setActiveSpecsTab('details')}
@@ -1070,7 +1070,7 @@ export default function ProductPage() {
               <div className="lg:col-span-8 overflow-x-auto rounded-2xl border border-neutral-200 bg-white shadow-xs">
                 <table className="w-full text-left font-body text-xs sm:text-sm">
                   <thead>
-                    <tr className="bg-neutral-900 text-white font-display uppercase tracking-wider text-xs">
+                    <tr className="bg-neutral-900 text-white font-display uppercase tracking-wider text-xs whitespace-nowrap">
                       <th className="py-3.5 px-4">Size</th>
                       <th className="py-3.5 px-4">Garment Length</th>
                       <th className="py-3.5 px-4">Bust Circumference</th>
@@ -1366,7 +1366,7 @@ export default function ProductPage() {
           STICKY QUICK-ADD FLOATING BAR
          ======================================================== */}
       <div
-        className={`fixed bottom-0 inset-x-0 z-40 bg-white/95 backdrop-blur-xl border-t border-neutral-200/80 py-3 px-4 sm:px-8 shadow-2xl transition-all duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] ${
+        className={`fixed bottom-0 inset-x-0 z-40 bg-white/95 backdrop-blur-xl border-t border-neutral-200/80 py-2.5 sm:py-3 px-3 sm:px-8 pb-[max(0.75rem,env(safe-area-inset-bottom))] shadow-2xl transition-all duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] ${
           isStickyVisible
             ? 'translate-y-0 opacity-100'
             : 'translate-y-full opacity-0 pointer-events-none'

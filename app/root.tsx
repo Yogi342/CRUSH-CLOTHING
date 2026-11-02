@@ -178,7 +178,7 @@ export function Layout({children}: {children?: React.ReactNode}) {
     <html lang="en">
       <head>
         <meta charSet="utf-8" />
-        <meta name="viewport" content="width=device-width,initial-scale=1" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, viewport-fit=cover" />
         <link rel="preload" href={tailwindUrl} as="style" />
         <link rel="preload" href={appUrl} as="style" />
         <link rel="stylesheet" href={tailwindUrl}></link>
