@@ -437,25 +437,36 @@ export default function ProductPage() {
               const optName = opt.name;
               const currentValue = selectedOptions[optName];
 
-              // Color Option Swatch View
+              // Color Option Visual Photo Card Swatch View (Snitch / Atelier Fashion Style)
               if (isColorOption(optName)) {
                 return (
-                  <div key={opt.id || optName} className="space-y-2.5">
-                    <div className="flex items-center justify-between">
-                      <span className="font-display text-xs font-semibold tracking-[0.14em] uppercase text-[var(--color-ink)]">
-                        {optName}:{' '}
-                        <span className="font-bold text-[var(--color-ink)] underline underline-offset-2">
-                          {currentValue}
-                        </span>
+                  <div key={opt.id || optName} className="space-y-3 pt-1">
+                    {/* Header: Selected Color · [Color Name] */}
+                    <div className="flex items-center gap-2">
+                      <span className="font-display text-xs tracking-wider uppercase text-[var(--color-ink)]/70">
+                        Selected Color
+                      </span>
+                      <span className="text-[var(--color-stone-dark)] font-bold text-xs">•</span>
+                      <span className="font-display text-xs font-bold tracking-wider uppercase text-[var(--color-ink)]">
+                        {currentValue}
                       </span>
                     </div>
+
+                    {/* Horizontal Photo Swatches */}
                     <div
-                      className="flex flex-wrap items-center gap-2.5"
+                      className="flex items-center gap-2.5 overflow-x-auto pb-1"
                       role="radiogroup"
-                      aria-label={`${optName} options`}
+                      aria-label={`${optName} visual swatches`}
                     >
                       {opt.values.map((val: string) => {
                         const isSelected = currentValue === val;
+                        // Find variant image for this specific color
+                        const colorVariant = variants.find((v: any) =>
+                          v.selectedOptions?.some(
+                            (so: any) => so.name === optName && so.value === val,
+                          ),
+                        );
+                        const swatchImgUrl = colorVariant?.image?.url;
                         const hex = resolveColorHex(val);
 
                         return (
@@ -463,19 +474,30 @@ export default function ProductPage() {
                             key={val}
                             type="button"
                             onClick={() => handleSelectOption(optName, val)}
-                            className={`flex items-center gap-2 px-3.5 py-2 border text-xs font-display uppercase tracking-wider transition-all duration-200 cursor-pointer ${
+                            className={`group relative shrink-0 w-14 sm:w-16 aspect-[3/4] overflow-hidden transition-all duration-200 cursor-pointer p-0.5 bg-[var(--color-stone-light)] ${
                               isSelected
-                                ? 'border-[var(--color-ink)] bg-white font-bold ring-2 ring-[var(--color-ink)] shadow-xs'
-                                : 'border-[var(--color-stone)] bg-transparent hover:border-[var(--color-stone-dark)]'
+                                ? 'border-2 border-[var(--color-ink)] shadow-xs'
+                                : 'border border-[var(--color-stone)] hover:border-[var(--color-stone-dark)] opacity-85 hover:opacity-100'
                             }`}
                             aria-checked={isSelected}
+                            aria-label={`Select ${val}`}
                             role="radio"
                           >
-                            <span
-                              className="w-4 h-4 rounded-full border border-black/25 shrink-0 shadow-inner"
-                              style={{backgroundColor: hex}}
-                            />
-                            <span>{val}</span>
+                            {swatchImgUrl ? (
+                              <img
+                                src={swatchImgUrl}
+                                alt={val}
+                                className="w-full h-full object-cover object-top"
+                                loading="lazy"
+                              />
+                            ) : (
+                              <div
+                                className="w-full h-full flex items-center justify-center font-display text-[9px] uppercase tracking-wider text-black/70"
+                                style={{backgroundColor: hex}}
+                              >
+                                {val}
+                              </div>
+                            )}
                           </button>
                         );
                       })}
