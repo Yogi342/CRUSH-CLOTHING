@@ -57,6 +57,16 @@ async function loadCriticalData({context, params, request}: Route.LoaderArgs) {
     throw redirect('/collections/all');
   }
 
+  // Sanitize vendor and tags: ensure supplier/dropship names like Trendsi never appear
+  if (shopifyProduct) {
+    shopifyProduct.vendor = 'CRUSH ATELIER';
+    if (shopifyProduct.tags) {
+      shopifyProduct.tags = shopifyProduct.tags.filter(
+        (t: string) => !/trendsi/i.test(t) && !/overseas/i.test(t),
+      );
+    }
+  }
+
   // Related pieces query
   let related: any[] = [];
   try {
@@ -529,7 +539,7 @@ export default function ProductPage() {
             <div className="border-b border-[var(--color-stone)] pb-5 space-y-3">
               <div className="flex items-center justify-between">
                 <span className="font-display text-[10px] font-semibold tracking-[0.25em] uppercase text-[var(--color-ink)]/60">
-                  {product.vendor || 'CRUSH ATELIER // US'}
+                  CRUSH ATELIER // US
                 </span>
                 <span
                   className={`font-display text-[10px] tracking-widest uppercase px-2.5 py-0.5 border ${
@@ -1475,7 +1485,7 @@ export default function ProductPage() {
                 id: product.id,
                 title: product.title,
                 price: price.amount || '0',
-                vendor: product.vendor,
+                vendor: 'CRUSH CLOTHING',
                 variantId: activeVariant.id || '',
                 variantTitle: activeVariant.title || '',
                 quantity: 1,
