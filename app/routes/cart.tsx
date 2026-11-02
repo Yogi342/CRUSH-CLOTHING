@@ -1,4 +1,4 @@
-import {useLoaderData, data, type HeadersFunction} from 'react-router';
+import {useLoaderData, data, Link, type HeadersFunction} from 'react-router';
 import type {Route} from './+types/cart';
 import type {CartQueryDataReturn} from '@shopify/hydrogen';
 import {CartForm} from '@shopify/hydrogen';
@@ -105,9 +105,26 @@ export default function Cart() {
   const cart = useLoaderData<typeof loader>();
 
   return (
-    <div className="cart">
-      <h1>Cart</h1>
-      <CartMain layout="page" cart={cart} />
+    <div className="crush-cart-page bg-[var(--color-ivory)] text-[var(--color-ink)] min-h-[75vh] py-12 sm:py-20 border-b border-[var(--color-stone)]">
+      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="border-b border-[var(--color-stone)] pb-6 mb-8 flex flex-col sm:flex-row sm:items-end justify-between gap-4">
+          <div>
+            <span className="font-display text-[10px] font-semibold tracking-[0.25em] text-[var(--color-ink)]/50 uppercase block mb-1">
+              Atelier Checkout // Drop 01
+            </span>
+            <h1 className="font-display font-bold text-3xl sm:text-5xl tracking-[0.06em] uppercase text-[var(--color-ink)] m-0">
+              Shopping Bag
+            </h1>
+          </div>
+          <Link
+            to="/collections/all"
+            className="font-display text-xs font-semibold tracking-widest uppercase text-[var(--color-ink)] hover:underline no-underline"
+          >
+            ← Continue Browsing
+          </Link>
+        </div>
+        <CartMain layout="page" cart={cart ?? null} />
+      </div>
     </div>
   );
 }

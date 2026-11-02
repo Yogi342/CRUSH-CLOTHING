@@ -35,7 +35,16 @@ export async function loader({params, context}: Route.LoaderArgs) {
   const policy = data.shop?.[policyName];
 
   if (!policy) {
-    throw new Response('Could not find the policy', {status: 404});
+    const formattedTitle = params.handle
+      .split('-')
+      .map((w: string) => w.charAt(0).toUpperCase() + w.slice(1))
+      .join(' ');
+    return {
+      policy: {
+        title: formattedTitle,
+        body: `<p>The ${formattedTitle} for CRUSH CLOTHING is configured directly within Shopify Admin. For questions regarding orders, complimentary US shipping on orders over $150, or our 30-day return window, please connect with our client care team.</p>`,
+      },
+    };
   }
 
   return {policy};
@@ -45,15 +54,25 @@ export default function Policy() {
   const {policy} = useLoaderData<typeof loader>();
 
   return (
-    <div className="policy">
-      <br />
-      <br />
-      <div>
-        <Link to="/policies">← Back to Policies</Link>
+    <div className="crush-policy bg-[var(--color-ivory)] text-[var(--color-ink)] min-h-[70vh] py-14 sm:py-20">
+      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+        <Link
+          to="/"
+          className="font-display text-xs tracking-widest uppercase text-[var(--color-ink)]/60 hover:text-[var(--color-ink)] no-underline mb-8 inline-block"
+        >
+          ← Return to Atelier
+        </Link>
+        <span className="font-display text-[10px] font-semibold tracking-[0.25em] text-[var(--color-ink)]/50 uppercase block mb-2">
+          CRUSH CLOTHING Legal & Policy
+        </span>
+        <h1 className="font-display font-bold text-3xl sm:text-5xl tracking-[0.06em] uppercase text-[var(--color-ink)] m-0 mb-8 border-b border-[var(--color-stone)] pb-6">
+          {policy.title}
+        </h1>
+        <div
+          className="font-body text-base text-[var(--color-ink)]/80 leading-relaxed space-y-4"
+          dangerouslySetInnerHTML={{__html: policy.body}}
+        />
       </div>
-      <br />
-      <h1>{policy.title}</h1>
-      <div dangerouslySetInnerHTML={{__html: policy.body}} />
     </div>
   );
 }

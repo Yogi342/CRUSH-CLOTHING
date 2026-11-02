@@ -24,6 +24,8 @@ import type {
 } from 'customer-accountapi.generated';
 import {PaginatedResourceSection} from '~/components/PaginatedResourceSection';
 
+import {redirect} from 'react-router';
+
 type OrdersLoaderData = {
   customer: CustomerOrdersFragment;
   filters: OrderFilterParams;
@@ -35,6 +37,12 @@ export const meta: Route.MetaFunction = () => {
 
 export async function loader({request, context}: Route.LoaderArgs) {
   const {customerAccount} = context;
+
+  const isLoggedIn = await customerAccount.isLoggedIn().catch(() => false);
+  if (!isLoggedIn) {
+    return redirect('/account');
+  }
+
   const paginationVariables = getPaginationVariables(request, {
     pageBy: 20,
   });
@@ -43,19 +51,23 @@ export async function loader({request, context}: Route.LoaderArgs) {
   const filters = parseOrderFilters(url.searchParams);
   const query = buildOrderSearchQuery(filters);
 
-  const {data, errors} = await customerAccount.query(CUSTOMER_ORDERS_QUERY, {
-    variables: {
-      ...paginationVariables,
-      query,
-      language: customerAccount.i18n.language,
-    },
-  });
+  try {
+    const {data, errors} = await customerAccount.query(CUSTOMER_ORDERS_QUERY, {
+      variables: {
+        ...paginationVariables,
+        query,
+        language: customerAccount.i18n.language,
+      },
+    });
 
-  if (errors?.length || !data?.customer) {
-    throw Error('Customer orders not found');
+    if (errors?.length || !data?.customer) {
+      return redirect('/account');
+    }
+
+    return {customer: data.customer, filters};
+  } catch {
+    return redirect('/account');
   }
-
-  return {customer: data.customer, filters};
 }
 
 export default function Orders() {

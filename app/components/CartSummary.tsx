@@ -47,14 +47,32 @@ export function CartSummary({cart, layout}: CartSummaryProps) {
 }
 
 function CartCheckoutActions({checkoutUrl}: {checkoutUrl?: string}) {
-  if (!checkoutUrl) return null;
+  if (!checkoutUrl) {
+    return (
+      <div className="pt-3">
+        <div className="p-3 bg-[var(--color-stone-light)] border border-[var(--color-stone)] text-center text-xs text-[var(--color-ink)]/70 mb-2">
+          Demo Mode: Storefront API token required for live checkout handoff.
+        </div>
+        <button
+          type="button"
+          disabled
+          className="w-full block py-3.5 bg-[var(--color-ink)]/40 text-[var(--color-ivory)] font-display text-xs font-semibold tracking-widest uppercase text-center cursor-not-allowed"
+        >
+          Checkout (Demo Mode)
+        </button>
+      </div>
+    );
+  }
 
   return (
-    <div>
-      <a href={checkoutUrl} target="_self">
-        <p>Continue to Checkout &rarr;</p>
+    <div className="pt-3">
+      <a
+        href={checkoutUrl}
+        target="_self"
+        className="crush-btn crush-btn-primary w-full py-3.5"
+      >
+        Proceed to Checkout →
       </a>
-      <br />
     </div>
   );
 }

@@ -6,6 +6,7 @@ import type {
 import {
   data,
   Form,
+  redirect,
   useActionData,
   useNavigation,
   useOutletContext,
@@ -32,6 +33,10 @@ export const meta: Route.MetaFunction = () => {
 };
 
 export async function loader({context}: Route.LoaderArgs) {
+  const isLoggedIn = await context.customerAccount.isLoggedIn().catch(() => false);
+  if (!isLoggedIn) {
+    return redirect('/account');
+  }
   await context.customerAccount.handleAuthStatus();
 
   return {};

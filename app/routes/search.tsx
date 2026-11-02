@@ -1,8 +1,9 @@
-import {useLoaderData} from 'react-router';
+import {useLoaderData, Link} from 'react-router';
 import type {Route} from './+types/search';
 import {getPaginationVariables, Analytics} from '@shopify/hydrogen';
 import {SearchForm} from '~/components/SearchForm';
 import {SearchResults} from '~/components/SearchResults';
+import {ProductItem} from '~/components/ProductItem';
 import {
   type RegularSearchReturn,
   type PredictiveSearchReturn,
@@ -40,38 +41,85 @@ export default function SearchPage() {
   const {type, term, result, error} = useLoaderData<typeof loader>();
   if (type === 'predictive') return null;
 
+  const hasMatches = Boolean(result?.total && result.total > 0);
+
   return (
-    <div className="search">
-      <h1>Search</h1>
-      <SearchForm>
-        {({inputRef}) => (
-          <>
-            <input
-              defaultValue={term}
-              name="q"
-              placeholder="Search…"
-              ref={inputRef}
-              type="search"
-            />
-            &nbsp;
-            <button type="submit">Search</button>
-          </>
+    <div className="crush-search-page bg-[var(--color-ivory)] text-[var(--color-ink)] min-h-[75vh] py-14 sm:py-20">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="mb-10 text-center max-w-2xl mx-auto">
+          <span className="font-display text-[10px] font-semibold tracking-[0.25em] text-[var(--color-ink)]/50 uppercase block mb-2">
+            Catalog Search
+          </span>
+          <h1 className="font-display font-bold text-3xl sm:text-5xl tracking-[0.06em] uppercase text-[var(--color-ink)] m-0">
+            Search The Collection
+          </h1>
+          <p className="font-body text-sm text-[var(--color-ink)]/70 mt-2">
+            Search across all dresses, tailoring, tops, and seasonal drops.
+          </p>
+
+          <div className="mt-8">
+            <SearchForm>
+              {({inputRef}) => (
+                <div className="flex items-center border-b-2 border-[var(--color-ink)] pb-2 max-w-xl mx-auto">
+                  <input
+                    defaultValue={term}
+                    name="q"
+                    placeholder="Search for garments, fabrics, silhouettes..."
+                    ref={inputRef}
+                    type="search"
+                    className="w-full bg-transparent font-body text-base text-[var(--color-ink)] placeholder:text-[var(--color-ink)]/40 outline-none"
+                  />
+                  <button
+                    type="submit"
+                    className="px-6 py-2.5 bg-[var(--color-ink)] text-[var(--color-ivory)] font-display text-xs font-semibold tracking-widest uppercase hover:bg-[var(--color-ink)]/90 transition-colors cursor-pointer"
+                  >
+                    Search
+                  </button>
+                </div>
+              )}
+            </SearchForm>
+          </div>
+        </div>
+
+        {error && (
+          <div className="p-4 bg-red-50 border border-red-200 text-red-700 text-xs text-center max-w-md mx-auto mb-8">
+            {error}
+          </div>
         )}
-      </SearchForm>
-      {error && <p style={{color: 'red'}}>{error}</p>}
-      {!term || !result?.total ? (
-        <SearchResults.Empty />
-      ) : (
-        <SearchResults result={result} term={term}>
-          {({articles, pages, products, term}) => (
-            <div>
-              <SearchResults.Products products={products} term={term} />
-              <SearchResults.Pages pages={pages} term={term} />
-              <SearchResults.Articles articles={articles} term={term} />
-            </div>
-          )}
-        </SearchResults>
-      )}
+
+        {!term ? (
+          <div className="text-center py-12 text-[var(--color-ink)]/50 font-display text-xs tracking-widest uppercase">
+            Enter a keyword above to search the archive.
+          </div>
+        ) : !hasMatches ? (
+          <div className="text-center py-16 border border-dashed border-[var(--color-stone)] max-w-xl mx-auto">
+            <h2 className="font-display text-base tracking-widest uppercase text-[var(--color-ink)] mb-2">
+              No Pieces Found For &ldquo;{term}&rdquo;
+            </h2>
+            <p className="font-body text-xs text-[var(--color-ink)]/60 mb-6">
+              Check your spelling or explore our complete collections.
+            </p>
+            <Link
+              to="/collections/all"
+              className="inline-flex px-6 py-3 bg-[var(--color-ink)] text-[var(--color-ivory)] font-display text-xs font-semibold tracking-widest uppercase no-underline hover:bg-black transition-colors"
+            >
+              Browse Complete Catalog
+            </Link>
+          </div>
+        ) : hasMatches ? (
+          <div className="mt-12">
+            <SearchResults result={result} term={term}>
+              {({articles, pages, products, term}) => (
+                <div className="space-y-12">
+                  <SearchResults.Products products={products} term={term} />
+                  <SearchResults.Pages pages={pages} term={term} />
+                  <SearchResults.Articles articles={articles} term={term} />
+                </div>
+              )}
+            </SearchResults>
+          </div>
+        ) : null}
+      </div>
       <Analytics.SearchView data={{searchTerm: term, searchResults: result}} />
     </div>
   );

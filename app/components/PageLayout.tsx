@@ -72,24 +72,29 @@ function CartAside({cart}: {cart: PageLayoutProps['cart']}) {
 function SearchAside() {
   const queriesDatalistId = useId();
   return (
-    <Aside type="search" heading="SEARCH">
-      <div className="predictive-search">
-        <br />
+    <Aside type="search" heading="SEARCH CATALOG">
+      <div className="predictive-search p-4">
         <SearchFormPredictive>
           {({fetchResults, goToSearch, inputRef}) => (
-            <>
+            <div className="flex items-center gap-2 border-b border-[var(--color-ink)] pb-2 mb-6">
               <input
                 name="q"
                 onChange={fetchResults}
                 onFocus={fetchResults}
-                placeholder="Search"
+                placeholder="Search dresses, blazers, tops..."
                 ref={inputRef}
                 type="search"
                 list={queriesDatalistId}
+                className="w-full bg-transparent font-body text-sm text-[var(--color-ink)] placeholder:text-[var(--color-ink)]/40 outline-none"
               />
-              &nbsp;
-              <button onClick={goToSearch}>Search</button>
-            </>
+              <button
+                type="button"
+                onClick={goToSearch}
+                className="font-display text-xs font-semibold tracking-wider uppercase text-[var(--color-ink)] hover:text-[var(--color-stone-dark)] px-2 cursor-pointer"
+              >
+                Find
+              </button>
+            </div>
           )}
         </SearchFormPredictive>
 
@@ -159,16 +164,13 @@ function MobileMenuAside({
   publicStoreDomain: PageLayoutProps['publicStoreDomain'];
 }) {
   return (
-    header.menu &&
-    header.shop.primaryDomain?.url && (
-      <Aside type="mobile" heading="MENU">
-        <HeaderMenu
-          menu={header.menu}
-          viewport="mobile"
-          primaryDomainUrl={header.shop.primaryDomain.url}
-          publicStoreDomain={publicStoreDomain}
-        />
-      </Aside>
-    )
+    <Aside type="mobile" heading="MENU">
+      <HeaderMenu
+        menu={header?.menu}
+        viewport="mobile"
+        primaryDomainUrl={header?.shop?.primaryDomain?.url || ''}
+        publicStoreDomain={publicStoreDomain}
+      />
+    </Aside>
   );
 }

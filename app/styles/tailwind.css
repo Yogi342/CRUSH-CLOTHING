@@ -1,6 +1,16 @@
-/**
- * Configure Tailwind v4 in this file using CSS variables and directives:
- * https://tailwindcss.com/docs/v4-beta#css-first-configuration
- */
-
 @import 'tailwindcss';
+
+@theme {
+  --color-ink: #111111;
+  --color-ivory: #F4F1E9;
+  --color-stone: #D8D5CE;
+  --color-stone-light: #ECEBE5;
+  --color-stone-dark: #BAB7AD;
+  --color-white: #FFFFFF;
+
+  --font-display: 'Space Grotesk', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-body: 'DM Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+
+  --ease-editorial: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-fluid: cubic-bezier(0.25, 1, 0.5, 1);
+}

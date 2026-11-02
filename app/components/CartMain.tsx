@@ -4,6 +4,7 @@ import type {CartApiQueryFragment} from 'storefrontapi.generated';
 import {useAside} from '~/components/Aside';
 import {CartLineItem, type CartLine} from '~/components/CartLineItem';
 import {CartSummary} from './CartSummary';
+import {FreeShippingMeter} from './FreeShippingMeter';
 
 export type CartLayout = 'page' | 'aside';
 
@@ -56,6 +57,9 @@ export function CartMain({layout, cart: originalCart}: CartMainProps) {
     >
       <CartEmpty hidden={linesCount} layout={layout} />
       <div className="cart-details">
+        {cartHasItems && (
+          <FreeShippingMeter subtotalAmount={cart?.cost?.subtotalAmount?.amount} />
+        )}
         <p id="cart-lines" className="sr-only">
           Line items
         </p>
@@ -94,15 +98,20 @@ function CartEmpty({
 }) {
   const {close} = useAside();
   return (
-    <div hidden={hidden}>
-      <br />
-      <p>
-        Looks like you haven&rsquo;t added anything yet, let&rsquo;s get you
-        started!
+    <div hidden={hidden} className="py-12 px-2 text-center">
+      <p className="font-display text-xs tracking-widest uppercase text-[var(--color-ink)]/50 mb-2">
+        Your Bag is Empty
       </p>
-      <br />
-      <Link to="/collections" onClick={close} prefetch="viewport">
-        Continue shopping →
+      <p className="font-body text-sm text-[var(--color-ink)]/80 max-w-xs mx-auto mb-6 leading-relaxed">
+        Discover the Spring / Summer 2026 collection and explore our new sculptural silhouettes.
+      </p>
+      <Link
+        to="/collections/all"
+        onClick={close}
+        prefetch="viewport"
+        className="inline-flex items-center justify-center px-6 py-3 bg-[var(--color-ink)] text-[var(--color-ivory)] font-display text-xs font-semibold tracking-widest uppercase hover:bg-[var(--color-ink)]/90 transition-colors no-underline"
+      >
+        Shop New Arrivals →
       </Link>
     </div>
   );
