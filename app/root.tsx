@@ -53,7 +53,15 @@ export const shouldRevalidate: ShouldRevalidateFunction = ({
  * https://github.com/remix-run/remix/issues/9242
  */
 export function links() {
+  const isDev = process.env.NODE_ENV !== 'production';
+  const tailwindUrl = isDev ? `${tailwindCss}?direct` : tailwindCss;
+  const resetUrl = isDev ? `${resetStyles}?direct` : resetStyles;
+  const appUrl = isDev ? `${appStyles}?direct` : appStyles;
+
   return [
+    {rel: 'stylesheet', href: tailwindUrl},
+    {rel: 'stylesheet', href: resetUrl},
+    {rel: 'stylesheet', href: appUrl},
     {
       rel: 'preconnect',
       href: 'https://cdn.shopify.com',
@@ -181,13 +189,22 @@ export function Layout({children}: {children?: React.ReactNode}) {
           dangerouslySetInnerHTML={{
             __html: `
               /* Critical Anti-FOUC & Initial Paint Containment */
-              html, body {
+              html {
                 background-color: #ffffff;
                 color: #171717;
                 margin: 0;
                 padding: 0;
                 font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
                 -webkit-font-smoothing: antialiased;
+              }
+              /* Strictly keep body visually hidden until CSS parses and sets visibility: visible */
+              body {
+                background-color: #ffffff;
+                color: #171717;
+                margin: 0;
+                padding: 0;
+                visibility: hidden;
+                opacity: 0;
               }
               a {
                 color: inherit;
@@ -231,6 +248,26 @@ export function Layout({children}: {children?: React.ReactNode}) {
             `,
           }}
         />
+        <script
+          nonce={nonce}
+          dangerouslySetInnerHTML={{
+            __html: `
+              setTimeout(function() {
+                if (document.body && document.body.style.visibility !== 'visible') {
+                  document.body.style.visibility = 'visible';
+                  document.body.style.opacity = '1';
+                }
+              }, 250);
+            `,
+          }}
+        />
+        <noscript>
+          <style
+            dangerouslySetInnerHTML={{
+              __html: `body { visibility: visible !important; opacity: 1 !important; }`,
+            }}
+          />
+        </noscript>
         <Meta />
         <Links />
       </head>
