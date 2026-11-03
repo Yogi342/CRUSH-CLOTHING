@@ -130,7 +130,7 @@ export default function Page() {
           </div>
           <a
             href="mailto:concierge@crushclothing.com"
-            className="px-6 py-3 bg-[var(--color-ink)] text-[var(--color-ivory)] font-display text-xs font-semibold tracking-widest uppercase no-underline hover:bg-black transition-colors shrink-0"
+            className="px-6 py-3 bg-[var(--color-ink)] text-[var(--color-ivory)] font-display text-xs font-semibold tracking-widest uppercase no-underline hover:bg-neutral-800 hover:shadow-md hover:-translate-y-0.5 transition-all shrink-0"
           >
             Contact Atelier →
           </a>

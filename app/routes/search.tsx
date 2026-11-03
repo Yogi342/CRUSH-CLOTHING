@@ -71,7 +71,7 @@ export default function SearchPage() {
                   />
                   <button
                     type="submit"
-                    className="px-6 py-2.5 rounded-full bg-[var(--color-ink)] text-[var(--color-ivory)] font-display text-xs font-semibold tracking-widest uppercase hover:bg-black transition-all cursor-pointer shadow-xs active:scale-95 ml-2 shrink-0"
+                    className="px-6 py-2.5 rounded-full bg-[var(--color-ink)] text-[var(--color-ivory)] font-display text-xs font-semibold tracking-widest uppercase hover:bg-neutral-800 hover:shadow-md hover:-translate-y-0.5 transition-all cursor-pointer shadow-xs active:scale-95 ml-2 shrink-0"
                   >
                     Search
                   </button>
@@ -101,7 +101,7 @@ export default function SearchPage() {
             </p>
             <Link
               to="/collections/all"
-              className="inline-flex px-6 py-3 bg-[var(--color-ink)] text-[var(--color-ivory)] font-display text-xs font-semibold tracking-widest uppercase no-underline hover:bg-black transition-colors"
+              className="inline-flex px-6 py-3 bg-[var(--color-ink)] text-[var(--color-ivory)] font-display text-xs font-semibold tracking-widest uppercase no-underline hover:bg-neutral-800 hover:shadow-md hover:-translate-y-0.5 transition-all"
             >
               Browse Complete Catalog
             </Link>

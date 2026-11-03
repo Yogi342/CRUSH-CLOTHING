@@ -17,6 +17,7 @@
   --ease-fluid: cubic-bezier(0.25, 1, 0.5, 1);
 }
 
+html.crush-ready body,
 body {
   visibility: visible !important;
   opacity: 1 !important;

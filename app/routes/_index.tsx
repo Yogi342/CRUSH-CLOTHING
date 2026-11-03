@@ -93,13 +93,13 @@ export default function Homepage() {
               <div className="crush-hero-ctas flex flex-col sm:flex-row items-stretch sm:items-center gap-3 pt-2">
                 <Link
                   to="/collections/all"
-                  className="rounded-full bg-neutral-900 hover:bg-black text-white px-8 py-3.5 sm:py-4 font-display text-xs font-bold tracking-widest uppercase shadow-md hover:shadow-lg transition-all active:scale-[0.99] cursor-pointer text-center"
+                  className="rounded-full bg-neutral-900 hover:bg-neutral-800 text-white px-8 py-3.5 sm:py-4 font-display text-xs font-bold tracking-widest uppercase shadow-md hover:shadow-xl hover:-translate-y-0.5 transition-all duration-300 active:scale-[0.99] cursor-pointer text-center inline-flex items-center justify-center gap-2 group"
                 >
                   Shop New Arrivals →
                 </Link>
                 <Link
                   to="/products/frill-tie-shoulder-mini-dress"
-                  className="rounded-full border border-neutral-300 hover:border-black text-neutral-900 px-8 py-3.5 sm:py-4 font-display text-xs font-bold tracking-widest uppercase transition-all hover:bg-neutral-50 cursor-pointer text-center"
+                  className="rounded-full border border-neutral-900 hover:bg-neutral-900 hover:text-white text-neutral-900 px-8 py-3.5 sm:py-4 font-display text-xs font-bold tracking-widest uppercase shadow-xs hover:shadow-lg hover:-translate-y-0.5 transition-all duration-300 active:scale-[0.99] cursor-pointer text-center group"
                 >
                   The Frill Tie Mini Edit
                 </Link>
@@ -280,7 +280,7 @@ export default function Homepage() {
                       </p>
                       <Link
                         to="/collections/all"
-                        className="rounded-full bg-neutral-900 text-white px-6 py-3 font-display text-xs uppercase tracking-wider font-semibold hover:bg-black inline-block"
+                        className="rounded-full bg-neutral-900 text-white px-6 py-3 font-display text-xs uppercase tracking-wider font-semibold hover:bg-neutral-800 hover:shadow-md hover:-translate-y-0.5 transition-all inline-block"
                       >
                         Explore Collections Catalog →
                       </Link>
@@ -384,7 +384,7 @@ export default function Homepage() {
               <div className="pt-4">
                 <Link
                   to="/collections/all"
-                  className="rounded-full bg-white text-neutral-900 hover:bg-neutral-100 px-8 py-4 font-display text-xs font-bold tracking-widest uppercase inline-block shadow-md transition-all"
+                  className="rounded-full bg-white text-neutral-900 hover:bg-neutral-100 hover:shadow-xl hover:-translate-y-0.5 px-8 py-4 font-display text-xs font-bold tracking-widest uppercase inline-flex items-center justify-center gap-2 shadow-md transition-all duration-300 group cursor-pointer"
                 >
                   Discover The Drop →
                 </Link>

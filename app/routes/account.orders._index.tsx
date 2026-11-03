@@ -193,7 +193,7 @@ function OrderSearchForm({
           <button
             type="submit"
             disabled={isSearching}
-            className="px-5 py-2 rounded-full bg-neutral-900 hover:bg-black text-white font-display text-xs font-semibold tracking-wider uppercase cursor-pointer transition-all shadow-xs active:scale-95 disabled:opacity-50"
+            className="px-5 py-2 rounded-full bg-neutral-900 hover:bg-neutral-800 hover:shadow-md hover:-translate-y-0.5 text-white font-display text-xs font-semibold tracking-wider uppercase cursor-pointer transition-all shadow-xs active:scale-95 disabled:opacity-50"
           >
             {isSearching ? 'Searching...' : 'Search'}
           </button>

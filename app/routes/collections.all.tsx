@@ -168,7 +168,7 @@ export default function CollectionAll() {
                   className={`px-4 py-1.5 rounded-full font-display text-xs tracking-wider uppercase border transition-all cursor-pointer ${
                     categoryFilter === cat.id
                       ? 'bg-[var(--color-ink)] text-[var(--color-ivory)] border-[var(--color-ink)] font-semibold shadow-xs'
-                      : 'bg-transparent text-[var(--color-ink)] border-[var(--color-stone)] hover:border-[var(--color-ink)] hover:bg-white/40'
+                      : 'bg-transparent text-[var(--color-ink)] border-[var(--color-stone)] hover:border-black hover:bg-neutral-900 hover:text-white hover:shadow-xs hover:-translate-y-0.5'
                   }`}
                 >
                   {cat.label}
@@ -217,7 +217,7 @@ export default function CollectionAll() {
                   className={`px-3 py-1 rounded-full font-display text-[11px] tracking-wider uppercase border transition-all cursor-pointer ${
                     priceFilter === tier.id
                       ? 'bg-[var(--color-ink)] text-[var(--color-ivory)] border-[var(--color-ink)] font-semibold'
-                      : 'bg-white/30 text-[var(--color-ink)]/80 border-[var(--color-stone)] hover:border-[var(--color-ink)]'
+                      : 'bg-white/30 text-[var(--color-ink)]/80 border-[var(--color-stone)] hover:border-black hover:bg-neutral-900 hover:text-white hover:shadow-xs hover:-translate-y-0.5'
                   }`}
                 >
                   {tier.label}

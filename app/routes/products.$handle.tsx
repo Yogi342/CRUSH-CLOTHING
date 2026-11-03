@@ -760,8 +760,7 @@ export default function ProductPage() {
                             className={`py-3.5 rounded-xl text-center font-display text-xs font-bold tracking-wider uppercase transition-all duration-200 cursor-pointer relative ${
                               isSelected
                                 ? 'bg-neutral-900 text-white shadow-md'
-                                : isSizeAvailable
-                                ? 'border border-neutral-200 bg-white text-neutral-800 hover:border-black'
+                                : isSizeAvailable ? 'border border-neutral-200 bg-white text-neutral-800 hover:border-neutral-900 hover:bg-neutral-900 hover:text-white hover:shadow-sm hover:-translate-y-0.5'
                                 : 'border border-neutral-200 bg-neutral-100 text-neutral-400 cursor-not-allowed opacity-60'
                             }`}
                             aria-checked={isSelected}
@@ -825,7 +824,7 @@ export default function ProductPage() {
                   <button
                     type="button"
                     onClick={() => setQuantity((q) => Math.max(1, q - 1))}
-                    className="w-10 h-10 rounded-full flex items-center justify-center font-display text-lg hover:bg-neutral-100 transition-all cursor-pointer text-neutral-700"
+                    className="w-10 h-10 rounded-full flex items-center justify-center font-display text-lg hover:bg-neutral-900 hover:text-white transition-all duration-200 cursor-pointer text-neutral-700 active:scale-95"
                     aria-label="Decrease quantity"
                   >
                     −
@@ -842,7 +841,7 @@ export default function ProductPage() {
                   <button
                     type="button"
                     onClick={() => setQuantity((q) => Math.min(10, q + 1))}
-                    className="w-10 h-10 rounded-full flex items-center justify-center font-display text-lg hover:bg-neutral-100 transition-all cursor-pointer text-neutral-700"
+                    className="w-10 h-10 rounded-full flex items-center justify-center font-display text-lg hover:bg-neutral-900 hover:text-white transition-all duration-200 cursor-pointer text-neutral-700 active:scale-95"
                     aria-label="Increase quantity"
                   >
                     +
@@ -862,7 +861,7 @@ export default function ProductPage() {
                         },
                       ]}
                     >
-                      <span className="w-full h-14 rounded-full bg-neutral-900 hover:bg-black text-white text-xs sm:text-sm font-bold tracking-widest uppercase shadow-md hover:shadow-lg transition-all flex items-center justify-center gap-3 active:scale-[0.99] cursor-pointer">
+                      <span className="w-full h-14 rounded-full bg-neutral-900 group-hover:bg-neutral-800 text-white text-xs sm:text-sm font-bold tracking-widest uppercase shadow-md group-hover:shadow-xl group-hover:-translate-y-0.5 transition-all duration-300 flex items-center justify-center gap-3 active:scale-[0.99] cursor-pointer">
                         {isAvailable ? (
                           <>
                             <svg
@@ -1177,7 +1176,7 @@ export default function ProductPage() {
                 <button
                   type="button"
                   onClick={() => setSizeGuideOpen(true)}
-                  className="w-full py-3.5 rounded-full bg-neutral-900 hover:bg-black text-white text-xs font-bold tracking-widest uppercase cursor-pointer shadow-sm transition-all"
+                  className="w-full py-3.5 rounded-full bg-neutral-900 hover:bg-neutral-800 hover:shadow-md hover:-translate-y-0.5 text-white text-xs font-bold tracking-widest uppercase cursor-pointer shadow-sm transition-all"
                 >
                   ✦ Open Size Advisor Modal →
                 </button>
@@ -1486,8 +1485,7 @@ export default function ProductPage() {
             >
               <span
                 className={`rounded-full py-2.5 px-5 sm:py-3 sm:px-8 text-xs font-bold tracking-widest uppercase shadow-md transition-all flex items-center justify-center ${
-                  isAvailable
-                    ? 'bg-neutral-900 hover:bg-black text-white cursor-pointer'
+                  isAvailable ? 'bg-neutral-900 group-hover:bg-neutral-800 text-white group-hover:shadow-lg group-hover:-translate-y-0.5 cursor-pointer'
                     : 'bg-neutral-200 text-neutral-400 cursor-not-allowed'
                 }`}
               >

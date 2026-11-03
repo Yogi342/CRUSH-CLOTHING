@@ -179,13 +179,19 @@ export function Layout({children}: {children?: React.ReactNode}) {
       <head>
         <meta charSet="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, viewport-fit=cover" />
+        <link rel="preload" href={tailwindUrl} as="style" />
+        <link rel="preload" href={appUrl} as="style" />
         <Meta />
         <Links />
         <style
           nonce={nonce}
           dangerouslySetInnerHTML={{
             __html: `
-              /* Critical Anti-FOUC & Initial Paint Containment */
+              /* ========================================================
+                 CRITICAL ZERO-FOUC & ARCHITECTURAL GATING
+                 Ensures no raw HTML, unstyled text, or unconstrained
+                 SVGs can EVER flash before stylesheets are fully parsed.
+                 ======================================================== */
               *, *::before, *::after {
                 box-sizing: border-box;
               }
@@ -198,6 +204,17 @@ export function Layout({children}: {children?: React.ReactNode}) {
                 -webkit-font-smoothing: antialiased;
                 -webkit-text-size-adjust: 100%;
               }
+              /* Strictly gate body visibility until stylesheets are parsed */
+              html:not(.crush-ready) body {
+                visibility: hidden !important;
+                opacity: 0 !important;
+                pointer-events: none !important;
+              }
+              html.crush-ready body {
+                visibility: visible !important;
+                opacity: 1 !important;
+                transition: opacity 0.18s cubic-bezier(0.16, 1, 0.3, 1) !important;
+              }
               body {
                 background-color: #ffffff;
                 color: #111827;
@@ -207,8 +224,13 @@ export function Layout({children}: {children?: React.ReactNode}) {
                 width: 100%;
               }
               a {
-                color: inherit;
-                text-decoration: none;
+                color: inherit !important;
+                text-decoration: none !important;
+              }
+              ul, ol, menu {
+                list-style: none !important;
+                margin: 0 !important;
+                padding: 0 !important;
               }
               /* Strictly hide all unexpanded drawers and hidden utility classes on frame 1 */
               .hidden {
@@ -223,20 +245,26 @@ export function Layout({children}: {children?: React.ReactNode}) {
               .crush-mega-menu {
                 display: none !important;
               }
-              /* Strict containment for icons so SVGs can NEVER blow up to viewport width */
-              svg {
+              /* Strict containment for icons: SVGs can NEVER blow up beyond icon size */
+              svg:not(.crush-svg-allow-large) {
                 display: inline-block;
                 vertical-align: middle;
-                max-width: 100%;
+                max-width: 24px !important;
+                max-height: 24px !important;
+                width: auto;
                 height: auto;
               }
               header svg,
               button svg,
-              nav svg {
+              nav svg,
+              a svg {
                 width: 1.125rem !important;
                 height: 1.125rem !important;
                 max-width: 20px !important;
                 max-height: 20px !important;
+              }
+              svg circle, svg path, svg line {
+                vector-effect: non-scaling-stroke;
               }
               /* Critical Navbar Baseline Layout */
               .crush-header-wrapper {
@@ -263,6 +291,93 @@ export function Layout({children}: {children?: React.ReactNode}) {
             `,
           }}
         />
+        {/* Synchronous CSS-readiness observer: reveals page the millisecond stylesheets parse */}
+        <script
+          nonce={nonce}
+          dangerouslySetInnerHTML={{
+            __html: `
+              (function() {
+                var docEl = document.documentElement;
+                var revealed = false;
+                function reveal() {
+                  if (revealed) return;
+                  revealed = true;
+                  docEl.classList.add('crush-ready');
+                }
+
+                if (document.readyState === 'complete') {
+                  reveal();
+                  return;
+                }
+
+                var links = document.querySelectorAll('link[rel="stylesheet"]');
+                var count = links.length;
+                if (!count) {
+                  reveal();
+                  return;
+                }
+
+                var done = 0;
+                function onSheetLoaded() {
+                  done++;
+                  if (done >= count) {
+                    reveal();
+                  }
+                }
+
+                for (var i = 0; i < links.length; i++) {
+                  var link = links[i];
+                  try {
+                    if (link.sheet) {
+                      onSheetLoaded();
+                      continue;
+                    }
+                  } catch (e) {}
+                  link.addEventListener('load', onSheetLoaded, {once: true});
+                  link.addEventListener('error', onSheetLoaded, {once: true});
+                }
+
+                // High-frequency animation-frame poll for sheet readiness
+                var rafCount = 0;
+                function checkSheets() {
+                  var allReady = true;
+                  for (var j = 0; j < links.length; j++) {
+                    try {
+                      if (!links[j].sheet) {
+                        allReady = false;
+                        break;
+                      }
+                    } catch (e) {}
+                  }
+                  if (allReady) {
+                    reveal();
+                  } else if (rafCount++ < 60) {
+                    requestAnimationFrame(checkSheets);
+                  } else {
+                    reveal();
+                  }
+                }
+                requestAnimationFrame(checkSheets);
+
+                // Watchdog fallback (1000ms max) guarantees page is never stuck
+                setTimeout(reveal, 1000);
+              })();
+            `,
+          }}
+        />
+        <noscript>
+          <style
+            dangerouslySetInnerHTML={{
+              __html: `
+                html:not(.crush-ready) body,
+                body {
+                  visibility: visible !important;
+                  opacity: 1 !important;
+                }
+              `,
+            }}
+          />
+        </noscript>
       </head>
       <body>
         {children}
