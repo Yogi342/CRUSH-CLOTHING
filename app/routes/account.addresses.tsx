@@ -317,7 +317,7 @@ function NewAddressForm() {
             disabled={stateForMethod('POST') !== 'idle'}
             formMethod="POST"
             type="submit"
-            className="px-6 py-2.5 rounded-full bg-neutral-900 hover:bg-neutral-800 hover:shadow-md hover:-translate-y-0.5 text-white font-display text-xs font-semibold tracking-wider uppercase cursor-pointer transition-all shadow-xs active:scale-95 disabled:opacity-50"
+            className="px-6 py-2.5 rounded-full bg-neutral-900 hover:bg-neutral-800 hover:shadow-md active:scale-95 text-white font-display text-xs font-semibold tracking-wider uppercase cursor-pointer transition-all shadow-xs active:scale-95 disabled:opacity-50"
           >
             {stateForMethod('POST') !== 'idle' ? 'Creating...' : 'Create Address'}
           </button>
@@ -347,7 +347,7 @@ function ExistingAddresses({
                 disabled={stateForMethod('PUT') !== 'idle'}
                 formMethod="PUT"
                 type="submit"
-                className="px-5 py-2 rounded-full bg-neutral-900 hover:bg-neutral-800 hover:shadow-md hover:-translate-y-0.5 text-white font-display text-xs font-semibold tracking-wider uppercase cursor-pointer transition-all shadow-xs active:scale-95 disabled:opacity-50"
+                className="px-5 py-2 rounded-full bg-neutral-900 hover:bg-neutral-800 hover:shadow-md active:scale-95 text-white font-display text-xs font-semibold tracking-wider uppercase cursor-pointer transition-all shadow-xs active:scale-95 disabled:opacity-50"
               >
                 {stateForMethod('PUT') !== 'idle' ? 'Saving...' : 'Save'}
               </button>

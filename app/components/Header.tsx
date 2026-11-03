@@ -551,7 +551,7 @@ export function HeaderMenu({
         <NavLink
           to="/account"
           onClick={close}
-          className="flex items-center justify-between py-3 px-4 rounded-xl bg-neutral-900 text-white font-display text-xs font-semibold tracking-widest uppercase no-underline shadow-sm hover:bg-neutral-800 hover:shadow-md hover:-translate-y-0.5 transition-all"
+          className="flex items-center justify-between py-3 px-4 rounded-xl bg-neutral-900 text-white font-display text-xs font-semibold tracking-widest uppercase no-underline shadow-sm hover:bg-neutral-800 hover:shadow-md active:scale-[0.98] transition-all duration-200"
         >
           <div className="flex items-center gap-2.5">
             <svg
@@ -673,7 +673,7 @@ function CartBadge({count}: {count: number}) {
   return (
     <button
       type="button"
-      className="inline-flex items-center gap-1.5 sm:gap-2.5 px-3 py-1.5 sm:px-4 sm:py-2 bg-neutral-900 hover:bg-neutral-800 hover:shadow-md hover:-translate-y-0.5 text-white rounded-full cursor-pointer shadow-xs transition-all duration-200 active:scale-95 group"
+      className="inline-flex items-center gap-1.5 sm:gap-2.5 px-3 py-1.5 sm:px-4 sm:py-2 bg-neutral-900 hover:bg-neutral-800 hover:shadow-md text-white rounded-full cursor-pointer shadow-xs transition-all duration-200 active:scale-95 group"
       onClick={(e) => {
         e.preventDefault();
         open('cart');

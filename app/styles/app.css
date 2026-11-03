@@ -39,37 +39,42 @@ h1, h2, h3, h4, h5, h6, .font-display {
 
 img { border-radius: 4px; }
 
-/* Button & Interactive Element Hover Base */
-button, input[type="submit"], a.btn, [role="button"] {
-  transition: all 250ms var(--ease-editorial);
+/* ========================================================
+ * CRUSH CLOTHING — SILKY SMOOTH LUXURY BUTTON SYSTEM
+ * Hardware-accelerated feedback, zero jitter, zero layout displacement
+ * ======================================================== */
+button, input[type="submit"], a.btn, [role="button"], .crush-btn {
+  transition: background-color 200ms cubic-bezier(0.16, 1, 0.3, 1),
+              border-color 200ms cubic-bezier(0.16, 1, 0.3, 1),
+              color 200ms cubic-bezier(0.16, 1, 0.3, 1),
+              box-shadow 240ms cubic-bezier(0.16, 1, 0.3, 1),
+              opacity 200ms ease;
   cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
 }
 
-button:active:not(:disabled), input[type="submit"]:active:not(:disabled) {
-  transform: scale(0.98);
+button:active:not(:disabled), input[type="submit"]:active:not(:disabled), .crush-btn:active {
+  transform: scale(0.975);
+  transition: transform 90ms ease-out;
 }
 
 /* Global Luxury Button Hover Interactions */
 .crush-hover-lift {
-  transition: transform 250ms var(--ease-editorial), box-shadow 250ms var(--ease-editorial), background-color 250ms ease;
+  transition: background-color 200ms cubic-bezier(0.16, 1, 0.3, 1),
+              box-shadow 240ms cubic-bezier(0.16, 1, 0.3, 1);
 }
 .crush-hover-lift:hover {
-  transform: translateY(-2px);
   box-shadow: 0 8px 24px rgba(17, 17, 17, 0.16);
 }
 
-/* Ensure all primary buttons elevate distinctly on hover */
+/* Ensure all primary dark buttons transition cleanly to rich charcoal + soft shadow */
 button.bg-neutral-900:not(:disabled):hover,
 a.bg-neutral-900:not(:disabled):hover {
-  background-color: #262626;
-  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.18);
-  transform: translateY(-1.5px);
+  background-color: #262626 !important;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.18) !important;
 }
 
-/* ========================================================
- * CRUSH CLOTHING — LUXURY BUTTON SYSTEM
- * Guaranteed high-contrast, tactile hover, zero invisible text
- * ======================================================== */
+/* Luxury Atelier Button Base */
 .crush-btn {
   display: inline-flex;
   align-items: center;
@@ -84,20 +89,15 @@ a.bg-neutral-900:not(:disabled):hover {
   padding: 0.95rem 1.85rem;
   border-radius: 9999px;
   position: relative;
-  transition: all 260ms var(--ease-editorial);
   user-select: none;
   white-space: nowrap;
 }
 
-.crush-btn:active {
-  transform: scale(0.98) !important;
-}
-
-/* Primary Ink Black Button (For light surfaces: Chalk Ivory / Soft Stone) */
+/* Primary Ink Black Button */
 .crush-btn-primary {
   background-color: var(--color-ink) !important;
   color: var(--color-ivory) !important;
-  border: 1px solid var(--color-ink) !important;
+  border: 1.5px solid var(--color-ink) !important;
 }
 .crush-btn-primary:hover,
 .crush-btn-primary:focus-visible {
@@ -105,52 +105,58 @@ a.bg-neutral-900:not(:disabled):hover {
   color: #ffffff !important;
   border-color: #262626 !important;
   box-shadow: 0 8px 24px rgba(17, 17, 17, 0.2) !important;
-  transform: translateY(-2px);
 }
 
-/* Secondary Outline Button (For light surfaces) */
+/* Secondary Outline Button (Inverts smoothly on hover) */
 .crush-btn-secondary {
   background-color: transparent !important;
   color: var(--color-ink) !important;
-  border: 1px solid var(--color-ink) !important;
+  border: 1.5px solid var(--color-ink) !important;
 }
 .crush-btn-secondary:hover,
 .crush-btn-secondary:focus-visible {
   background-color: var(--color-ink) !important;
-  color: var(--color-ivory) !important;
+  color: #ffffff !important;
   border-color: var(--color-ink) !important;
-  box-shadow: 0 4px 14px rgba(17, 17, 17, 0.15);
-  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(17, 17, 17, 0.14) !important;
 }
 
-/* Primary Light Ivory Button (For dark surfaces: Ink Black background e.g. Editorial / Hero) */
+/* Primary Light Ivory Button (For dark editorial surfaces) */
 .crush-btn-light-primary {
   background-color: var(--color-ivory) !important;
   color: var(--color-ink) !important;
-  border: 1px solid var(--color-ivory) !important;
+  border: 1.5px solid var(--color-ivory) !important;
 }
 .crush-btn-light-primary:hover,
 .crush-btn-light-primary:focus-visible {
-  background-color: transparent !important;
-  color: var(--color-ivory) !important;
-  border-color: var(--color-ivory) !important;
-  box-shadow: 0 4px 16px rgba(244, 241, 233, 0.18);
-  transform: translateY(-2px);
+  background-color: #f5f5f5 !important;
+  color: var(--color-ink) !important;
+  border-color: #f5f5f5 !important;
+  box-shadow: 0 8px 24px rgba(255, 255, 255, 0.22) !important;
 }
 
-/* Secondary Light Outline Button (For dark surfaces) */
+/* Secondary Light Outline Button */
 .crush-btn-light-secondary {
   background-color: transparent !important;
   color: var(--color-ivory) !important;
-  border: 1px solid rgba(244, 241, 233, 0.8) !important;
+  border: 1.5px solid rgba(244, 241, 233, 0.8) !important;
 }
 .crush-btn-light-secondary:hover,
 .crush-btn-light-secondary:focus-visible {
   background-color: var(--color-ivory) !important;
   color: var(--color-ink) !important;
   border-color: var(--color-ivory) !important;
-  box-shadow: 0 4px 16px rgba(244, 241, 233, 0.22);
-  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(244, 241, 233, 0.22) !important;
+}
+
+/* Silky Group Hover Micro-Arrow Animation */
+.group-hover-arrow {
+  display: inline-block;
+  transition: transform 200ms cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: transform;
+}
+.group:hover .group-hover-arrow {
+  transform: translateX(4px);
 }
 
 

@@ -87,7 +87,7 @@ export default function Policies() {
             <Link
               key={policy.id}
               to={`/policies/${policy.handle}`}
-              className="group block p-6 sm:p-8 bg-white border border-[var(--color-stone)] hover:border-[var(--color-ink)] transition-all duration-300 no-underline shadow-xs hover:shadow-md hover:-translate-y-0.5"
+              className="group block p-6 sm:p-8 bg-white border border-[var(--color-stone)] hover:border-[var(--color-ink)] transition-all duration-300 no-underline shadow-xs hover:shadow-md active:scale-95"
             >
               <div className="flex items-center justify-between mb-4">
                 <span className="font-display text-[10px] font-semibold tracking-[0.2em] uppercase text-[var(--color-ink)]/50">

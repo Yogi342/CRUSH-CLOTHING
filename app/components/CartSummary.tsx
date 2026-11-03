@@ -69,9 +69,10 @@ function CartCheckoutActions({checkoutUrl}: {checkoutUrl?: string}) {
       <a
         href={checkoutUrl}
         target="_self"
-        className="crush-btn crush-btn-primary w-full py-3.5"
+        className="crush-btn crush-btn-primary w-full py-3.5 group inline-flex items-center justify-center gap-2"
       >
-        Proceed to Checkout →
+        <span>Proceed to Checkout</span>
+        <span className="group-hover-arrow">→</span>
       </a>
     </div>
   );
@@ -133,7 +134,7 @@ function CartDiscounts({
           <button
             type="submit"
             aria-label="Apply discount code"
-            className="px-4 py-1.5 rounded-full bg-neutral-900 hover:bg-neutral-800 hover:shadow-sm hover:-translate-y-0.5 text-white font-display text-[11px] font-semibold tracking-wider uppercase cursor-pointer transition-all shadow-xs active:scale-95 shrink-0"
+            className="px-4 py-1.5 rounded-full bg-neutral-900 hover:bg-neutral-800 hover:shadow-sm active:scale-95 text-white font-display text-[11px] font-semibold tracking-wider uppercase cursor-pointer transition-all shadow-xs active:scale-95 shrink-0"
           >
             Apply
           </button>
@@ -263,7 +264,7 @@ function CartGiftCard({
             type="submit"
             disabled={giftCardAddFetcher.state !== 'idle'}
             aria-label="Apply gift card code"
-            className="px-4 py-1.5 rounded-full bg-neutral-900 hover:bg-neutral-800 hover:shadow-sm hover:-translate-y-0.5 text-white font-display text-[11px] font-semibold tracking-wider uppercase cursor-pointer transition-all shadow-xs active:scale-95 shrink-0 disabled:opacity-40"
+            className="px-4 py-1.5 rounded-full bg-neutral-900 hover:bg-neutral-800 hover:shadow-sm active:scale-95 text-white font-display text-[11px] font-semibold tracking-wider uppercase cursor-pointer transition-all shadow-xs active:scale-95 shrink-0 disabled:opacity-40"
           >
             Apply
           </button>

@@ -465,9 +465,9 @@ export function SizeAdvisorModal({
                   <button
                     type="button"
                     onClick={() => setStep(2)}
-                    className="w-full py-4 rounded-full bg-neutral-900 hover:bg-neutral-800 hover:shadow-xl hover:-translate-y-0.5 text-white font-display text-xs font-bold tracking-widest uppercase shadow-md transition-all duration-200 cursor-pointer active:scale-[0.99]"
+                    className="w-full py-4 rounded-full bg-neutral-900 hover:bg-neutral-800 hover:shadow-xl active:scale-[0.98] text-white font-display text-xs font-bold tracking-widest uppercase shadow-md transition-all duration-200 cursor-pointer active:scale-[0.99]"
                   >
-                    Continue →
+                    <span>Continue</span> <span className="group-hover-arrow">→</span>
                   </button>
                 </div>
               </div>
@@ -561,7 +561,7 @@ export function SizeAdvisorModal({
                   <button
                     type="button"
                     onClick={() => setStep(3)}
-                    className="w-full py-4 rounded-full bg-neutral-900 hover:bg-neutral-800 hover:shadow-xl hover:-translate-y-0.5 text-white font-display text-xs font-bold tracking-widest uppercase shadow-md transition-all duration-200 cursor-pointer active:scale-[0.99]"
+                    className="w-full py-4 rounded-full bg-neutral-900 hover:bg-neutral-800 hover:shadow-xl active:scale-[0.98] text-white font-display text-xs font-bold tracking-widest uppercase shadow-md transition-all duration-200 cursor-pointer active:scale-[0.99]"
                   >
                     Continue →
                   </button>
@@ -630,9 +630,9 @@ export function SizeAdvisorModal({
                   <button
                     type="button"
                     onClick={() => setStep(4)}
-                    className="w-full py-4 rounded-full bg-neutral-900 hover:bg-neutral-800 hover:shadow-xl hover:-translate-y-0.5 text-white font-display text-xs font-bold tracking-widest uppercase shadow-md transition-all duration-200 cursor-pointer active:scale-[0.99]"
+                    className="w-full py-4 rounded-full bg-neutral-900 hover:bg-neutral-800 hover:shadow-xl active:scale-[0.98] text-white font-display text-xs font-bold tracking-widest uppercase shadow-md transition-all duration-200 cursor-pointer active:scale-[0.99]"
                   >
-                    Show my size →
+                    <span>Show my size</span> <span className="group-hover-arrow">→</span>
                   </button>
                   <button
                     type="button"
@@ -757,7 +757,7 @@ export function SizeAdvisorModal({
                   <button
                     type="button"
                     onClick={() => handleApplySize(activeRecommendedSize, true)}
-                    className="w-full py-4 rounded-full bg-neutral-900 hover:bg-neutral-800 hover:shadow-xl hover:-translate-y-0.5 text-white font-display text-xs font-bold tracking-widest uppercase shadow-md transition-all duration-200 cursor-pointer active:scale-[0.99]"
+                    className="w-full py-4 rounded-full bg-neutral-900 hover:bg-neutral-800 hover:shadow-xl active:scale-[0.98] text-white font-display text-xs font-bold tracking-widest uppercase shadow-md transition-all duration-200 cursor-pointer active:scale-[0.99]"
                   >
                     Add size {activeRecommendedSize} to bag
                   </button>
@@ -841,7 +841,7 @@ export function SizeAdvisorModal({
             <button
               type="button"
               onClick={() => setActiveTab('advisor')}
-              className="w-full py-3.5 rounded-full bg-neutral-900 hover:bg-neutral-800 hover:shadow-xl hover:-translate-y-0.5 text-white font-display text-xs font-bold tracking-widest uppercase shadow-md transition-all duration-200 cursor-pointer"
+              className="w-full py-3.5 rounded-full bg-neutral-900 hover:bg-neutral-800 hover:shadow-xl active:scale-[0.98] text-white font-display text-xs font-bold tracking-widest uppercase shadow-md transition-all duration-200 cursor-pointer"
             >
               ← Back To Smart Fit Advisor
             </button>

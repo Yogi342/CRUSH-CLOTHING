@@ -93,13 +93,14 @@ export default function Homepage() {
               <div className="crush-hero-ctas flex flex-col sm:flex-row items-stretch sm:items-center gap-3 pt-2">
                 <Link
                   to="/collections/all"
-                  className="rounded-full bg-neutral-900 hover:bg-neutral-800 text-white px-8 py-3.5 sm:py-4 font-display text-xs font-bold tracking-widest uppercase shadow-md hover:shadow-xl hover:-translate-y-0.5 transition-all duration-300 active:scale-[0.99] cursor-pointer text-center inline-flex items-center justify-center gap-2 group"
+                  className="rounded-full bg-neutral-900 hover:bg-neutral-800 text-white px-8 py-3.5 sm:py-4 font-display text-xs font-bold tracking-widest uppercase shadow-md hover:shadow-xl transition-all duration-200 active:scale-[0.98] cursor-pointer text-center inline-flex items-center justify-center gap-2.5 group"
                 >
-                  Shop New Arrivals →
+                  <span>Shop New Arrivals</span>
+                  <span className="group-hover-arrow">→</span>
                 </Link>
                 <Link
                   to="/products/frill-tie-shoulder-mini-dress"
-                  className="rounded-full border border-neutral-900 hover:bg-neutral-900 hover:text-white text-neutral-900 px-8 py-3.5 sm:py-4 font-display text-xs font-bold tracking-widest uppercase shadow-xs hover:shadow-lg hover:-translate-y-0.5 transition-all duration-300 active:scale-[0.99] cursor-pointer text-center group"
+                  className="rounded-full border border-neutral-900 hover:bg-neutral-900 hover:text-white text-neutral-900 px-8 py-3.5 sm:py-4 font-display text-xs font-bold tracking-widest uppercase shadow-xs hover:shadow-lg transition-all duration-200 active:scale-[0.98] cursor-pointer text-center group"
                 >
                   The Frill Tie Mini Edit
                 </Link>
@@ -280,7 +281,7 @@ export default function Homepage() {
                       </p>
                       <Link
                         to="/collections/all"
-                        className="rounded-full bg-neutral-900 text-white px-6 py-3 font-display text-xs uppercase tracking-wider font-semibold hover:bg-neutral-800 hover:shadow-md hover:-translate-y-0.5 transition-all inline-block"
+                        className="rounded-full bg-neutral-900 text-white px-6 py-3 font-display text-xs uppercase tracking-wider font-semibold hover:bg-neutral-800 hover:shadow-md active:scale-[0.98] transition-all inline-block"
                       >
                         Explore Collections Catalog →
                       </Link>
@@ -341,7 +342,7 @@ export default function Homepage() {
             ].map((press) => (
               <div
                 key={press.source}
-                className="p-6 bg-white rounded-2xl border border-neutral-100 hover:border-black transition-all duration-300 flex flex-col justify-between shadow-xs hover:shadow-md hover:-translate-y-1"
+                className="p-6 bg-white rounded-2xl border border-neutral-100 hover:border-black transition-all duration-300 flex flex-col justify-between shadow-xs hover:shadow-md"
               >
                 <div>
                   <span className="font-display text-[9px] font-semibold tracking-[0.25em] uppercase text-neutral-400 block mb-3">
@@ -384,9 +385,10 @@ export default function Homepage() {
               <div className="pt-4">
                 <Link
                   to="/collections/all"
-                  className="rounded-full bg-white text-neutral-900 hover:bg-neutral-100 hover:shadow-xl hover:-translate-y-0.5 px-8 py-4 font-display text-xs font-bold tracking-widest uppercase inline-flex items-center justify-center gap-2 shadow-md transition-all duration-300 group cursor-pointer"
+                  className="rounded-full bg-white text-neutral-900 hover:bg-neutral-100 hover:shadow-xl px-8 py-4 font-display text-xs font-bold tracking-widest uppercase inline-flex items-center justify-center gap-2.5 shadow-md transition-all duration-200 active:scale-[0.98] group cursor-pointer"
                 >
-                  Discover The Drop →
+                  <span>Discover The Drop</span>
+                  <span className="group-hover-arrow">→</span>
                 </Link>
               </div>
             </div>
