@@ -217,8 +217,46 @@ export function LivingRack() {
               </div>
             </div>
 
-            {/* Suspended Garment Cards on Atelier Hangers */}
-            <div className="space-y-2.5" role="tablist" aria-label="Clothing rack garments">
+            {/* Mobile Kinetic Rack Selector: Compact horizontal swipe tray */}
+            <div className="lg:hidden flex gap-3 overflow-x-auto py-2 scrollbar-none snap-x snap-mandatory" role="tablist" aria-label="Mobile clothing rack garments">
+              {LOOKS.map((look, index) => {
+                const isActive = index === activeIndex;
+                return (
+                  <button
+                    key={look.id}
+                    type="button"
+                    role="tab"
+                    aria-selected={isActive}
+                    onClick={() => selectLook(index)}
+                    className={`snap-center shrink-0 w-44 p-3 rounded-2xl border text-left transition-all cursor-pointer bg-white ${
+                      isActive
+                        ? 'border-neutral-900 shadow-md ring-2 ring-black/5'
+                        : 'border-neutral-200/80 opacity-75'
+                    }`}
+                  >
+                    <div className="flex items-center gap-2.5">
+                      <div className="w-10 h-12 rounded-lg overflow-hidden bg-neutral-100 shrink-0 border border-neutral-200/60">
+                        <img src={look.garmentImg} alt={look.title} className="w-full h-full object-cover" />
+                      </div>
+                      <div className="min-w-0">
+                        <span className="font-display text-[9px] font-bold uppercase tracking-wider text-neutral-400 block">
+                          LOOK {look.number}
+                        </span>
+                        <h4 className="font-display text-xs font-bold text-neutral-900 truncate m-0">
+                          {look.title}
+                        </h4>
+                        <span className="font-display text-xs font-semibold text-neutral-900 block mt-0.5">
+                          {look.price}
+                        </span>
+                      </div>
+                    </div>
+                  </button>
+                );
+              })}
+            </div>
+
+            {/* Desktop Suspended Garment Cards on Atelier Hangers */}
+            <div className="hidden lg:block space-y-2.5" role="tablist" aria-label="Clothing rack garments">
               {LOOKS.map((look, index) => {
                 const isActive = index === activeIndex;
                 return (

@@ -220,9 +220,6 @@ export function Layout({children}: {children?: React.ReactNode}) {
                 opacity: 0 !important;
                 pointer-events: none !important;
               }
-              aside:not(.expanded) {
-                display: none !important;
-              }
               .crush-mega-menu {
                 display: none !important;
               }

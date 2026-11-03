@@ -63,10 +63,28 @@ export function Aside({
     >
       <button className="close-outside" onClick={close} />
       <aside>
-        <header>
-          <h3 id={id}>{heading}</h3>
-          <button className="close reset" onClick={close} aria-label="Close">
-            &times;
+        <header className="flex items-center justify-between px-5 sm:px-6 py-4 border-b border-neutral-100 bg-white shrink-0">
+          {type === 'mobile' ? (
+            <div>
+              <span className="font-serif text-lg tracking-[0.25em] text-neutral-900 font-normal uppercase block">
+                CRUSH
+              </span>
+              <span className="font-display text-[8px] tracking-[0.35em] text-neutral-400 uppercase font-medium">
+                NEW YORK · ATELIER
+              </span>
+            </div>
+          ) : (
+            <h3 id={id} className="font-display text-xs font-bold tracking-[0.2em] uppercase text-neutral-900 m-0">
+              {heading}
+            </h3>
+          )}
+          <button
+            type="button"
+            className="w-9 h-9 rounded-full flex items-center justify-center text-neutral-400 hover:text-neutral-900 hover:bg-neutral-100 active:bg-neutral-200 transition-all cursor-pointer font-light text-xl"
+            onClick={close}
+            aria-label="Close drawer"
+          >
+            ✕
           </button>
         </header>
         <main>{children}</main>

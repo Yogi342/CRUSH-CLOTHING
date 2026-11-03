@@ -454,16 +454,104 @@ export function HeaderMenu({
   // Mobile Drawer Navigation
   return (
     <nav
-      className="crush-mobile-nav flex flex-col divide-y divide-neutral-100 p-2 sm:p-4"
+      className="crush-mobile-nav flex flex-col space-y-5 p-3.5 sm:p-5"
       role="navigation"
       aria-label="Mobile Navigation"
     >
-      {/* Client Account Quick Access */}
-      <div className="pb-4">
+      {/* Editorial Promo Card */}
+      <Link
+        to="/collections/all"
+        onClick={close}
+        className="block relative rounded-2xl overflow-hidden bg-neutral-900 text-white p-4 no-underline shadow-md group"
+      >
+        <div className="flex items-center justify-between mb-1.5">
+          <span className="text-[9px] font-display uppercase tracking-[0.25em] text-emerald-400 font-bold bg-emerald-950/60 px-2 py-0.5 rounded-full border border-emerald-800/60">
+            SS26 Capsule Live
+          </span>
+          <span className="text-xs text-neutral-400 group-hover:text-white transition-colors">
+            Explore →
+          </span>
+        </div>
+        <h4 className="font-serif text-base font-normal text-white m-0 tracking-wide">
+          The Architecture of Presence
+        </h4>
+        <p className="font-body text-[11px] text-neutral-300 m-0 mt-0.5">
+          Sculptural silhouettes crafted from pure natural cotton.
+        </p>
+      </Link>
+
+      {/* Primary Collections & Edits */}
+      <div className="space-y-0.5">
+        <span className="font-display text-[9px] font-bold tracking-[0.3em] uppercase text-neutral-400 block mb-1.5 px-1">
+          Collections & Edits
+        </span>
+
+        <NavLink
+          end
+          onClick={close}
+          prefetch="intent"
+          to="/"
+          className="flex items-center justify-between py-2.5 px-3 rounded-xl font-display text-sm font-semibold tracking-widest uppercase text-neutral-900 no-underline hover:bg-neutral-100 transition-colors"
+        >
+          <span>Atelier Home</span>
+          <span className="text-xs text-neutral-300">Overview</span>
+        </NavLink>
+
+        {[
+          {id: 'nav-new', title: 'New Arrivals', url: '/collections/all', tag: 'Fresh Releases'},
+          {id: 'nav-col', title: 'Collections', url: '/collections/all', tag: 'SS26 Edits'},
+          {id: 'nav-dr', title: 'Dresses', url: '/products/frill-tie-shoulder-mini-dress', tag: 'Signature Piece'},
+          {id: 'nav-at', title: 'The Atelier', url: '/#atelier', tag: 'French Tailoring'},
+          {id: 'nav-ed', title: 'Editorial', url: '/products/frill-tie-shoulder-mini-dress#atelier-specifications', tag: 'Lookbook'},
+        ].map((item) => (
+          <NavLink
+            key={item.id}
+            end
+            onClick={close}
+            prefetch="intent"
+            to={item.url}
+            className="flex items-center justify-between py-2.5 px-3 rounded-xl font-display text-sm font-semibold tracking-widest uppercase text-neutral-900 no-underline hover:bg-neutral-100 transition-colors group"
+          >
+            <span>{item.title}</span>
+            <span className="text-[10px] font-body normal-case text-neutral-400 group-hover:text-neutral-900 transition-colors">
+              {item.tag} →
+            </span>
+          </NavLink>
+        ))}
+      </div>
+
+      {/* Smart Size Advisor Card */}
+      <Link
+        to="/products/frill-tie-shoulder-mini-dress?openSizeAdvisor=true"
+        onClick={close}
+        className="block p-3.5 rounded-2xl bg-gradient-to-r from-emerald-50 via-emerald-50/50 to-white border border-emerald-200/80 no-underline shadow-xs hover:border-emerald-300 transition-all"
+      >
+        <div className="flex items-center justify-between">
+          <div className="flex items-center gap-2.5">
+            <span className="w-7 h-7 rounded-full bg-emerald-800 text-white flex items-center justify-center text-xs font-bold shrink-0">
+              ✦
+            </span>
+            <div>
+              <span className="font-display text-xs font-bold uppercase tracking-wider text-emerald-950 block">
+                Smart Size Advisor
+              </span>
+              <span className="font-body text-[11px] text-emerald-800">
+                Calculate your exact fit in 30s
+              </span>
+            </div>
+          </div>
+          <span className="font-display text-[10px] font-bold uppercase tracking-wider text-emerald-900 bg-white px-2.5 py-1 rounded-full border border-emerald-200 shrink-0">
+            Start →
+          </span>
+        </div>
+      </Link>
+
+      {/* VIP Client Account */}
+      <div>
         <NavLink
           to="/account"
           onClick={close}
-          className="flex items-center justify-between py-3 px-4 rounded-xl bg-neutral-900 text-white font-display text-xs font-semibold tracking-widest uppercase no-underline shadow-xs hover:bg-black transition-colors"
+          className="flex items-center justify-between py-3 px-4 rounded-xl bg-neutral-900 text-white font-display text-xs font-semibold tracking-widest uppercase no-underline shadow-sm hover:bg-black transition-colors"
         >
           <div className="flex items-center gap-2.5">
             <svg
@@ -474,83 +562,59 @@ export function HeaderMenu({
               stroke="currentColor"
               strokeWidth="1.8"
               viewBox="0 0 24 24"
+              style={{width: 15, height: 15, maxWidth: 15, maxHeight: 15}}
             >
               <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z" />
             </svg>
-            <span>Client Account</span>
+            <span>VIP Client Account</span>
           </div>
           <span className="text-[10px] opacity-70">Sign In →</span>
         </NavLink>
       </div>
 
-      <div className="py-4 space-y-1">
-        <span className="font-display text-[10px] tracking-[0.25em] uppercase text-neutral-400 block mb-2">
-          Collections & Edits
+      {/* Atelier Client Services & Guarantees */}
+      <div className="pt-2 border-t border-neutral-100 space-y-2 text-xs font-display uppercase tracking-wider text-neutral-500">
+        <span className="text-[9px] font-bold tracking-[0.3em] uppercase text-neutral-400 block px-1">
+          Client Services
         </span>
-        <NavLink
-          end
-          onClick={close}
-          prefetch="intent"
-          to="/"
-          className="block py-2.5 font-display text-base font-semibold tracking-widest uppercase text-neutral-900 no-underline hover:translate-x-1.5 transition-transform"
-        >
-          Atelier Home
-        </NavLink>
-        {curatedLinks.map((item) => (
-          <NavLink
-            className="flex items-center justify-between py-2.5 font-display text-base font-semibold tracking-widest uppercase text-neutral-900 no-underline hover:translate-x-1.5 transition-transform"
-            end
-            key={item.id}
+        <div className="grid grid-cols-2 gap-2 text-[11px]">
+          <Link
+            to="/policies/shipping-policy"
             onClick={close}
-            prefetch="intent"
-            to={item.url}
+            className="p-2.5 rounded-lg bg-neutral-50 hover:bg-neutral-100 text-neutral-700 no-underline transition-colors block"
           >
-            <span>{item.title}</span>
-            <span className="text-xs text-neutral-400">→</span>
-          </NavLink>
-        ))}
+            <span className="font-semibold block">Express Shipping</span>
+            <span className="text-[9px] font-body normal-case text-neutral-400">Complimentary &gt; $150</span>
+          </Link>
+          <Link
+            to="/policies/refund-policy"
+            onClick={close}
+            className="p-2.5 rounded-lg bg-neutral-50 hover:bg-neutral-100 text-neutral-700 no-underline transition-colors block"
+          >
+            <span className="font-semibold block">30-Day Returns</span>
+            <span className="text-[9px] font-body normal-case text-neutral-400">Effortless exchanges</span>
+          </Link>
+        </div>
       </div>
 
-      <div className="pt-6 pb-4 space-y-3">
-        <p className="font-display text-[10px] tracking-[0.25em] uppercase text-neutral-400 m-0">
-          Atelier Client Services
-        </p>
-        <NavLink
-          to="/products/frill-tie-shoulder-mini-dress?openSizeAdvisor=true"
-          onClick={close}
-          className="block text-xs uppercase tracking-wider text-neutral-600 no-underline hover:text-black py-1"
-        >
-          Interactive Size Advisor
-        </NavLink>
-        <NavLink
-          to="/policies/shipping-policy"
-          onClick={close}
-          className="block text-xs uppercase tracking-wider text-neutral-600 no-underline hover:text-black py-1"
-        >
-          Shipping & Global Delivery
-        </NavLink>
-        <NavLink
-          to="/policies/refund-policy"
-          onClick={close}
-          className="block text-xs uppercase tracking-wider text-neutral-600 no-underline hover:text-black py-1"
-        >
-          30-Day Returns & Exchanges
-        </NavLink>
-        <NavLink
-          to="/policies/terms-of-service"
-          onClick={close}
-          className="block text-xs uppercase tracking-wider text-neutral-600 no-underline hover:text-black py-1"
-        >
-          Terms of Service
-        </NavLink>
-      </div>
-
-      <div className="pt-6 pb-2">
-        <span className="font-display text-[10px] tracking-[0.25em] uppercase text-neutral-400 block mb-2">
-          Region & Currency
+      {/* Region & Currency */}
+      <div className="pt-2 border-t border-neutral-100">
+        <span className="font-display text-[9px] font-bold tracking-[0.3em] uppercase text-neutral-400 block mb-2 px-1">
+          Currency Preference
         </span>
-        <div className="flex items-center gap-2 font-display text-xs text-neutral-800 bg-neutral-100 py-2.5 px-3.5 rounded-xl border border-neutral-200">
-          <span>🇺🇸 United States (USD $)</span>
+        <div className="flex items-center gap-1.5 flex-wrap">
+          {['USD ($)', 'EUR (€)', 'GBP (£)', 'CAD ($)'].map((curr, idx) => (
+            <span
+              key={curr}
+              className={`px-2.5 py-1 rounded-full font-display text-[10px] uppercase font-semibold tracking-wider transition-colors ${
+                idx === 0
+                  ? 'bg-neutral-900 text-white'
+                  : 'bg-neutral-100 text-neutral-600 hover:bg-neutral-200'
+              }`}
+            >
+              {curr}
+            </span>
+          ))}
         </div>
       </div>
     </nav>
