@@ -175,7 +175,7 @@ export function Layout({children}: {children?: React.ReactNode}) {
   const appUrl = isDev ? `${appStyles}?direct` : appStyles;
 
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <head>
         <meta charSet="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, viewport-fit=cover" />
@@ -208,7 +208,6 @@ export function Layout({children}: {children?: React.ReactNode}) {
               html:not(.crush-ready) body {
                 visibility: hidden !important;
                 opacity: 0 !important;
-                pointer-events: none !important;
               }
               html.crush-ready body {
                 visibility: visible !important;
@@ -222,10 +221,15 @@ export function Layout({children}: {children?: React.ReactNode}) {
                 padding: 0;
                 overflow-x: hidden;
                 width: 100%;
+                pointer-events: auto !important;
+              }
+              a, button, [role="button"], input, select, textarea {
+                pointer-events: auto !important;
               }
               a {
                 color: inherit !important;
                 text-decoration: none !important;
+                cursor: pointer !important;
               }
               ul, ol, menu {
                 list-style: none !important;
@@ -305,9 +309,11 @@ export function Layout({children}: {children?: React.ReactNode}) {
                   docEl.classList.add('crush-ready');
                 }
 
-                if (document.readyState === 'complete') {
+                if (document.readyState === 'complete' || document.readyState === 'interactive') {
                   reveal();
-                  return;
+                } else {
+                  document.addEventListener('DOMContentLoaded', reveal, {once: true});
+                  window.addEventListener('load', reveal, {once: true});
                 }
 
                 var links = document.querySelectorAll('link[rel="stylesheet"]');
@@ -349,18 +355,16 @@ export function Layout({children}: {children?: React.ReactNode}) {
                       }
                     } catch (e) {}
                   }
-                  if (allReady) {
+                  if (allReady || rafCount++ >= 30) {
                     reveal();
-                  } else if (rafCount++ < 60) {
-                    requestAnimationFrame(checkSheets);
                   } else {
-                    reveal();
+                    requestAnimationFrame(checkSheets);
                   }
                 }
                 requestAnimationFrame(checkSheets);
 
-                // Watchdog fallback (1000ms max) guarantees page is never stuck
-                setTimeout(reveal, 1000);
+                // Watchdog fallback (300ms max) guarantees page is never stuck
+                setTimeout(reveal, 300);
               })();
             `,
           }}

@@ -360,6 +360,11 @@ aside li {
   z-index: 99999;
 }
 
+.overlay:not(.expanded) {
+  display: none !important;
+  pointer-events: none !important;
+}
+
 .overlay .close-outside {
   background: transparent;
   border: none;
