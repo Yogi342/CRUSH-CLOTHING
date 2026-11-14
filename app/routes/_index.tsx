@@ -61,104 +61,152 @@ export default function Homepage() {
   return (
     <div className="crush-homepage bg-white text-neutral-900">
       {/* ========================================================
-          1. CONTEMPORARY EDITORIAL LUXURY HERO CAMPAIGN SECTION
-          (Replaces the outdated dark cyberpunk streetwear banner)
+          1. ULTRA-LUXURY EDITORIAL ATELIER HERO SECTION
          ======================================================== */}
       <section
         ref={heroRef}
-        className="crush-hero relative bg-white border-b border-neutral-100 py-12 sm:py-16 lg:py-24 overflow-hidden"
+        className="crush-hero relative bg-[#FAFAF9] border-b border-neutral-200/80 pt-8 sm:pt-12 pb-16 sm:pb-24 overflow-hidden"
         aria-label="Campaign Hero"
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-14 items-center">
+          {/* Top Atelier Overline Bar */}
+          <div className="flex flex-wrap items-center justify-between gap-4 pb-6 mb-8 border-b border-neutral-200/90 text-[11px] font-display uppercase tracking-[0.24em] text-neutral-500">
+            <div className="flex items-center gap-2.5">
+              <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
+              <span className="text-neutral-900 font-semibold tracking-[0.28em]">CRUSH ATELIER // NEW YORK</span>
+            </div>
+            <div className="hidden md:flex items-center gap-6 text-[10px] tracking-[0.28em] text-neutral-400">
+              <span>SS 2026 CAPSULE</span>
+              <span className="text-neutral-300">/</span>
+              <span>DROP 01 LIVE</span>
+              <span className="text-neutral-300">/</span>
+              <span>100% PURE NATURAL COTTON</span>
+            </div>
+            <Link
+              to="/products/frill-tie-shoulder-mini-dress?openSizeAdvisor=true"
+              className="font-semibold text-neutral-900 hover:text-neutral-600 underline underline-offset-4 transition-colors"
+            >
+              Interactive Size Advisor →
+            </Link>
+          </div>
+
+          {/* Main Hero Split Grid */}
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-center">
             
-            {/* Left Column: Refined Editorial Typography & CTAs */}
-            <div className="lg:col-span-7 space-y-6">
-              <div className="crush-hero-tag inline-flex items-center gap-2.5 px-4 py-1.5 rounded-full bg-neutral-100 border border-neutral-200/80 text-neutral-800 font-display text-[11px] font-semibold tracking-[0.2em] uppercase">
-                <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
-                <span>Spring / Summer 2026 Collection</span>
+            {/* Left Column: Dramatic Editorial Typography & Luxury CTAs */}
+            <div className="lg:col-span-6 space-y-6 sm:space-y-7">
+              <div className="space-y-3.5">
+                <span className="inline-block px-3.5 py-1.5 rounded-full bg-white border border-neutral-200 text-neutral-900 font-display text-[10px] font-bold tracking-[0.24em] uppercase shadow-xs">
+                  Atelier Edition 01 · Spring / Summer 2026
+                </span>
+                <h1 className="crush-hero-title font-serif font-normal text-4xl sm:text-6xl lg:text-7xl xl:text-[76px] tracking-tight text-neutral-900 m-0 leading-[1.06]">
+                  Silhouettes Of
+                  <span className="block italic text-neutral-500 font-serif font-normal mt-1">
+                    Sculptural Grace.
+                  </span>
+                </h1>
               </div>
 
-              <h1 className="crush-hero-title font-serif font-normal text-3xl sm:text-5xl lg:text-7xl tracking-tight text-neutral-900 m-0 leading-[1.12]">
-                Effortless Silhouettes.
-                <span className="block italic text-neutral-600 font-serif font-normal mt-1">
-                  Sculptural Presence.
-                </span>
-              </h1>
-
-              <p className="crush-hero-sub font-body text-base sm:text-lg text-neutral-600 max-w-xl leading-relaxed m-0">
-                Contemporary women’s luxury apparel crafted from breathable natural cotton weaves and French-finished seams. Designed in New York for an effortless day-to-evening presence.
+              <p className="crush-hero-sub font-body text-base sm:text-lg text-neutral-600 max-w-lg leading-relaxed m-0">
+                Contemporary women’s luxury apparel tailored from breathable natural cotton weaves and French-bound seams. Designed in New York for an effortless, commanding presence from day to twilight.
               </p>
 
-              <div className="crush-hero-ctas flex flex-col sm:flex-row items-stretch sm:items-center gap-3 pt-2">
+              {/* Bulletproof Luxury CTAs */}
+              <div className="crush-hero-ctas flex flex-col sm:flex-row items-stretch sm:items-center gap-4 pt-2">
                 <Link
                   to="/collections/all"
-                  className="rounded-full bg-neutral-900 hover:bg-neutral-800 text-white px-8 py-3.5 sm:py-4 font-display text-xs font-bold tracking-widest uppercase shadow-md hover:shadow-xl transition-all duration-200 active:scale-[0.98] cursor-pointer text-center inline-flex items-center justify-center gap-2.5 group"
+                  className="crush-btn crush-btn-primary group"
                 >
                   <span>Shop New Arrivals</span>
                   <span className="group-hover-arrow">→</span>
                 </Link>
                 <Link
                   to="/products/frill-tie-shoulder-mini-dress"
-                  className="rounded-full border border-neutral-900 hover:bg-neutral-900 hover:text-white text-neutral-900 px-8 py-3.5 sm:py-4 font-display text-xs font-bold tracking-widest uppercase shadow-xs hover:shadow-lg transition-all duration-200 active:scale-[0.98] cursor-pointer text-center group"
+                  className="crush-btn crush-btn-secondary group"
                 >
-                  The Frill Tie Mini Edit
+                  <span>The Signature Mini Edit</span>
                 </Link>
               </div>
 
-              <div className="pt-8 border-t border-neutral-100 grid grid-cols-1 sm:grid-cols-3 gap-3.5 sm:gap-4 text-[11px] font-display uppercase tracking-wider text-neutral-500">
+              {/* Refined Atelier Feature Pillars */}
+              <div className="pt-8 border-t border-neutral-200/90 grid grid-cols-3 gap-4 text-[11px] font-display uppercase tracking-wider text-neutral-500">
                 <div>
-                  <span className="font-bold text-neutral-900 block">100% Cotton</span>
-                  <span className="text-[10px] text-neutral-400 font-body normal-case">Natural breathable weave</span>
+                  <span className="font-bold text-neutral-900 block tracking-widest">100% Cotton</span>
+                  <span className="text-[10px] text-neutral-400 font-body normal-case">Natural tactile weave</span>
                 </div>
                 <div>
-                  <span className="font-bold text-neutral-900 block">Atelier Sizing</span>
-                  <span className="text-[10px] text-neutral-400 font-body normal-case">Interactive Fit Advisor</span>
+                  <span className="font-bold text-neutral-900 block tracking-widest">French Seams</span>
+                  <span className="text-[10px] text-neutral-400 font-body normal-case">Bound clean finish</span>
                 </div>
                 <div>
-                  <span className="font-bold text-neutral-900 block">Express Delivery</span>
-                  <span className="text-[10px] text-neutral-400 font-body normal-case">Complimentary over $150</span>
+                  <span className="font-bold text-neutral-900 block tracking-widest">Complimentary</span>
+                  <span className="text-[10px] text-neutral-400 font-body normal-case">Express over $150</span>
                 </div>
               </div>
             </div>
 
-            {/* Right Column: High-Fashion Lookbook Editorial Showcase */}
-            <div className="lg:col-span-5">
-              <div className="crush-hero-bg relative aspect-[3/4] sm:aspect-[4/5] rounded-3xl overflow-hidden shadow-2xl border border-neutral-100 bg-neutral-100 group">
-                <img
-                  src="https://cdn.shopify.com/s/files/1/0844/4359/4861/files/4a5c9b52-89bf-4835-9201-11dd8247d95a-Max-Origin.webp?v=1793609651"
-                  alt="CRUSH Atelier SS26 Editorial Campaign"
-                  className="w-full h-full object-cover object-top transition-transform duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-105"
-                  loading="eager"
-                />
+            {/* Right Column: Editorial Double Showcase */}
+            <div className="lg:col-span-6">
+              <div className="grid grid-cols-12 gap-4 items-end">
+                {/* Main Hero Card (Khaki Frill Tie Mini) */}
+                <div className="col-span-8 relative aspect-[3/4] rounded-3xl overflow-hidden shadow-2xl border border-neutral-200/80 bg-neutral-100 group">
+                  <img
+                    src="https://cdn.shopify.com/s/files/1/0844/4359/4861/files/4a5c9b52-89bf-4835-9201-11dd8247d95a-Max-Origin.webp?v=1793609651"
+                    alt="CRUSH Frill Tie Mini Dress"
+                    className="w-full h-full object-cover object-top transition-transform duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-105"
+                    loading="eager"
+                  />
+                  {/* Floating Luxury Detail Badge */}
+                  <div className="absolute top-4 left-4 bg-white/95 backdrop-blur-md px-3.5 py-1.5 rounded-full border border-neutral-200 shadow-xs">
+                    <span className="font-display text-[9px] font-bold tracking-[0.2em] uppercase text-neutral-900">
+                      ICONIC PIECE · $31.99
+                    </span>
+                  </div>
 
-                {/* Floating Eyebrow Pill */}
-                <div className="absolute top-4 left-4 bg-white/90 backdrop-blur-md px-3.5 py-1.5 rounded-full border border-neutral-200/60 shadow-xs">
-                  <span className="font-display text-[10px] font-bold tracking-widest uppercase text-neutral-900">
-                    Atelier Edition 01
-                  </span>
+                  {/* Bottom Floating Piece Bar */}
+                  <Link
+                    to="/products/frill-tie-shoulder-mini-dress"
+                    className="absolute bottom-3 left-3 right-3 bg-white/95 backdrop-blur-md p-3.5 rounded-2xl border border-neutral-200/90 shadow-md flex items-center justify-between no-underline group/card hover:bg-white transition-all"
+                  >
+                    <div className="min-w-0 pr-2">
+                      <h4 className="font-serif text-sm font-semibold text-neutral-900 m-0 truncate">
+                        Frill Tie Shoulder Mini
+                      </h4>
+                      <p className="font-body text-[11px] text-neutral-500 m-0">
+                        Khaki, Brown & Black · 100% Cotton
+                      </p>
+                    </div>
+                    <span className="w-8 h-8 rounded-full bg-neutral-900 text-white flex items-center justify-center shrink-0 group-hover/card:bg-black group-hover/card:scale-105 transition-all text-xs">
+                      →
+                    </span>
+                  </Link>
                 </div>
 
-                {/* Floating Bottom Card: Direct Link to the Featured Piece */}
-                <Link
-                  to="/products/frill-tie-shoulder-mini-dress"
-                  className="absolute bottom-4 left-4 right-4 bg-white/95 backdrop-blur-xl p-4 rounded-2xl border border-neutral-200/80 shadow-lg flex items-center justify-between no-underline group/card hover:bg-white transition-all"
-                >
-                  <div className="min-w-0 pr-3">
-                    <span className="font-display text-[9px] font-bold tracking-widest uppercase text-emerald-800 bg-emerald-50 px-2 py-0.5 rounded-full border border-emerald-200">
-                      Iconic Piece
+                {/* Secondary Editorial Diptych Card (Draped Detail) */}
+                <div className="col-span-4 space-y-4">
+                  <div className="relative aspect-[3/4] rounded-2xl overflow-hidden shadow-lg border border-neutral-200/80 bg-neutral-100 group">
+                    <img
+                      src="https://cdn.shopify.com/s/files/1/0844/4359/4861/files/8362fe37-bd92-4b75-8d98-bc7e0c69ffdb-Max-Origin.webp?v=1793609651"
+                      alt="CRUSH Frill Tie Shoulder Bow Detail"
+                      className="w-full h-full object-cover object-center transition-transform duration-700 group-hover:scale-105"
+                      loading="eager"
+                    />
+                    <div className="absolute bottom-2.5 left-2.5 right-2.5 bg-neutral-900/85 backdrop-blur-md px-2 py-1.5 rounded-xl text-white text-center">
+                      <span className="font-display text-[9px] font-bold tracking-widest uppercase block">
+                        TIE BOW DETAIL
+                      </span>
+                    </div>
+                  </div>
+
+                  <div className="p-3.5 rounded-2xl bg-white border border-neutral-200/80 shadow-xs">
+                    <span className="font-display text-[9px] font-bold tracking-widest uppercase text-emerald-800 block mb-1">
+                      ATELIER CRAFT
                     </span>
-                    <h4 className="font-serif text-sm font-semibold text-neutral-900 mt-1 m-0 truncate">
-                      Frill Tie Shoulder Mini Dress
-                    </h4>
-                    <p className="font-body text-xs text-neutral-500 m-0">
-                      $31.99 • Khaki, Brown & Black
+                    <p className="font-body text-[11px] text-neutral-600 m-0 leading-snug">
+                      French bound seams ensure lifelong drape.
                     </p>
                   </div>
-                  <span className="w-9 h-9 rounded-full bg-neutral-900 text-white flex items-center justify-center shrink-0 group-hover/card:bg-black group-hover/card:scale-105 transition-all text-xs">
-                    →
-                  </span>
-                </Link>
+                </div>
               </div>
             </div>
 
@@ -166,10 +214,14 @@ export default function Homepage() {
         </div>
       </section>
 
-      {/* 2. THE LIVING RACK // TRY-ON MOTION CENTERPIECE */}
+      {/* ========================================================
+          2. THE LIVING RACK // KINETIC ATELIER RUNWAY
+         ======================================================== */}
       <LivingRack />
 
-      {/* 3. CATEGORY DISCOVERY SECTION */}
+      {/* ========================================================
+          3. CURATED ARCHITECTURE // READY-TO-WEAR CATEGORIES
+         ======================================================== */}
       <section
         id="categories"
         className="py-20 sm:py-28 border-b border-neutral-100 bg-white"
@@ -179,42 +231,42 @@ export default function Homepage() {
           <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-12">
             <div>
               <p className="font-display text-[11px] font-semibold tracking-[0.25em] text-neutral-400 uppercase m-0 mb-1">
-                Curated Architecture
+                Curated Architecture · SS 2026
               </p>
               <h2 className="font-display font-bold text-2xl sm:text-4xl tracking-[0.08em] uppercase text-neutral-900 m-0">
-                Collections
+                Collections & Edits
               </h2>
             </div>
             <Link
               to="/collections/all"
               className="font-display text-xs font-semibold tracking-[0.16em] uppercase text-neutral-900 hover:underline underline-offset-4 no-underline"
             >
-              View All Categories →
+              View Full Archive →
             </Link>
           </div>
 
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-6">
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
             {CATEGORIES.map((cat) => (
               <Link
                 key={cat.id}
                 to={cat.href}
-                className="group block relative overflow-hidden rounded-2xl bg-neutral-100 border border-neutral-100 no-underline shadow-xs hover:shadow-md transition-shadow"
+                className="group block relative overflow-hidden rounded-2xl bg-neutral-100 border border-neutral-200/80 no-underline shadow-xs hover:shadow-xl transition-all duration-300"
               >
-                <div className="aspect-[3/4] w-full overflow-hidden">
+                <div className="aspect-[3/4] w-full overflow-hidden bg-neutral-100">
                   <img
                     src={cat.image}
                     alt={cat.title}
-                    className="w-full h-full object-cover object-center transition-transform duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-105"
+                    className="w-full h-full object-cover object-top transition-transform duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-105"
                     loading="lazy"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/25 to-transparent" />
                 </div>
 
                 <div className="absolute inset-x-0 bottom-0 p-5 text-white">
-                  <span className="font-display text-[10px] tracking-[0.25em] uppercase text-neutral-300 block mb-1">
+                  <span className="font-display text-[9px] tracking-[0.28em] uppercase text-neutral-300 block mb-1">
                     {cat.tag}
                   </span>
-                  <h3 className="font-display text-base font-bold tracking-[0.12em] uppercase m-0 text-white">
+                  <h3 className="font-display text-base font-bold tracking-[0.14em] uppercase m-0 text-white group-hover:text-neutral-200 transition-colors">
                     {cat.title}
                   </h3>
                 </div>
@@ -224,7 +276,60 @@ export default function Homepage() {
         </div>
       </section>
 
-      {/* 4. NEW ARRIVALS // REAL SHOPIFY STOREFRONT PRODUCTS */}
+      {/* ========================================================
+          3.5 THE CRUSH ATELIER DISCIPLINES
+         ======================================================== */}
+      <section
+        className="py-16 sm:py-24 bg-[#FAFAF9] border-b border-neutral-200/80"
+        aria-label="Atelier Craft Disciplines"
+      >
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="max-w-2xl mx-auto text-center mb-14">
+            <span className="font-display text-[10px] font-bold tracking-[0.3em] uppercase text-neutral-400 block mb-2">
+              The Code of Construction
+            </span>
+            <h3 className="font-serif text-2xl sm:text-4xl text-neutral-900 m-0">
+              Crafted With Uncompromising Discipline
+            </h3>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div className="bg-white p-7 rounded-2xl border border-neutral-200/80 shadow-xs space-y-3">
+              <span className="font-display text-xs font-bold tracking-widest text-neutral-900 block">
+                01 / NATURAL TEXTILES
+              </span>
+              <h4 className="font-serif text-lg text-neutral-900 m-0">100% Pure Breathable Weaves</h4>
+              <p className="font-body text-xs sm:text-sm text-neutral-600 leading-relaxed m-0">
+                We design with pure long-staple cotton and natural fibers. Never synthetic fillers. Garments that breathe naturally with your body from morning to midnight.
+              </p>
+            </div>
+
+            <div className="bg-white p-7 rounded-2xl border border-neutral-200/80 shadow-xs space-y-3">
+              <span className="font-display text-xs font-bold tracking-widest text-neutral-900 block">
+                02 / FRENCH FINISHED SEAMS
+              </span>
+              <h4 className="font-serif text-lg text-neutral-900 m-0">Clean Bound Architecture</h4>
+              <p className="font-body text-xs sm:text-sm text-neutral-600 leading-relaxed m-0">
+                Every interior edge is French-bound and double-seamed to eliminate raw thread friction against skin, guaranteeing drape retention through years of wear.
+              </p>
+            </div>
+
+            <div className="bg-white p-7 rounded-2xl border border-neutral-200/80 shadow-xs space-y-3">
+              <span className="font-display text-xs font-bold tracking-widest text-neutral-900 block">
+                03 / BESPOKE FIT ADVISOR
+              </span>
+              <h4 className="font-serif text-lg text-neutral-900 m-0">Algorithmic Precision Fit</h4>
+              <p className="font-body text-xs sm:text-sm text-neutral-600 leading-relaxed m-0">
+                Our interactive size engine cross-references your exact measurements against our atelier patterns, eliminating fit guesswork and returns.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ========================================================
+          4. NEW ARRIVALS // DROP 01 CURATED SHOWCASE
+         ======================================================== */}
       <section
         className="py-20 sm:py-28 border-b border-neutral-100 bg-white"
         aria-labelledby="new-arrivals-heading"
@@ -265,34 +370,68 @@ export default function Homepage() {
           >
             <Await resolve={data.recommendedProducts}>
               {(response) => {
-                const products = response?.products?.nodes || [];
+                const liveProducts = response?.products?.nodes || [];
 
-                if (products.length === 0) {
-                  return (
-                    <div className="py-16 text-center border border-neutral-150 rounded-2xl bg-neutral-50 max-w-lg mx-auto p-8 shadow-xs">
-                      <span className="font-display text-[10px] font-semibold tracking-[0.25em] uppercase text-neutral-400 block mb-2">
-                        Atelier SS 2026 Arrivals
-                      </span>
-                      <h4 className="font-display font-semibold text-xl uppercase tracking-wider text-neutral-900 mb-2">
-                        Collection Updating
-                      </h4>
-                      <p className="font-body text-xs sm:text-sm text-neutral-500 mb-6 leading-relaxed">
-                        Pieces published to the Headless sales channel in Shopify Admin will appear here dynamically.
-                      </p>
-                      <Link
-                        to="/collections/all"
-                        className="rounded-full bg-neutral-900 text-white px-6 py-3 font-display text-xs uppercase tracking-wider font-semibold hover:bg-neutral-800 hover:shadow-md active:scale-[0.98] transition-all inline-block"
-                      >
-                        Explore Collections Catalog →
-                      </Link>
-                    </div>
-                  );
-                }
+                // Curated balanced showcase ensuring complete 4-product luxury grid
+                const complementaryPieces = [
+                  {
+                    id: 'atelier-piece-2',
+                    title: 'Frill Tie Mini — Atelier Perspective',
+                    handle: 'products/frill-tie-shoulder-mini-dress',
+                    price: '$31.99',
+                    tag: 'Atelier View 02',
+                    image: 'https://cdn.shopify.com/s/files/1/0844/4359/4861/files/0bba3306-63ad-4175-bdb6-27554f82b875-Max-Origin.webp?v=1793609652',
+                  },
+                  {
+                    id: 'atelier-piece-3',
+                    title: 'Frill Tie Mini — Drape Architecture',
+                    handle: 'products/frill-tie-shoulder-mini-dress',
+                    price: '$31.99',
+                    tag: 'Atelier View 03',
+                    image: 'https://cdn.shopify.com/s/files/1/0844/4359/4861/files/713a647f-a042-4b48-939e-259ee071a94a-Max-Origin.webp?v=1793609652',
+                  },
+                  {
+                    id: 'atelier-piece-4',
+                    title: 'Frill Tie Mini — Self-Tie Bow Detail',
+                    handle: 'products/frill-tie-shoulder-mini-dress',
+                    price: '$31.99',
+                    tag: 'Craft Detail',
+                    image: 'https://cdn.shopify.com/s/files/1/0844/4359/4861/files/8362fe37-bd92-4b75-8d98-bc7e0c69ffdb-Max-Origin.webp?v=1793609651',
+                  },
+                ];
 
                 return (
                   <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
-                    {products.map((product: any) => (
+                    {/* Real Shopify Storefront Products */}
+                    {liveProducts.map((product: any) => (
                       <ProductItem key={product.id} product={product} />
+                    ))}
+
+                    {/* Curated Complementary Capsule Editions for complete grid balance */}
+                    {complementaryPieces.slice(0, Math.max(0, 4 - liveProducts.length)).map((piece) => (
+                      <Link
+                        key={piece.id}
+                        to={piece.handle.startsWith('collections') ? `/${piece.handle}` : `/products/${piece.handle}`}
+                        className="group flex flex-col no-underline text-neutral-900"
+                      >
+                        <div className="relative aspect-[3/4] w-full overflow-hidden rounded-2xl bg-neutral-100 border border-neutral-200/80 mb-3.5 shadow-xs group-hover:shadow-md transition-shadow">
+                          <img
+                            src={piece.image}
+                            alt={piece.title}
+                            className="w-full h-full object-cover object-top transition-transform duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-105"
+                            loading="lazy"
+                          />
+                          <div className="absolute top-3 left-3 bg-white/90 backdrop-blur-xs px-2.5 py-1 rounded-full text-[9px] font-display font-semibold tracking-widest uppercase text-neutral-900">
+                            {piece.tag}
+                          </div>
+                        </div>
+                        <h4 className="font-display text-sm font-semibold tracking-wider uppercase text-neutral-900 group-hover:text-black transition-colors m-0">
+                          {piece.title}
+                        </h4>
+                        <span className="font-display text-xs text-neutral-500 font-medium mt-1">
+                          {piece.price}
+                        </span>
+                      </Link>
                     ))}
                   </div>
                 );
@@ -302,17 +441,19 @@ export default function Homepage() {
         </div>
       </section>
 
-      {/* 4.5 EDITORIAL PRESS & CRITICAL ACCLAIM BAR */}
+      {/* ========================================================
+          4.5 EDITORIAL PRESS & CRITICAL ACCLAIM BAR
+         ======================================================== */}
       <section
-        className="py-14 sm:py-20 border-b border-neutral-100 bg-neutral-50/50"
+        className="py-16 sm:py-24 border-b border-neutral-100 bg-[#FAFAF9]"
         aria-label="Critical Acclaim and Press"
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-10">
-            <span className="font-display text-[10px] font-semibold tracking-[0.35em] uppercase text-neutral-400 block mb-1">
+          <div className="text-center mb-12">
+            <span className="font-display text-[10px] font-bold tracking-[0.35em] uppercase text-neutral-400 block mb-2">
               Critical Acclaim · Industry Recognition
             </span>
-            <h3 className="font-display font-bold text-xl sm:text-2xl tracking-[0.12em] uppercase text-neutral-900 m-0">
+            <h3 className="font-serif text-2xl sm:text-4xl text-neutral-900 m-0">
               The Architecture of Prestige
             </h3>
           </div>
@@ -342,18 +483,18 @@ export default function Homepage() {
             ].map((press) => (
               <div
                 key={press.source}
-                className="p-6 bg-white rounded-2xl border border-neutral-100 hover:border-black transition-all duration-300 flex flex-col justify-between shadow-xs hover:shadow-md"
+                className="p-6 sm:p-7 bg-white rounded-2xl border border-neutral-200/80 hover:border-neutral-900 transition-all duration-300 flex flex-col justify-between shadow-xs hover:shadow-md"
               >
                 <div>
-                  <span className="font-display text-[9px] font-semibold tracking-[0.25em] uppercase text-neutral-400 block mb-3">
+                  <span className="font-display text-[9px] font-bold tracking-[0.25em] uppercase text-neutral-400 block mb-3">
                     {press.tag}
                   </span>
-                  <p className="font-display text-xs sm:text-sm font-medium tracking-wide uppercase text-neutral-800 leading-relaxed m-0 italic">
+                  <p className="font-serif text-sm sm:text-base font-normal tracking-wide text-neutral-800 leading-relaxed m-0 italic">
                     &ldquo;{press.quote}&rdquo;
                   </p>
                 </div>
                 <div className="pt-6 border-t border-neutral-100 mt-6 flex items-center justify-between">
-                  <span className="font-display font-bold text-xs tracking-[0.2em] uppercase text-neutral-900">
+                  <span className="font-display font-bold text-xs tracking-[0.24em] uppercase text-neutral-900">
                     {press.source}
                   </span>
                 </div>
@@ -363,7 +504,9 @@ export default function Homepage() {
         </div>
       </section>
 
-      {/* 5. EDITORIAL ATTITUDE CHAPTER */}
+      {/* ========================================================
+          5. EDITORIAL MANIFESTO // THE ARCHITECTURE OF PRESENCE
+         ======================================================== */}
       <section
         id="editorial"
         ref={editorialRef}
@@ -373,7 +516,7 @@ export default function Homepage() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
             <div className="lg:col-span-6 space-y-6">
-              <span className="font-display text-[10px] font-semibold tracking-[0.3em] uppercase text-neutral-400 block">
+              <span className="font-display text-[10px] font-bold tracking-[0.3em] uppercase text-neutral-400 block">
                 Editorial Manifesto · SS 2026
               </span>
               <h2 className="font-serif font-normal text-3xl sm:text-5xl lg:text-6xl tracking-tight text-white leading-tight m-0">
@@ -385,7 +528,7 @@ export default function Homepage() {
               <div className="pt-4">
                 <Link
                   to="/collections/all"
-                  className="rounded-full bg-white text-neutral-900 hover:bg-neutral-100 hover:shadow-xl px-8 py-4 font-display text-xs font-bold tracking-widest uppercase inline-flex items-center justify-center gap-2.5 shadow-md transition-all duration-200 active:scale-[0.98] group cursor-pointer"
+                  className="crush-btn crush-btn-light-primary group"
                 >
                   <span>Discover The Drop</span>
                   <span className="group-hover-arrow">→</span>
@@ -394,11 +537,11 @@ export default function Homepage() {
             </div>
 
             <div className="lg:col-span-6">
-              <div className="relative aspect-[4/5] rounded-3xl overflow-hidden border border-white/10 shadow-2xl">
+              <div className="relative aspect-[4/5] rounded-3xl overflow-hidden border border-white/10 shadow-2xl bg-neutral-800">
                 <img
-                  src="/images/look-studio-1.jpg"
-                  alt="CRUSH Editorial Silhouette"
-                  className="w-full h-full object-cover"
+                  src="/images/model-full-1.jpg"
+                  alt="CRUSH Editorial Trench Silhouette"
+                  className="w-full h-full object-cover object-top"
                   loading="lazy"
                 />
               </div>
@@ -407,13 +550,15 @@ export default function Homepage() {
         </div>
       </section>
 
-      {/* 6. BRAND STATEMENT */}
+      {/* ========================================================
+          6. BRAND PHILOSOPHY STATEMENT
+         ======================================================== */}
       <section
         className="py-24 sm:py-32 border-b border-neutral-100 bg-white text-center"
         aria-label="Brand Philosophy"
       >
         <div className="max-w-4xl mx-auto px-4 sm:px-6">
-          <p className="font-display text-xs font-semibold tracking-[0.3em] text-neutral-400 uppercase mb-4">
+          <p className="font-display text-xs font-bold tracking-[0.3em] text-neutral-400 uppercase mb-4">
             CRUSH CLOTHING
           </p>
           <blockquote className="m-0">
@@ -432,32 +577,32 @@ export default function Homepage() {
 
 const CATEGORIES = [
   {
-    id: 'dresses',
-    title: 'Dresses & Gowns',
-    tag: 'Category 01',
-    image: '/images/look-studio-2.jpg',
-    href: '/collections/all',
+    id: 'dresses-khaki',
+    title: 'Sculpted Dresses',
+    tag: 'SS26 · Natural Khaki',
+    image: 'https://cdn.shopify.com/s/files/1/0844/4359/4861/files/4a5c9b52-89bf-4835-9201-11dd8247d95a-Max-Origin.webp?v=1793609651',
+    href: '/products/frill-tie-shoulder-mini-dress',
   },
   {
-    id: 'tops',
-    title: 'Tops & Shirting',
-    tag: 'Category 02',
-    image: '/images/look-studio-3.jpg',
-    href: '/collections/all',
+    id: 'dresses-noir',
+    title: 'Editorial Silhouette',
+    tag: 'SS26 · Atelier Drape',
+    image: 'https://cdn.shopify.com/s/files/1/0844/4359/4861/files/06a7c83488f94c948aa93f313cbf19c2-Max-Origin.webp?v=1793609652',
+    href: '/products/frill-tie-shoulder-mini-dress',
   },
   {
-    id: 'outerwear',
-    title: 'Tailored Outerwear',
-    tag: 'Category 03',
-    image: '/images/look-studio-4.jpg',
-    href: '/collections/all',
+    id: 'dresses-earth',
+    title: 'Atelier Tailoring',
+    tag: 'SS26 · Seated Drape',
+    image: 'https://cdn.shopify.com/s/files/1/0844/4359/4861/files/0bba3306-63ad-4175-bdb6-27554f82b875-Max-Origin.webp?v=1793609652',
+    href: '/products/frill-tie-shoulder-mini-dress',
   },
   {
-    id: 'sets',
-    title: 'Minimal Sets',
-    tag: 'Category 04',
-    image: '/images/look-studio-5.jpg',
-    href: '/collections/all',
+    id: 'detail-bow',
+    title: 'Craft & Finishing',
+    tag: 'SS26 · Hand-Tied Straps',
+    image: 'https://cdn.shopify.com/s/files/1/0844/4359/4861/files/8362fe37-bd92-4b75-8d98-bc7e0c69ffdb-Max-Origin.webp?v=1793609651',
+    href: '/products/frill-tie-shoulder-mini-dress',
   },
 ];
 

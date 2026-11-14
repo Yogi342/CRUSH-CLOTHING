@@ -220,7 +220,6 @@ export function Layout({children}: {children?: React.ReactNode}) {
                 pointer-events: auto !important;
               }
               a {
-                color: inherit !important;
                 text-decoration: none !important;
                 cursor: pointer !important;
               }

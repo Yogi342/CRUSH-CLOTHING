@@ -22,41 +22,12 @@ export function useHeroMotion(containerRef: React.RefObject<HTMLElement | null>)
     if (!containerRef.current || prefersReducedMotion()) return;
 
     const ctx = gsap.context(() => {
-      const tl = gsap.timeline({
-        defaults: {ease: 'power3.out', duration: 1.1},
+      // Subtle editorial scale reveal on image without hiding text or buttons
+      gsap.from('.crush-hero-bg', {
+        scale: 1.04,
+        duration: 1.2,
+        ease: 'power2.out',
       });
-
-      // Subtle mask/scale reveal for background
-      tl.fromTo(
-        '.crush-hero-bg',
-        {scale: 1.08, opacity: 0},
-        {scale: 1, opacity: 1, duration: 1.4}
-      )
-        // Staggered headline entrance
-        .fromTo(
-          '.crush-hero-tag',
-          {y: 20, opacity: 0},
-          {y: 0, opacity: 1, duration: 0.8},
-          '-=1.0'
-        )
-        .fromTo(
-          '.crush-hero-title',
-          {y: 40, opacity: 0},
-          {y: 0, opacity: 1, duration: 1.0},
-          '-=0.7'
-        )
-        .fromTo(
-          '.crush-hero-sub',
-          {y: 20, opacity: 0},
-          {y: 0, opacity: 1, duration: 0.8},
-          '-=0.7'
-        )
-        .fromTo(
-          '.crush-hero-ctas',
-          {y: 20, opacity: 0},
-          {y: 0, opacity: 1, duration: 0.8},
-          '-=0.6'
-        );
     }, containerRef);
 
     return () => ctx.revert();

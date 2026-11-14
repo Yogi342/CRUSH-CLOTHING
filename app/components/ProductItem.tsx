@@ -32,23 +32,12 @@ export function ProductItem({
     >
       <div className="relative aspect-[3/4] w-full overflow-hidden rounded-2xl bg-neutral-100 mb-3 border border-neutral-100 shadow-xs group-hover:shadow-md transition-shadow duration-300">
         {image ? (
-          isLocalImage ? (
-            <img
-              src={image.url}
-              alt={image.altText || product.title}
-              loading={loading || 'lazy'}
-              className="w-full h-full object-cover object-top transition-transform duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-105"
-            />
-          ) : (
-            <Image
-              alt={image.altText || product.title}
-              aspectRatio="3/4"
-              data={image}
-              loading={loading}
-              className="w-full h-full object-cover object-top transition-transform duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-105"
-              sizes="(min-width: 64em) 25vw, (min-width: 48em) 33vw, 50vw"
-            />
-          )
+          <img
+            src={image.url}
+            alt={image.altText || product.title}
+            loading={loading || 'lazy'}
+            className="w-full h-full object-cover object-top transition-transform duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-105"
+          />
         ) : (
           <div className="w-full h-full flex items-center justify-center font-display text-xs text-neutral-400 tracking-widest uppercase">
             Atelier Visual
