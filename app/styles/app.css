@@ -21,7 +21,6 @@
   --ease-editorial: cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-html.crush-ready body,
 body {
   background-color: var(--color-ivory);
   color: var(--color-ink);

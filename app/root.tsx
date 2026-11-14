@@ -105,7 +105,7 @@ export async function loader(args: Route.LoaderArgs) {
       publicStorefrontId: env.PUBLIC_STOREFRONT_ID,
     }),
     consent: {
-      checkoutDomain: env.PUBLIC_CHECKOUT_DOMAIN,
+      checkoutDomain: env.PUBLIC_CHECKOUT_DOMAIN || env.PUBLIC_STORE_DOMAIN,
       storefrontAccessToken: env.PUBLIC_STOREFRONT_API_TOKEN,
       withPrivacyBanner: false,
       // localize the privacy banner
@@ -185,6 +185,7 @@ export function Layout({children}: {children?: React.ReactNode}) {
         <Links />
         <style
           nonce={nonce}
+          suppressHydrationWarning
           dangerouslySetInnerHTML={{
             __html: `
               /* ========================================================
@@ -204,16 +205,6 @@ export function Layout({children}: {children?: React.ReactNode}) {
                 -webkit-font-smoothing: antialiased;
                 -webkit-text-size-adjust: 100%;
               }
-              /* Strictly gate body visibility until stylesheets are parsed */
-              html:not(.crush-ready) body {
-                visibility: hidden !important;
-                opacity: 0 !important;
-              }
-              html.crush-ready body {
-                visibility: visible !important;
-                opacity: 1 !important;
-                transition: opacity 0.18s cubic-bezier(0.16, 1, 0.3, 1) !important;
-              }
               body {
                 background-color: #ffffff;
                 color: #111827;
@@ -221,6 +212,8 @@ export function Layout({children}: {children?: React.ReactNode}) {
                 padding: 0;
                 overflow-x: hidden;
                 width: 100%;
+                visibility: visible !important;
+                opacity: 1 !important;
                 pointer-events: auto !important;
               }
               a, button, [role="button"], input, select, textarea {
@@ -295,93 +288,6 @@ export function Layout({children}: {children?: React.ReactNode}) {
             `,
           }}
         />
-        {/* Synchronous CSS-readiness observer: reveals page the millisecond stylesheets parse */}
-        <script
-          nonce={nonce}
-          dangerouslySetInnerHTML={{
-            __html: `
-              (function() {
-                var docEl = document.documentElement;
-                var revealed = false;
-                function reveal() {
-                  if (revealed) return;
-                  revealed = true;
-                  docEl.classList.add('crush-ready');
-                }
-
-                if (document.readyState === 'complete' || document.readyState === 'interactive') {
-                  reveal();
-                } else {
-                  document.addEventListener('DOMContentLoaded', reveal, {once: true});
-                  window.addEventListener('load', reveal, {once: true});
-                }
-
-                var links = document.querySelectorAll('link[rel="stylesheet"]');
-                var count = links.length;
-                if (!count) {
-                  reveal();
-                  return;
-                }
-
-                var done = 0;
-                function onSheetLoaded() {
-                  done++;
-                  if (done >= count) {
-                    reveal();
-                  }
-                }
-
-                for (var i = 0; i < links.length; i++) {
-                  var link = links[i];
-                  try {
-                    if (link.sheet) {
-                      onSheetLoaded();
-                      continue;
-                    }
-                  } catch (e) {}
-                  link.addEventListener('load', onSheetLoaded, {once: true});
-                  link.addEventListener('error', onSheetLoaded, {once: true});
-                }
-
-                // High-frequency animation-frame poll for sheet readiness
-                var rafCount = 0;
-                function checkSheets() {
-                  var allReady = true;
-                  for (var j = 0; j < links.length; j++) {
-                    try {
-                      if (!links[j].sheet) {
-                        allReady = false;
-                        break;
-                      }
-                    } catch (e) {}
-                  }
-                  if (allReady || rafCount++ >= 30) {
-                    reveal();
-                  } else {
-                    requestAnimationFrame(checkSheets);
-                  }
-                }
-                requestAnimationFrame(checkSheets);
-
-                // Watchdog fallback (300ms max) guarantees page is never stuck
-                setTimeout(reveal, 300);
-              })();
-            `,
-          }}
-        />
-        <noscript>
-          <style
-            dangerouslySetInnerHTML={{
-              __html: `
-                html:not(.crush-ready) body,
-                body {
-                  visibility: visible !important;
-                  opacity: 1 !important;
-                }
-              `,
-            }}
-          />
-        </noscript>
       </head>
       <body>
         {children}
