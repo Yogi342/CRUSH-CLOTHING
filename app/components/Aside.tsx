@@ -65,13 +65,12 @@ export function Aside({
       <aside>
         <header className="flex items-center justify-between px-5 sm:px-6 py-4 border-b border-neutral-100 bg-white shrink-0">
           {type === 'mobile' ? (
-            <div>
-              <span className="font-serif text-lg tracking-[0.25em] text-neutral-900 font-normal uppercase block">
-                CRUSH
-              </span>
-              <span className="font-display text-[8px] tracking-[0.35em] text-neutral-400 uppercase font-medium">
-                NEW YORK · ATELIER
-              </span>
+            <div className="flex items-center">
+              <img
+                src="/images/crush-logo.png"
+                alt="CRUSH CLOTHING"
+                className="h-9 w-auto object-contain"
+              />
             </div>
           ) : (
             <h3 id={id} className="font-display text-xs font-bold tracking-[0.2em] uppercase text-neutral-900 m-0">

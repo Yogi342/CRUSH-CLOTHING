@@ -100,17 +100,21 @@ export function Footer({
         </div>
       </div>
 
-      {/* 2. Massive Architectural Brand Masthead */}
-      <div className="border-b border-[var(--color-ivory)]/15 py-12 sm:py-20">
+      {/* 2. Architectural Brand Masthead with Official Monogram */}
+      <div className="border-b border-[var(--color-ivory)]/15 py-12 sm:py-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-6">
-            <div>
-              <span className="font-display text-[11px] font-semibold tracking-[0.35em] text-[var(--color-stone)] uppercase block mb-2">
+            <div className="space-y-4">
+              <span className="font-display text-[11px] font-semibold tracking-[0.35em] text-[var(--color-stone)] uppercase block">
                 Haute Contemporaine · United States
               </span>
-              <h2 className="font-display font-bold text-4xl sm:text-7xl lg:text-9xl tracking-[0.08em] sm:tracking-[0.14em] uppercase text-[var(--color-ivory)] m-0 leading-none select-none">
-                CRUSH
-              </h2>
+              <div className="flex items-center gap-4">
+                <img
+                  src="/images/crush-logo-white.png"
+                  alt="CRUSH CLOTHING"
+                  className="h-16 sm:h-24 w-auto object-contain"
+                />
+              </div>
             </div>
             <div className="max-w-md lg:text-right">
               <p className="font-body text-sm sm:text-base text-[var(--color-stone-light)] leading-relaxed m-0">

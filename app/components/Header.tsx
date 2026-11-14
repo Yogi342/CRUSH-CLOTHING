@@ -151,18 +151,19 @@ export function Header({
             prefetch="intent"
             to="/"
             end
-            className="group inline-flex flex-col items-center no-underline text-neutral-900 focus-visible:outline-2 focus-visible:outline-neutral-900"
+            className="group inline-flex items-center justify-center no-underline text-neutral-900 focus-visible:outline-2 focus-visible:outline-neutral-900 transition-transform active:scale-95"
+            aria-label="CRUSH CLOTHING — Atelier Home"
           >
-            <span
-              className={`font-serif tracking-[0.28em] sm:tracking-[0.38em] uppercase transition-all duration-400 group-hover:tracking-[0.44em] text-neutral-900 font-normal ${
-                isScrolled ? 'text-xl sm:text-[26px]' : 'text-2xl sm:text-[32px]'
+            <img
+              src="/images/crush-logo.png"
+              alt="CRUSH CLOTHING"
+              className={`w-auto object-contain transition-all duration-300 ${
+                isScrolled
+                  ? 'h-8 sm:h-10'
+                  : 'h-10 sm:h-13'
               }`}
-            >
-              CRUSH
-            </span>
-            <span className="font-display text-[7.5px] sm:text-[9px] tracking-[0.42em] sm:tracking-[0.48em] text-neutral-400 uppercase -mt-0.5 group-hover:text-neutral-700 transition-colors font-medium">
-              NEW YORK
-            </span>
+              loading="eager"
+            />
           </NavLink>
         </div>
 

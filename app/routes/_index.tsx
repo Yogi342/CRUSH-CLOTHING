@@ -653,6 +653,14 @@ export default function Homepage() {
         aria-label="Brand Philosophy"
       >
         <div className="max-w-4xl mx-auto px-4 sm:px-6">
+          <div className="flex justify-center mb-6">
+            <img
+              src="/images/crush-logo.png"
+              alt="CRUSH CLOTHING Monogram"
+              className="h-16 sm:h-20 w-auto object-contain"
+              loading="lazy"
+            />
+          </div>
           <p className="font-display text-xs font-bold tracking-[0.3em] text-neutral-400 uppercase mb-4">
             CRUSH CLOTHING
           </p>

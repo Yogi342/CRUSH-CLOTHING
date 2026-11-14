@@ -55,6 +55,13 @@ export default function AccountLayout() {
     return (
       <div className="min-h-[70vh] bg-[var(--color-ivory)] py-16 px-4 sm:px-6 lg:px-8 flex items-center justify-center">
         <div className="max-w-md w-full text-center border border-[var(--color-stone)] bg-white/70 p-8 sm:p-10 shadow-xs">
+          <div className="flex justify-center mb-5">
+            <img
+              src="/images/crush-logo.png"
+              alt="CRUSH CLOTHING"
+              className="h-12 w-auto object-contain"
+            />
+          </div>
           <p className="font-display text-[10px] sm:text-xs tracking-[0.25em] uppercase text-[var(--color-stone-light)] mb-3">
             Atelier Client Portal · SS 2026
           </p>
