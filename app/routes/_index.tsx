@@ -65,15 +65,17 @@ export default function Homepage() {
          ======================================================== */}
       <section
         ref={heroRef}
-        className="crush-hero relative bg-[#FAFAF9] border-b border-neutral-200/80 pt-8 sm:pt-12 pb-16 sm:pb-24 overflow-hidden"
+        className="crush-hero relative bg-[#FAFAF9] border-b border-neutral-200/80 pt-4 sm:pt-10 pb-12 sm:pb-24 overflow-hidden"
         aria-label="Campaign Hero"
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           {/* Top Atelier Overline Bar */}
-          <div className="flex flex-wrap items-center justify-between gap-4 pb-6 mb-8 border-b border-neutral-200/90 text-[11px] font-display uppercase tracking-[0.24em] text-neutral-500">
-            <div className="flex items-center gap-2.5">
-              <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
-              <span className="text-neutral-900 font-semibold tracking-[0.28em]">CRUSH ATELIER // NEW YORK</span>
+          <div className="flex items-center justify-between gap-2 pb-4 sm:pb-6 mb-5 sm:mb-8 border-b border-neutral-200/90 text-[10px] sm:text-[11px] font-display uppercase tracking-[0.2em] sm:tracking-[0.24em] text-neutral-500">
+            <div className="flex items-center gap-2 sm:gap-2.5">
+              <span className="w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full bg-emerald-500 animate-pulse" />
+              <span className="text-neutral-900 font-semibold tracking-[0.22em] sm:tracking-[0.28em]">
+                CRUSH ATELIER <span className="hidden sm:inline">// NEW YORK</span><span className="sm:hidden">· NYC</span>
+              </span>
             </div>
             <div className="hidden md:flex items-center gap-6 text-[10px] tracking-[0.28em] text-neutral-400">
               <span>SS 2026 CAPSULE</span>
@@ -84,15 +86,109 @@ export default function Homepage() {
             </div>
             <Link
               to="/products/frill-tie-shoulder-mini-dress?openSizeAdvisor=true"
-              className="font-semibold text-neutral-900 hover:text-neutral-600 underline underline-offset-4 transition-colors"
+              className="font-semibold text-neutral-900 hover:text-neutral-600 underline underline-offset-4 transition-colors shrink-0 text-[10px] sm:text-[11px]"
             >
-              Interactive Size Advisor →
+              <span className="hidden sm:inline">Interactive Size Advisor →</span>
+              <span className="sm:hidden">Size Advisor →</span>
             </Link>
           </div>
 
-          {/* Main Hero Split Grid */}
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-center">
-            
+          {/* ========================================================
+              A. MOBILE EDITORIAL HERO LAYOUT (lg:hidden)
+              Visual-First Haute Couture Mobile Presentation
+             ======================================================== */}
+          <div className="lg:hidden space-y-4">
+            {/* Title & Badge */}
+            <div className="space-y-1.5">
+              <span className="inline-block px-3 py-1 rounded-full bg-white border border-neutral-200 text-neutral-900 font-display text-[9px] font-bold tracking-[0.22em] uppercase shadow-2xs">
+                Atelier Edition 01 · SS 2026
+              </span>
+              <h1 className="crush-hero-title font-serif font-normal text-3xl sm:text-5xl tracking-tight text-neutral-900 m-0 leading-[1.08]">
+                Silhouettes Of
+                <span className="block italic text-neutral-500 font-serif font-normal mt-0.5">
+                  Sculptural Grace.
+                </span>
+              </h1>
+            </div>
+
+            {/* Signature Piece Image Card - Prominently Above the Mobile Fold */}
+            <div className="relative aspect-[4/5] w-full rounded-2xl overflow-hidden shadow-xl border border-neutral-200/80 bg-neutral-100 group">
+              <img
+                src="https://cdn.shopify.com/s/files/1/0844/4359/4861/files/4a5c9b52-89bf-4835-9201-11dd8247d95a-Max-Origin.webp?v=1793609651"
+                alt="CRUSH Frill Tie Mini Dress"
+                className="w-full h-full object-cover object-top"
+                loading="eager"
+              />
+              {/* Floating Luxury Detail Badge */}
+              <div className="absolute top-3.5 left-3.5 bg-white/95 backdrop-blur-md px-3 py-1.5 rounded-full border border-neutral-200 shadow-xs">
+                <span className="font-display text-[9px] font-bold tracking-[0.2em] uppercase text-neutral-900">
+                  ICONIC PIECE · $31.99
+                </span>
+              </div>
+
+              {/* Bottom Floating Piece Bar */}
+              <Link
+                to="/products/frill-tie-shoulder-mini-dress"
+                className="absolute bottom-3 left-3 right-3 bg-white/95 backdrop-blur-md p-3 rounded-xl border border-neutral-200/90 shadow-md flex items-center justify-between no-underline active:scale-[0.99] transition-all"
+              >
+                <div className="min-w-0 pr-2">
+                  <h4 className="font-serif text-sm font-semibold text-neutral-900 m-0 truncate">
+                    Frill Tie Shoulder Mini
+                  </h4>
+                  <p className="font-body text-[11px] text-neutral-500 m-0">
+                    Khaki, Brown & Black · 100% Cotton
+                  </p>
+                </div>
+                <span className="w-7 h-7 rounded-full bg-neutral-900 text-white flex items-center justify-center shrink-0 text-xs font-bold">
+                  →
+                </span>
+              </Link>
+            </div>
+
+            {/* Concise Editorial Copy */}
+            <p className="crush-hero-sub font-body text-sm sm:text-base text-neutral-600 leading-relaxed m-0">
+              Contemporary women’s luxury apparel tailored from breathable natural cotton weaves and French-bound seams. Designed in New York for an effortless presence.
+            </p>
+
+            {/* Full-Width Touch-Friendly CTAs */}
+            <div className="crush-hero-ctas flex flex-col gap-2.5 pt-1">
+              <Link
+                to="/collections/all"
+                className="crush-btn crush-btn-primary w-full text-center"
+              >
+                <span>Shop New Arrivals</span>
+                <span className="group-hover-arrow ml-2">→</span>
+              </Link>
+              <Link
+                to="/products/frill-tie-shoulder-mini-dress"
+                className="crush-btn crush-btn-secondary w-full text-center"
+              >
+                <span>The Signature Mini Edit</span>
+              </Link>
+            </div>
+
+            {/* Mobile Horizontal Feature Strip */}
+            <div className="pt-3 border-t border-neutral-200/90 grid grid-cols-3 gap-2 text-center">
+              <div className="bg-white/80 border border-neutral-200/70 rounded-xl p-2.5 shadow-2xs">
+                <span className="font-display font-bold text-neutral-900 block text-[10px] tracking-wider uppercase">100% Cotton</span>
+                <span className="text-[9px] text-neutral-500 font-body">Pure weave</span>
+              </div>
+              <div className="bg-white/80 border border-neutral-200/70 rounded-xl p-2.5 shadow-2xs">
+                <span className="font-display font-bold text-neutral-900 block text-[10px] tracking-wider uppercase">French Seams</span>
+                <span className="text-[9px] text-neutral-500 font-body">Bound finish</span>
+              </div>
+              <div className="bg-white/80 border border-neutral-200/70 rounded-xl p-2.5 shadow-2xs">
+                <span className="font-display font-bold text-neutral-900 block text-[10px] tracking-wider uppercase">Free Express</span>
+                <span className="text-[9px] text-neutral-500 font-body">Over $150</span>
+              </div>
+            </div>
+          </div>
+
+          {/* ========================================================
+              B. DESKTOP EDITORIAL HERO LAYOUT (hidden lg:grid)
+              Grand Diptych Architecture for Wide Screens
+             ======================================================== */}
+          <div className="hidden lg:grid lg:grid-cols-12 gap-10 lg:gap-14 items-center">
             {/* Left Column: Dramatic Editorial Typography & Luxury CTAs */}
             <div className="lg:col-span-6 space-y-6 sm:space-y-7">
               <div className="space-y-3.5">
@@ -112,7 +208,7 @@ export default function Homepage() {
               </p>
 
               {/* Bulletproof Luxury CTAs */}
-              <div className="crush-hero-ctas flex flex-col sm:flex-row items-stretch sm:items-center gap-4 pt-2">
+              <div className="crush-hero-ctas flex flex-row items-center gap-4 pt-2">
                 <Link
                   to="/collections/all"
                   className="crush-btn crush-btn-primary group"
@@ -209,7 +305,6 @@ export default function Homepage() {
                 </div>
               </div>
             </div>
-
           </div>
         </div>
       </section>
@@ -539,8 +634,8 @@ export default function Homepage() {
             <div className="lg:col-span-6">
               <div className="relative aspect-[4/5] rounded-3xl overflow-hidden border border-white/10 shadow-2xl bg-neutral-800">
                 <img
-                  src="/images/model-full-1.jpg"
-                  alt="CRUSH Editorial Trench Silhouette"
+                  src="https://cdn.shopify.com/s/files/1/0844/4359/4861/files/245b7f1e-28db-4c81-8b01-52504930113f-Max-Origin.webp?v=1793609651"
+                  alt="CRUSH Editorial Silhouette in Motion"
                   className="w-full h-full object-cover object-top"
                   loading="lazy"
                 />

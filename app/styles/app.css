@@ -186,6 +186,16 @@ a.bg-neutral-900:not(:disabled):hover {
   transform: translateX(4px);
 }
 
+/* Mobile Luxury Touch UX Optimizations */
+@media (max-width: 640px) {
+  .crush-btn {
+    padding: 0.85rem 1.25rem;
+    font-size: 0.72rem;
+    letter-spacing: 0.15em;
+    min-height: 48px;
+  }
+}
+
 
 /* Reduced motion support */
 @media (prefers-reduced-motion: reduce) {

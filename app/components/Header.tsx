@@ -458,30 +458,41 @@ export function HeaderMenu({
       role="navigation"
       aria-label="Mobile Navigation"
     >
-      {/* Editorial Promo Card */}
+      {/* Editorial Promo Card with High-Res Thumbnail */}
       <Link
         to="/collections/all"
         onClick={close}
-        className="block relative rounded-2xl overflow-hidden bg-neutral-900 text-white p-4 no-underline shadow-md group"
+        className="block relative rounded-2xl overflow-hidden bg-neutral-950 text-white p-3.5 no-underline shadow-md group border border-neutral-800 hover:border-neutral-700 transition-all"
       >
-        <div className="flex items-center justify-between mb-1.5">
-          <span className="text-[9px] font-display uppercase tracking-[0.25em] text-emerald-400 font-bold bg-emerald-950/60 px-2 py-0.5 rounded-full border border-emerald-800/60">
+        <div className="flex items-center justify-between mb-2">
+          <span className="text-[9px] font-display uppercase tracking-[0.25em] text-emerald-400 font-bold bg-emerald-950/80 px-2.5 py-0.5 rounded-full border border-emerald-800/60">
             SS26 Capsule Live
           </span>
           <span className="text-xs text-neutral-400 group-hover:text-white transition-colors">
             Explore →
           </span>
         </div>
-        <h4 className="font-serif text-base font-normal text-white m-0 tracking-wide">
-          The Architecture of Presence
-        </h4>
-        <p className="font-body text-[11px] text-neutral-300 m-0 mt-0.5">
-          Sculptural silhouettes crafted from pure natural cotton.
-        </p>
+        <div className="flex items-center justify-between gap-3">
+          <div className="min-w-0">
+            <h4 className="font-serif text-base font-normal text-white m-0 tracking-wide truncate">
+              The Architecture of Presence
+            </h4>
+            <p className="font-body text-[11px] text-neutral-400 m-0 mt-0.5 line-clamp-1">
+              Sculptural silhouettes in 100% pure cotton.
+            </p>
+          </div>
+          <div className="w-12 h-14 rounded-lg overflow-hidden shrink-0 border border-neutral-800 bg-neutral-900 shadow-xs">
+            <img
+              src="https://cdn.shopify.com/s/files/1/0844/4359/4861/files/4a5c9b52-89bf-4835-9201-11dd8247d95a-Max-Origin.webp?v=1793609651"
+              alt="SS26 Preview"
+              className="w-full h-full object-cover object-top"
+            />
+          </div>
+        </div>
       </Link>
 
       {/* Primary Collections & Edits */}
-      <div className="space-y-0.5">
+      <div className="space-y-1">
         <span className="font-display text-[9px] font-bold tracking-[0.3em] uppercase text-neutral-400 block mb-1.5 px-1">
           Collections & Edits
         </span>
@@ -491,10 +502,10 @@ export function HeaderMenu({
           onClick={close}
           prefetch="intent"
           to="/"
-          className="flex items-center justify-between py-2.5 px-3 rounded-xl font-display text-sm font-semibold tracking-widest uppercase text-neutral-900 no-underline hover:bg-neutral-100 transition-colors"
+          className="flex items-center justify-between py-3 px-3.5 rounded-xl font-display text-sm font-semibold tracking-widest uppercase text-neutral-900 no-underline hover:bg-neutral-100 min-h-[46px] transition-colors"
         >
           <span>Atelier Home</span>
-          <span className="text-xs text-neutral-300">Overview</span>
+          <span className="text-xs text-neutral-400">Overview</span>
         </NavLink>
 
         {[
@@ -510,10 +521,10 @@ export function HeaderMenu({
             onClick={close}
             prefetch="intent"
             to={item.url}
-            className="flex items-center justify-between py-2.5 px-3 rounded-xl font-display text-sm font-semibold tracking-widest uppercase text-neutral-900 no-underline hover:bg-neutral-100 transition-colors group"
+            className="flex items-center justify-between py-3 px-3.5 rounded-xl font-display text-sm font-semibold tracking-widest uppercase text-neutral-900 no-underline hover:bg-neutral-100 min-h-[46px] transition-colors group"
           >
             <span>{item.title}</span>
-            <span className="text-[10px] font-body normal-case text-neutral-400 group-hover:text-neutral-900 transition-colors">
+            <span className="text-[11px] font-body normal-case text-neutral-500 group-hover:text-neutral-900 transition-colors">
               {item.tag} →
             </span>
           </NavLink>
@@ -546,29 +557,30 @@ export function HeaderMenu({
         </div>
       </Link>
 
-      {/* VIP Client Account */}
+      {/* VIP Client Account - High Contrast Crisp Styling */}
       <div>
         <NavLink
           to="/account"
           onClick={close}
-          className="flex items-center justify-between py-3 px-4 rounded-xl bg-neutral-900 text-white font-display text-xs font-semibold tracking-widest uppercase no-underline shadow-sm hover:bg-neutral-800 hover:shadow-md active:scale-[0.98] transition-all duration-200"
+          className="flex items-center justify-between py-3.5 px-4 rounded-xl font-display text-xs font-semibold tracking-widest uppercase no-underline shadow-md hover:shadow-lg active:scale-[0.98] transition-all duration-200 min-h-[48px]"
+          style={{backgroundColor: '#111827', color: '#ffffff'}}
         >
-          <div className="flex items-center gap-2.5">
+          <div className="flex items-center gap-2.5" style={{color: '#ffffff'}}>
             <svg
-              width="15"
-              height="15"
+              width="16"
+              height="16"
               className="w-4 h-4 shrink-0"
               fill="none"
-              stroke="currentColor"
+              stroke="#ffffff"
               strokeWidth="1.8"
               viewBox="0 0 24 24"
-              style={{width: 15, height: 15, maxWidth: 15, maxHeight: 15}}
+              style={{width: 16, height: 16, maxWidth: 16, maxHeight: 16, color: '#ffffff'}}
             >
               <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z" />
             </svg>
-            <span>VIP Client Account</span>
+            <span style={{color: '#ffffff', fontWeight: 600}}>VIP Client Account</span>
           </div>
-          <span className="text-[10px] opacity-70">Sign In →</span>
+          <span className="text-[10px] font-semibold" style={{color: '#e5e7eb'}}>Sign In →</span>
         </NavLink>
       </div>
 

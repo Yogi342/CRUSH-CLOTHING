@@ -17,57 +17,57 @@ const LOOKS: LookItem[] = [
   {
     id: 'look-1',
     number: '01',
-    title: 'Alabaster Sculpted Trench',
-    price: '$380',
-    emotion: 'A dramatic silhouette sculpted for quiet authority and sharp presence.',
-    garmentImg: '/images/hanger-garment-1.jpg',
-    modelImg: '/images/model-full-1.jpg',
-    tag: 'Drop 01 · Tailored Outerwear',
-    handle: 'alabaster-sculpted-trench',
+    title: 'Sculpted Frill Tie Mini',
+    price: '$31.99',
+    emotion: 'A sculptural silhouette crafted from pure breathable cotton for commanding quiet presence.',
+    garmentImg: 'https://cdn.shopify.com/s/files/1/0844/4359/4861/files/06a7c83488f94c948aa93f313cbf19c2-Max-Origin.webp?v=1793609652',
+    modelImg: 'https://cdn.shopify.com/s/files/1/0844/4359/4861/files/4a5c9b52-89bf-4835-9201-11dd8247d95a-Max-Origin.webp?v=1793609651',
+    tag: 'Drop 01 · Signature Mini Dress',
+    handle: 'frill-tie-shoulder-mini-dress',
   },
   {
     id: 'look-2',
     number: '02',
-    title: 'Champagne Bias Silk Slip',
-    price: '$290',
-    emotion: 'Liquid silk cut on the bias that catches every movement and whisper.',
-    garmentImg: '/images/hanger-garment-2.jpg',
-    modelImg: '/images/model-full-2.jpg',
-    tag: 'Drop 01 · Evening Silk',
-    handle: 'champagne-bias-silk-slip',
+    title: 'Atelier Seated Silhouette',
+    price: '$31.99',
+    emotion: 'Fluid folds sculpted to drape effortlessly with every subtle movement and posture.',
+    garmentImg: 'https://cdn.shopify.com/s/files/1/0844/4359/4861/files/8362fe37-bd92-4b75-8d98-bc7e0c69ffdb-Max-Origin.webp?v=1793609651',
+    modelImg: 'https://cdn.shopify.com/s/files/1/0844/4359/4861/files/b4ad1bb5-2d18-4927-aa44-24584285ee31-Max-Origin.webp?v=1793609651',
+    tag: 'Drop 01 · Studio Drape',
+    handle: 'frill-tie-shoulder-mini-dress',
   },
   {
     id: 'look-3',
     number: '03',
-    title: 'Monolith Structured Blazer',
-    price: '$420',
-    emotion: 'Architectural tailoring engineered to command the room without saying a word.',
-    garmentImg: '/images/hanger-garment-3.jpg',
-    modelImg: '/images/model-full-3.jpg',
-    tag: 'Drop 01 · Suiting',
-    handle: 'monolith-structured-blazer',
+    title: 'Tie-Bow Shoulder Architecture',
+    price: '$31.99',
+    emotion: 'Hand-finished self-tie ribbons creating structural contrast against delicate cotton.',
+    garmentImg: 'https://cdn.shopify.com/s/files/1/0844/4359/4861/files/713a647f-a042-4b48-939e-259ee071a94a-Max-Origin.webp?v=1793609652',
+    modelImg: 'https://cdn.shopify.com/s/files/1/0844/4359/4861/files/0bba3306-63ad-4175-bdb6-27554f82b875-Max-Origin.webp?v=1793609652',
+    tag: 'Drop 01 · Atelier Craft',
+    handle: 'frill-tie-shoulder-mini-dress',
   },
   {
     id: 'look-4',
     number: '04',
-    title: 'Heather Draped Column Dress',
-    price: '$260',
-    emotion: 'Fluid column silhouette draped with pure mathematical grace and ease.',
-    garmentImg: '/images/hanger-garment-4.jpg',
-    modelImg: '/images/model-full-4.jpg',
-    tag: 'Drop 01 · Draped Knit',
-    handle: 'heather-draped-column-dress',
+    title: 'Kinetic Runway Movement',
+    price: '$31.99',
+    emotion: 'Weightless natural cotton engineered to float with rhythm and effortless authority.',
+    garmentImg: 'https://cdn.shopify.com/s/files/1/0844/4359/4861/files/4a5c9b52-89bf-4835-9201-11dd8247d95a-Max-Origin.webp?v=1793609651',
+    modelImg: 'https://cdn.shopify.com/s/files/1/0844/4359/4861/files/245b7f1e-28db-4c81-8b01-52504930113f-Max-Origin.webp?v=1793609651',
+    tag: 'Drop 01 · Editorial Motion',
+    handle: 'frill-tie-shoulder-mini-dress',
   },
   {
     id: 'look-5',
     number: '05',
-    title: 'Obsidian Cashmere Cocoon',
-    price: '$490',
-    emotion: 'Weightless double-faced cocoon luxury engineered for all-day presence.',
-    garmentImg: '/images/hanger-garment-5.jpg',
-    modelImg: '/images/model-full-5.jpg',
-    tag: 'Drop 01 · Outerwear',
-    handle: 'obsidian-cashmere-cocoon',
+    title: 'Pure Atelier Tailoring',
+    price: '$31.99',
+    emotion: 'Clean French-bound seams and bespoke proportions that define modern luxury.',
+    garmentImg: 'https://cdn.shopify.com/s/files/1/0844/4359/4861/files/cd2c7eadd05d4fddb476ea02bce75cd4-Max-Origin.webp?v=1793609652',
+    modelImg: 'https://cdn.shopify.com/s/files/1/0844/4359/4861/files/06a7c83488f94c948aa93f313cbf19c2-Max-Origin.webp?v=1793609652',
+    tag: 'Drop 01 · Form & Silhouette',
+    handle: 'frill-tie-shoulder-mini-dress',
   },
 ];
 
@@ -335,7 +335,7 @@ export function LivingRack() {
 
               <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
                 <Link
-                  to="/collections/all"
+                  to={`/products/${activeLook.handle}`}
                   className="crush-btn crush-btn-primary flex-1 text-center"
                 >
                   Explore Look {activeLook.number} in Catalog →
@@ -395,14 +395,14 @@ export function LivingRack() {
                 </div>
 
                 {/* Arrow Navigation */}
-                <div className="flex items-center gap-1.5">
+                <div className="flex items-center gap-2">
                   <button
                     type="button"
                     onClick={() =>
                       selectLook((activeIndex - 1 + LOOKS.length) % LOOKS.length)
                     }
                     aria-label="Previous look"
-                    className="w-10 h-10 rounded-full bg-[var(--color-ivory)] text-[var(--color-ink)] border border-[var(--color-stone)] flex items-center justify-center font-display text-base hover:bg-[var(--color-ink)] hover:text-[var(--color-ivory)] transition-colors duration-200 active:scale-95 cursor-pointer shadow-md"
+                    className="w-11 h-11 min-w-[44px] min-h-[44px] rounded-full bg-[var(--color-ivory)] text-[var(--color-ink)] border border-[var(--color-stone)] flex items-center justify-center font-display text-base hover:bg-[var(--color-ink)] hover:text-[var(--color-ivory)] transition-colors duration-200 active:scale-95 cursor-pointer shadow-md"
                   >
                     ←
                   </button>
@@ -410,7 +410,7 @@ export function LivingRack() {
                     type="button"
                     onClick={() => selectLook((activeIndex + 1) % LOOKS.length)}
                     aria-label="Next look"
-                    className="w-10 h-10 rounded-full bg-[var(--color-ivory)] text-[var(--color-ink)] border border-[var(--color-stone)] flex items-center justify-center font-display text-base hover:bg-[var(--color-ink)] hover:text-[var(--color-ivory)] transition-colors duration-200 active:scale-95 cursor-pointer shadow-md"
+                    className="w-11 h-11 min-w-[44px] min-h-[44px] rounded-full bg-[var(--color-ivory)] text-[var(--color-ink)] border border-[var(--color-stone)] flex items-center justify-center font-display text-base hover:bg-[var(--color-ink)] hover:text-[var(--color-ivory)] transition-colors duration-200 active:scale-95 cursor-pointer shadow-md"
                   >
                     →
                   </button>
