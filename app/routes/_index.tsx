@@ -661,8 +661,8 @@ export default function Homepage() {
               loading="lazy"
             />
           </div>
-          <p className="font-display text-xs font-bold tracking-[0.3em] text-neutral-400 uppercase mb-4">
-            CRUSH CLOTHING
+          <p className="font-display text-[11px] font-semibold tracking-[0.35em] text-neutral-400 uppercase mb-4">
+            The Philosophy
           </p>
           <blockquote className="m-0">
             <p className="font-serif font-normal text-2xl sm:text-4xl md:text-5xl tracking-tight text-neutral-900 leading-snug">
