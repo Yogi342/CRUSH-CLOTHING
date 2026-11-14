@@ -657,7 +657,7 @@ export default function Homepage() {
             <img
               src="/images/crush-logo.png"
               alt="CRUSH CLOTHING"
-              className="h-12 sm:h-16 w-auto object-contain"
+              className="h-10 sm:h-14 w-auto object-contain"
               loading="lazy"
             />
           </div>

@@ -112,7 +112,7 @@ export function Footer({
                 <img
                   src="/images/crush-logo-white.png"
                   alt="CRUSH CLOTHING"
-                  className="h-12 sm:h-16 w-auto object-contain"
+                  className="h-10 sm:h-14 w-auto object-contain"
                 />
               </div>
             </div>

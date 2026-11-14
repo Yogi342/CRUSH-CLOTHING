@@ -207,8 +207,8 @@ export function Header({
               alt="CRUSH CLOTHING"
               className={`w-auto object-contain transition-all duration-300 ${
                 isScrolled
-                  ? 'h-7 sm:h-9'
-                  : 'h-9 sm:h-12'
+                  ? 'h-7 sm:h-8'
+                  : 'h-8 sm:h-11'
               }`}
               loading="eager"
             />

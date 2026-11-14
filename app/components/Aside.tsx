@@ -69,7 +69,7 @@ export function Aside({
               <img
                 src="/images/crush-logo.png"
                 alt="CRUSH CLOTHING"
-                className="h-9 w-auto object-contain"
+                className="h-7 w-auto object-contain"
               />
             </div>
           ) : (
