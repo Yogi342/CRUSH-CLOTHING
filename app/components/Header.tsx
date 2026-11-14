@@ -17,6 +17,53 @@ interface HeaderProps {
 
 type Viewport = 'desktop' | 'mobile';
 
+export const CURATED_NAV_LINKS = [
+  {
+    id: 'nav-new-in',
+    title: 'New Arrivals',
+    url: '/collections/all',
+    tag: 'Fresh Releases',
+  },
+  {
+    id: 'nav-collections',
+    title: 'Collections',
+    url: '/collections/all',
+    hasMega: 'collections',
+    tag: 'SS26 Edits',
+  },
+  {
+    id: 'nav-dresses',
+    title: 'Dresses',
+    url: '/products/frill-tie-shoulder-mini-dress',
+    tag: 'Signature Piece',
+  },
+  {
+    id: 'nav-tops',
+    title: 'Tops & Bodices',
+    url: '/collections/all',
+    tag: 'Cotton Weaves',
+  },
+  {
+    id: 'nav-sets',
+    title: 'Sets & Tailoring',
+    url: '/collections/all',
+    tag: 'Atelier Tailoring',
+  },
+  {
+    id: 'nav-atelier',
+    title: 'The Atelier',
+    url: '/#atelier',
+    hasMega: 'atelier',
+    tag: 'Heritage & Craft',
+  },
+  {
+    id: 'nav-editorial',
+    title: 'Editorial',
+    url: '/products/frill-tie-shoulder-mini-dress#atelier-specifications',
+    tag: 'Lookbook Motion',
+  },
+];
+
 export function Header({
   header,
   isLoggedIn,
@@ -125,28 +172,29 @@ export function Header({
       )}
 
       {/* ========================================================
-          MAIN CLEAN LUXURY NAVBAR
+          TIER 1: ARCHITECTURAL BRAND MASTHEAD
          ======================================================== */}
       <header
-        className={`crush-header max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 flex items-center justify-between transition-all duration-300 ${
+        className={`crush-header max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between transition-all duration-300 ${
           isScrolled ? 'h-16' : 'h-20'
         }`}
       >
-        {/* Left: Hamburger + Desktop Nav */}
-        <div className="flex items-center gap-2 sm:gap-4 lg:gap-8 flex-1 justify-start min-w-[65px]">
+        {/* Left: Mobile Toggle (on < md) + Bespoke Fit link (on >= md) */}
+        <div className="flex items-center gap-3 sm:gap-4 flex-1 justify-start">
           <HeaderMenuMobileToggle />
-          <HeaderMenu
-            menu={menu}
-            viewport="desktop"
-            primaryDomainUrl={header.shop.primaryDomain?.url || ''}
-            publicStoreDomain={publicStoreDomain}
-            onHoverMega={handleMouseEnterMega}
-            activeMega={activeMegaMenu}
-          />
+          <div className="hidden md:flex items-center gap-2 text-neutral-500 font-display text-[11px] font-medium tracking-[0.2em] uppercase">
+            <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
+            <Link
+              to="/products/frill-tie-shoulder-mini-dress?openSizeAdvisor=true"
+              className="hover:text-black transition-colors no-underline text-neutral-600 hover:underline underline-offset-4"
+            >
+              Atelier Fit Advisor
+            </Link>
+          </div>
         </div>
 
-        {/* Center: Brand Logo */}
-        <div className="crush-brand-logo flex flex-col items-center justify-center text-center px-1 shrink-0">
+        {/* Center: Official Bold Brand Logo & Monogram */}
+        <div className="crush-brand-logo flex flex-col items-center justify-center text-center px-2 shrink-0">
           <NavLink
             prefetch="intent"
             to="/"
@@ -168,34 +216,73 @@ export function Header({
         </div>
 
         {/* Right: Actions */}
-        <div className="flex items-center gap-1.5 sm:gap-3.5 lg:gap-4 flex-1 justify-end min-w-[65px]">
+        <div className="flex items-center gap-2 sm:gap-3.5 lg:gap-4 flex-1 justify-end">
           <CurrencySelector />
           <SearchToggle />
 
           <NavLink
             prefetch="intent"
             to="/account"
-            className="hidden sm:inline-flex items-center justify-center w-9 h-9 rounded-full text-neutral-700 hover:text-black hover:bg-neutral-100 transition-all no-underline"
+            className="hidden sm:inline-flex items-center gap-1.5 py-1.5 px-3 rounded-full text-neutral-700 hover:text-black hover:bg-neutral-100 transition-all no-underline text-[11px] font-display font-medium tracking-wider uppercase border border-transparent hover:border-neutral-200"
             aria-label="Account profile"
           >
             <svg
-              width="16"
-              height="16"
-              className="w-4 h-4 shrink-0"
+              width="15"
+              height="15"
+              className="w-3.5 h-3.5 shrink-0"
               fill="none"
               stroke="currentColor"
-              strokeWidth="1.6"
+              strokeWidth="1.7"
               viewBox="0 0 24 24"
               aria-hidden="true"
-              style={{width: 16, height: 16, maxWidth: 16, maxHeight: 16}}
+              style={{width: 15, height: 15, maxWidth: 15, maxHeight: 15}}
             >
               <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z" />
             </svg>
+            <span className="hidden lg:inline">Sign In</span>
           </NavLink>
 
           <CartToggle cart={cart} />
         </div>
       </header>
+
+      {/* ========================================================
+          TIER 2: DEDICATED PROMINENT LUXURY CATEGORY NAVBAR
+          Always visible on desktop and tablet (md:block / 768px+)
+         ======================================================== */}
+      <div className="hidden md:block border-t border-neutral-100 bg-white/95 backdrop-blur-md">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <nav
+            className="flex items-center justify-center gap-6 lg:gap-9 xl:gap-11 py-2.5"
+            role="navigation"
+            aria-label="Main Store Navigation"
+          >
+            {CURATED_NAV_LINKS.map((item) => (
+              <div
+                key={item.id}
+                className="relative py-1"
+                onMouseEnter={() => item.hasMega && handleMouseEnterMega(item.hasMega)}
+              >
+                <NavLink
+                  to={item.url}
+                  className={({isActive}) =>
+                    `group inline-flex items-center gap-1 font-display text-[11px] lg:text-[12px] font-semibold tracking-[0.2em] uppercase no-underline transition-all py-1 border-b-2 ${
+                      isActive
+                        ? 'border-neutral-900 text-neutral-900'
+                        : 'border-transparent text-neutral-600 hover:text-neutral-900 hover:border-neutral-400'
+                    }`
+                  }
+                >
+                  <span>{item.title}</span>
+                  {item.hasMega && (
+                    <span className="text-[8px] opacity-40 group-hover:opacity-100 transition-opacity">▾</span>
+                  )}
+                </NavLink>
+              </div>
+            ))}
+          </nav>
+        </div>
+      </div>
 
       {/* ========================================================
           INTERACTIVE MEGA-MENU PANELS (Collections & The Atelier)
@@ -388,45 +475,14 @@ export function HeaderMenu({
 }) {
   const {close} = useAside();
 
-  // Curated Clean Professional Navigation Hierarchy (No tacky badges, no clutter)
-  const curatedLinks = [
-    {
-      id: 'nav-new-in',
-      title: 'New Arrivals',
-      url: '/collections/all',
-    },
-    {
-      id: 'nav-collections',
-      title: 'Collections',
-      url: '/collections/all',
-      hasMega: 'collections',
-    },
-    {
-      id: 'nav-dresses',
-      title: 'Dresses',
-      url: '/products/frill-tie-shoulder-mini-dress',
-    },
-    {
-      id: 'nav-atelier',
-      title: 'The Atelier',
-      url: '/#atelier',
-      hasMega: 'atelier',
-    },
-    {
-      id: 'nav-editorial',
-      title: 'Editorial',
-      url: '/products/frill-tie-shoulder-mini-dress#atelier-specifications',
-    },
-  ];
-
   if (viewport === 'desktop') {
     return (
       <nav
-        className="hidden lg:flex items-center gap-7 xl:gap-9"
+        className="hidden md:flex items-center gap-6 lg:gap-8"
         role="navigation"
         aria-label="Main Navigation"
       >
-        {curatedLinks.map((item) => {
+        {CURATED_NAV_LINKS.map((item) => {
           return (
             <div
               key={item.id}
@@ -509,13 +565,7 @@ export function HeaderMenu({
           <span className="text-xs text-neutral-400">Overview</span>
         </NavLink>
 
-        {[
-          {id: 'nav-new', title: 'New Arrivals', url: '/collections/all', tag: 'Fresh Releases'},
-          {id: 'nav-col', title: 'Collections', url: '/collections/all', tag: 'SS26 Edits'},
-          {id: 'nav-dr', title: 'Dresses', url: '/products/frill-tie-shoulder-mini-dress', tag: 'Signature Piece'},
-          {id: 'nav-at', title: 'The Atelier', url: '/#atelier', tag: 'French Tailoring'},
-          {id: 'nav-ed', title: 'Editorial', url: '/products/frill-tie-shoulder-mini-dress#atelier-specifications', tag: 'Lookbook'},
-        ].map((item) => (
+        {CURATED_NAV_LINKS.map((item) => (
           <NavLink
             key={item.id}
             end
@@ -639,15 +689,18 @@ function HeaderMenuMobileToggle() {
   return (
     <button
       type="button"
-      className="lg:hidden min-w-[44px] min-h-[44px] p-2.5 -ml-2 text-neutral-900 rounded-full hover:bg-neutral-100 active:bg-neutral-200 transition-colors cursor-pointer group flex items-center justify-center"
+      className="md:hidden flex items-center gap-2 min-h-[44px] py-2 px-3 -ml-2 text-neutral-900 rounded-full hover:bg-neutral-100 active:bg-neutral-200 transition-colors cursor-pointer group"
       onClick={() => open('mobile')}
-      aria-label="Open mobile menu"
+      aria-label="Open mobile navigation menu"
     >
-      <div className="w-5 h-4 flex flex-col justify-between">
+      <div className="w-5 h-3.5 flex flex-col justify-between shrink-0">
         <span className="w-5 h-0.5 bg-neutral-900 group-hover:w-4 transition-all duration-300" />
         <span className="w-3.5 h-0.5 bg-neutral-900 group-hover:w-5 transition-all duration-300" />
         <span className="w-5 h-0.5 bg-neutral-900 transition-all duration-300" />
       </div>
+      <span className="font-display text-[11px] font-bold tracking-[0.2em] uppercase text-neutral-900 select-none">
+        Menu
+      </span>
     </button>
   );
 }
