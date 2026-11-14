@@ -59,7 +59,7 @@ export default function AccountLayout() {
             <img
               src="/images/crush-logo.png"
               alt="CRUSH CLOTHING"
-              className="h-12 w-auto object-contain"
+              className="h-10 sm:h-12 w-auto object-contain"
             />
           </div>
           <p className="font-display text-[10px] sm:text-xs tracking-[0.25em] uppercase text-[var(--color-stone-light)] mb-3">

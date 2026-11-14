@@ -656,8 +656,8 @@ export default function Homepage() {
           <div className="flex justify-center mb-6">
             <img
               src="/images/crush-logo.png"
-              alt="CRUSH CLOTHING Monogram"
-              className="h-16 sm:h-20 w-auto object-contain"
+              alt="CRUSH CLOTHING"
+              className="h-12 sm:h-16 w-auto object-contain"
               loading="lazy"
             />
           </div>
